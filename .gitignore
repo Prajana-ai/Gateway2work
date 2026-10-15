@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.next/
+.turbo/
+.env.local
+.env.docker
+*.env
+!.env.example
+.DS_Store
+coverage/
+*.log
+.vercel/
+*.tsbuildinfo

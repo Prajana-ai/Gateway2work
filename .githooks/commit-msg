@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# ============================================================
+# Commit-msg hook — Conventional commit validation
+# Ensures all commit messages follow the format:
+#   <type>: <description>
+# ============================================================
+
+set -euo pipefail
+
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+commit_msg_file="$1"
+commit_msg=$(head -1 "$commit_msg_file")
+
+# Skip merge commits
+if echo "$commit_msg" | grep -qE "^Merge "; then
+  exit 0
+fi
+
+# Skip revert commits
+if echo "$commit_msg" | grep -qE "^Revert "; then
+  exit 0
+fi
+
+# Validate conventional commit format
+valid_types="feat|fix|refactor|docs|test|chore|perf|security|ci|build|style"
+pattern="^(${valid_types}): .{3,72}$"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo -e "${RED}ERROR: Commit message does not follow Conventional Commits format.${NC}"
+  echo ""
+  echo "  Your message:  $commit_msg"
+  echo ""
+  echo "  Required format:  <type>: <short description>"
+  echo ""
+  echo "  Valid types:"
+  echo "    feat      — New feature"
+  echo "    fix       — Bug fix"
+  echo "    refactor  — Code restructuring (no new feature or fix)"
+  echo "    docs      — Documentation only"
+  echo "    test      — Adding or updating tests"
+  echo "    chore     — Build, dependencies, tooling"
+  echo "    perf      — Performance improvement"
+  echo "    security  — Security fix or improvement"
+  echo "    ci        — CI/CD pipeline changes"
+  echo "    build     — Build system changes"
+  echo ""
+  echo "  Examples:"
+  echo "    feat: add barriers assessment scoring engine"
+  echo "    fix: resolve login redirect loop after MFA check"
+  echo "    chore: upgrade NestJS dependencies to v11"
+  echo ""
+  echo "  Rules:"
+  echo "    - Lowercase description (no capital first letter)"
+  echo "    - No period at the end"
+  echo "    - 3-72 characters for the description"
+  echo "    - Imperative mood (\"add\" not \"added\")"
+  echo ""
+  echo -e "  To bypass (emergencies only): ${YELLOW}git commit --no-verify${NC}"
+  exit 1
+fi
+
+# Warn if description starts with uppercase
+description=$(echo "$commit_msg" | sed -E "s/^(${valid_types}): //")
+if echo "$description" | grep -qE "^[A-Z]"; then
+  echo -e "${YELLOW}WARNING: Commit description should start with lowercase.${NC}"
+  echo "  Your message: $commit_msg"
+  echo ""
+fi
+
+exit 0

@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# ============================================================
+# Pre-commit hook — Code safety checks
+# Prevents committing secrets, .env files, and console.logs.
+# ============================================================
+
+set -euo pipefail
+
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+if [ -z "$staged_files" ]; then
+  exit 0
+fi
+
+errors=0
+
+# ── Block .env and credential files ──
+blocked_patterns=(".env" ".env.local" ".env.production" "credentials.json" "serviceAccountKey.json" ".pem" ".key")
+for file in $staged_files; do
+  basename=$(basename "$file")
+  for pattern in "${blocked_patterns[@]}"; do
+    if [ "$basename" = "$pattern" ] || echo "$basename" | grep -qE "\.(pem|key|pfx|p12)$"; then
+      echo -e "${RED}ERROR: Blocked file detected: ${file}${NC}"
+      echo "  Files containing secrets must not be committed."
+      echo "  Add it to .gitignore instead."
+      errors=1
+    fi
+  done
+done
+
+# ── Check for hardcoded secrets in staged files ──
+secret_patterns=(
+  "PRIVATE.KEY"
+  "password\s*=\s*['\"][^'\"]*['\"]"
+  "secret\s*=\s*['\"][^'\"]*['\"]"
+  "-----BEGIN (RSA |EC )?PRIVATE KEY-----"
+  "sk_live_"
+  "sk_test_"
+  "AKIA[0-9A-Z]{16}"
+)
+
+for file in $staged_files; do
+  # Skip hook files and documentation (they contain example patterns)
+  if echo "$file" | grep -qE '^\.(githooks|husky)/|^docs/|\.md$'; then
+    continue
+  fi
+
+  # Only check text files
+  if ! file "$file" 2>/dev/null | grep -q "text"; then
+    continue
+  fi
+
+  for pattern in "${secret_patterns[@]}"; do
+    if git diff --cached -- "$file" | grep -qEi "$pattern" 2>/dev/null; then
+      echo -e "${RED}ERROR: Possible secret detected in ${file}${NC}"
+      echo "  Pattern matched: $pattern"
+      echo "  Review the file and remove any secrets before committing."
+      errors=1
+    fi
+  done
+done
+
+# ── Warn about console.log in TypeScript/JavaScript files ──
+ts_files=$(echo "$staged_files" | grep -E '\.(ts|tsx|js|jsx)$' || true)
+if [ -n "$ts_files" ]; then
+  for file in $ts_files; do
+    # Skip test files and config files
+    if echo "$file" | grep -qE '(\.spec\.|\.test\.|\.config\.|jest\.|__tests__)'; then
+      continue
+    fi
+
+    if git diff --cached -- "$file" | grep -qE '^\+.*console\.(log|debug|info)\(' 2>/dev/null; then
+      echo -e "${YELLOW}WARNING: console.log found in ${file}${NC}"
+      echo "  Remove console statements before merging to develop/main."
+    fi
+  done
+fi
+
+if [ $errors -ne 0 ]; then
+  echo ""
+  echo -e "  To bypass (emergencies only): ${YELLOW}git commit --no-verify${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}Pre-commit checks passed.${NC}"
+exit 0

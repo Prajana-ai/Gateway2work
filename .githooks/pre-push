@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# ============================================================
+# Pre-push hook — Branch compliance enforcement
+# Prevents direct pushes to main and develop.
+# Validates branch naming conventions.
+# ============================================================
+
+set -euo pipefail
+
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "detached")
+
+# ── Block direct pushes to protected branches ──
+protected_branches=("main" "develop")
+for branch in "${protected_branches[@]}"; do
+  if [ "$current_branch" = "$branch" ]; then
+    echo -e "${RED}ERROR: Direct push to '${branch}' is not allowed.${NC}"
+    echo ""
+    echo "  Use the proper workflow:"
+    echo "    1. Create a feature branch:  git checkout -b feature/my-change"
+    echo "    2. Push the feature branch:  git push -u origin feature/my-change"
+    echo "    3. Create a PR in Azure DevOps to merge into '${branch}'"
+    echo ""
+    echo -e "  See ${YELLOW}docs/CONTRIBUTING.md${NC} for the full branching strategy."
+    echo ""
+    echo "  To bypass (emergencies only): git push --no-verify"
+    exit 1
+  fi
+done
+
+# ── Validate branch naming convention ──
+valid_pattern="^(feature|fix|hotfix|release|chore|docs|test)/[a-z0-9._-]+$"
+skip_patterns=("main" "develop" "HEAD" "detached")
+
+should_skip=false
+for skip in "${skip_patterns[@]}"; do
+  if [ "$current_branch" = "$skip" ]; then
+    should_skip=true
+    break
+  fi
+done
+
+if [ "$should_skip" = false ]; then
+  if ! echo "$current_branch" | grep -qE "$valid_pattern"; then
+    echo -e "${RED}ERROR: Branch name '${current_branch}' does not follow naming conventions.${NC}"
+    echo ""
+    echo "  Valid patterns:"
+    echo "    feature/short-description"
+    echo "    fix/short-description"
+    echo "    hotfix/short-description"
+    echo "    release/1.2.0"
+    echo "    chore/short-description"
+    echo "    docs/short-description"
+    echo "    test/short-description"
+    echo ""
+    echo "  Use lowercase letters, numbers, hyphens, and dots only."
+    echo ""
+    echo "  To bypass (emergencies only): git push --no-verify"
+    exit 1
+  fi
+fi
+
+# ── Prevent force-push to shared branches ──
+while read local_ref local_sha remote_ref remote_sha; do
+  if [ -z "$remote_ref" ]; then
+    continue
+  fi
+
+  remote_branch=$(echo "$remote_ref" | sed 's|refs/heads/||')
+
+  if [ "$remote_branch" = "main" ] || [ "$remote_branch" = "develop" ]; then
+    # Check if this is a force push (non-fast-forward)
+    if [ "$remote_sha" != "0000000000000000000000000000000000000000" ]; then
+      merge_base=$(git merge-base "$local_sha" "$remote_sha" 2>/dev/null || echo "")
+      if [ "$merge_base" != "$remote_sha" ]; then
+        echo -e "${RED}ERROR: Force-push to '${remote_branch}' is not allowed.${NC}"
+        echo "  This would rewrite shared history and may cause data loss."
+        exit 1
+      fi
+    fi
+  fi
+done
+
+echo -e "${GREEN}Pre-push checks passed.${NC}"
+exit 0

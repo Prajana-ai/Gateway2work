@@ -1,0 +1,1146 @@
+./docs/CONTRIBUTING.md:1. **Never log PII/PHI** — no client names, SSNs, DOBs, or health data in logs
+./docs/CONTRIBUTING.md:4. **Consent enforcement** — use `@RequiresConsent()` on client-specific endpoints
+./docs/CONTRIBUTING.md:- [ ] Frontend API calls go through `apiClient` (not raw `fetch`)
+./docs/ENVIRONMENTS.md:2. **5 system roles** — org_admin, compliance_admin, workforce_specialist, provider_case_manager, client
+./docs/WFD_Variables_List.csv:1,Participant ID,Participant identification and record management,,Participant table,Unique identfier of client/participant,
+./docs/WFD_Variables_List.csv:56,IPS client established date,Referral and enrollment,,Enrollment table,,
+./docs/WFD_Variables_List.csv:57,Case management established client date,Referral and enrollment,,Enrollment table,,
+./docs/WFD_Variables_List.csv:312,Competetive work,IPS Fidelity Review Variables,,IPS Fidelity,"% of clients that have competitive work secured through the IPS model",BHA measures what % of IPS clients are actively engaged in competitive work. This could include salary, hourly wages or it could reflect type of work being performed. Compare a job at McDonalds, Dairy Queen or the hog farm to being a mechanic, PRSS or a nurse.
+./docs/WFD_Variables_List.csv:313,Provider Caseload Size,IPS Fidelity Review Variables,,IPS Fidelity,Ideally IPS provider has less than 25 clients on caseload,Staffing component of IPS fidelity
+./docs/WFD_Variables_List.csv:319,Vocational Unit,IPS Fidelity Review Variables,,IPS Fidelity,2 full time IPS specialists and one IPS manager comprise a vocational unit which meets weekly in a client-based group setting for clients to share strategies and job leads,Organization component of IPS fidelity
+./docs/WFD_Variables_List.csv:321,Zero exclusion,IPS Fidelity Review Variables,,IPS Fidelity,clients interested in working have access to IPS regardless of job readiness, substance abuse symptoms, and personal presentation,Organization component of IPS fidelity
+./docs/WFD_Variables_List.csv:324,Work incentive planning,IPS Fidelity Review Variables,,IPS Fidelity,clients are offered assistance in obtaining comprehensive, individualized work incentives planning (SSI, WIC, SNAP, SECTION 8 VOUCHER), before starting a new job and assistance accessing work incentives planning thereafter when making decisions about changes in work hours and pay.,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:325,Disclosure,IPS Fidelity Review Variables,,IPS Fidelity,IPS specialists provide clients with accurate information and assist with evaluating their choices to make an informed decision regarding what is revealed to the employer about having a disability.,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:327,Rapid job-search,IPS Fidelity Review Variables,,IPS Fidelity,initial employment assesment and first face-to-face employer contact by the IPS specialist about a competitive job occurs within 30 days of client entering the program,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:328,Individualized job search,IPS Fidelity Review Variables,,IPS Fidelity,IPS specialists forms employer contacts based on client's preferences, strengths, and symptoms,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:329,Frequent employer contact,IPS Fidelity Review Variables,,IPS Fidelity,IPS specialist makes at least 6 face-to-face employer contacts weekly on behalf of clients looking for work ,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:330,Employer contact quality,IPS Fidelity Review Variables,,IPS Fidelity,IPS builds relationships with employers through planned visits to learn and guage needs of employers, convey what IPS offers to the employer, and describe clients that are a strong match for their program ,Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:334,individualized follow-along supports,IPS Fidelity Review Variables,,IPS Fidelity,clients recieve different types of support for working a job that are bease on the job, client preferences, work history, needs (educational information, job accomodations),Services component of IPS fidelity
+./docs/WFD_Variables_List.csv:335,Time-unlimited follow-along supports ,IPS Fidelity Review Variables,,IPS Fidelity,IPS specialists have fac-to-face contact with client 1 week before starting the job, 3 days after starting the job, weekly for the first month, and at least month for a year,Services component of IPS fidelity
+./docs/WFD_Data_Dictionary_Variables.md:| 1 | Participant ID | Participant identification and record management | Participant table | Unique identifier of client/participant. Scale: ordinal. Categorical with no hierarchy (gender: male/female/non-binary). |
+./docs/WFD_Data_Dictionary_Variables.md:| 5 | Preferred name | Participant identification and record management | Participant table | Training table. Inbound company referring client to TSRG. |
+./docs/WFD_Data_Dictionary_Variables.md:| 56 | IPS client established date | Referral and enrollment | Enrollment table | |
+./docs/WFD_Data_Dictionary_Variables.md:| 57 | Case management established client date | Referral and enrollment | Enrollment table | |
+./docs/WFD_Data_Dictionary_Variables.md:| 312 | Competitive work | IPS Fidelity Review Variables | IPS Fidelity | % of clients that have competitive work secured through the IPS model. BHA measures what % of IPS clients are actively engaged in competitive work. |
+./docs/WFD_Data_Dictionary_Variables.md:| 313 | Provider Caseload Size | IPS Fidelity Review Variables | IPS Fidelity | Ideally IPS provider has less than 25 clients on caseload. Staffing component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 321 | Zero exclusion | IPS Fidelity Review Variables | IPS Fidelity | clients interested in working have access to IPS regardless of job readiness. Organization component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 324 | Work incentive planning | IPS Fidelity Review Variables | IPS Fidelity | clients are offered assistance in obtaining comprehensive, individualized work incentives planning. Services component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 325 | Disclosure | IPS Fidelity Review Variables | IPS Fidelity | IPS specialists provide clients with accurate information regarding revealing disability to employer. Services component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 327 | Rapid job-search | IPS Fidelity Review Variables | IPS Fidelity | first face-to-face employer contact occurs within 30 days of client entering the program. Services component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 328 | Individualized job search | IPS Fidelity Review Variables | IPS Fidelity | IPS specialists forms employer contacts based on client's preferences, strengths, and symptoms. Services component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 334 | individualized follow-along supports | IPS Fidelity Review Variables | IPS Fidelity | clients receive different types of support based on the job, preferences, and work history. Services component of IPS fidelity. |
+./docs/WFD_Data_Dictionary_Variables.md:| 335 | Time-unlimited follow-along supports | IPS Fidelity Review Variables | IPS Fidelity | IPS specialists have face-to-face contact with client at specific intervals (1 week before, 3 days after, etc.). Services component of IPS fidelity. |
+./PROJECT_CONTEXT.md:- **Database**: PostgreSQL (raw `pg` client, `node-pg-migrate`)
+./PROJECT_CONTEXT.md:- **Entity Rename**: The domain entity previously named "Client" has been renamed to "Participant" across the entire monorepo.
+./PROJECT_CONTEXT.md:- **Legacy Note**: Historical migration files (001-012) retain "Client" references; migration 013 is the point of truth for the rename.
+./infra/modules/app-service.bicep:    clientAffinityEnabled: false
+./infra/modules/app-service.bicep:    clientAffinityEnabled: false
+./packages/shared/src/dto/enrollment.dto.ts:// Define shared types and enums if they exist, e.g., ClientStatus, TenantId
+./packages/shared/src/dto/enrollment.dto.ts:  ips_client_established_date: dateSchema.optional(),
+./packages/shared/src/dto/enrollment.dto.ts:  case_management_established_client_date: dateSchema.optional(),
+./azure-pipelines.yml:                    const { Client } = require('pg');
+./azure-pipelines.yml:                    const c = new Client({
+./azure-pipelines.yml:                    const { Client } = require('pg');
+./azure-pipelines.yml:                    const c = new Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+./apps/web/src/app/(participant)/tasks/page.tsx:'use client';
+./apps/web/src/app/(participant)/tasks/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(participant)/tasks/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(participant)/tasks/page.tsx:  ownerType: 'staff' | 'client';
+./apps/web/src/app/(participant)/tasks/page.tsx:export default function ClientTasksPage() {
+./apps/web/src/app/(participant)/tasks/page.tsx:  const clientId = user?.id ?? '';
+./apps/web/src/app/(participant)/tasks/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(participant)/tasks/page.tsx:    ['client-tasks', clientId],
+./apps/web/src/app/(participant)/tasks/page.tsx:    `/client-tasks/${clientId}`,
+./apps/web/src/app/(participant)/tasks/page.tsx:    { enabled: !!clientId },
+./apps/web/src/app/(participant)/tasks/page.tsx:  const tasks = (allTasks ?? []).filter((t) => t.ownerType === 'client');
+./apps/web/src/app/(participant)/tasks/page.tsx:      await apiClient.patch(`/plan-tasks/${taskId}/complete`, {});
+./apps/web/src/app/(participant)/tasks/page.tsx:      queryClient.invalidateQueries({ queryKey: ['client-tasks', clientId] });
+./apps/web/src/app/(participant)/tasks/page.tsx:      // handled by api client
+./apps/web/src/app/(participant)/check-in/page.tsx:'use client';
+./apps/web/src/app/(participant)/check-in/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(participant)/check-in/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(participant)/check-in/page.tsx:    ['client-check-ins'],
+./apps/web/src/app/(participant)/check-in/page.tsx:    '/client-check-ins',
+./apps/web/src/app/(participant)/check-in/page.tsx:    '/client-check-ins',
+./apps/web/src/app/(participant)/check-in/page.tsx:        queryClient.invalidateQueries({ queryKey: ['client-check-ins'] });
+./apps/web/src/app/(participant)/layout.tsx:'use client';
+./apps/web/src/app/(participant)/layout.tsx:export default function ClientLayout({
+./apps/web/src/app/(participant)/plan/page.tsx:'use client';
+./apps/web/src/app/(participant)/plan/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(participant)/plan/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(participant)/plan/page.tsx:  ownerType: 'staff' | 'client';
+./apps/web/src/app/(participant)/plan/page.tsx:export default function ClientPlanPage() {
+./apps/web/src/app/(participant)/plan/page.tsx:  const clientId = user?.id ?? '';
+./apps/web/src/app/(participant)/plan/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(participant)/plan/page.tsx:    ['client-plan', clientId],
+./apps/web/src/app/(participant)/plan/page.tsx:    `/workforce-plans/client/${clientId}`,
+./apps/web/src/app/(participant)/plan/page.tsx:    { enabled: !!clientId },
+./apps/web/src/app/(participant)/plan/page.tsx:    ['client-tasks', clientId],
+./apps/web/src/app/(participant)/plan/page.tsx:    `/client-tasks/${clientId}`,
+./apps/web/src/app/(participant)/plan/page.tsx:    { enabled: !!clientId },
+./apps/web/src/app/(participant)/plan/page.tsx:  // Only show tasks assigned to client
+./apps/web/src/app/(participant)/plan/page.tsx:  const tasks = (allTasks ?? []).filter((t) => t.ownerType === 'client');
+./apps/web/src/app/(participant)/plan/page.tsx:      await apiClient.patch(`/plan-tasks/${taskId}/complete`, {});
+./apps/web/src/app/(participant)/plan/page.tsx:      queryClient.invalidateQueries({ queryKey: ['client-tasks', clientId] });
+./apps/web/src/app/(participant)/plan/page.tsx:      // handled by api client
+./apps/web/src/app/(auth)/login/page.tsx:'use client';
+./apps/web/src/app/(auth)/login/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(auth)/login/page.tsx:      const res = await apiClient.post<LoginResponse>('/auth/login', {
+./apps/web/src/app/(auth)/login/page.tsx:      const res = await apiClient.post<MfaResponse>('/auth/mfa/verify', {
+./apps/web/src/app/(auth)/login/page.tsx:            clients across your network.
+./apps/web/src/app/providers.tsx:'use client';
+./apps/web/src/app/providers.tsx:import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+./apps/web/src/app/providers.tsx:  const [queryClient] = useState(
+./apps/web/src/app/providers.tsx:      new QueryClient({
+./apps/web/src/app/providers.tsx:    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+./apps/web/src/app/(staff)/ips/reviews/page.tsx:'use client';
+./apps/web/src/app/(staff)/ips/reviews/new/page.tsx:'use client';
+./apps/web/src/app/(staff)/ips/reviews/new/page.tsx:  { id: '312', key: 'score_312_competitive_work', label: 'Competitive Work', category: 'Staffing', desc: '% of clients that have competitive work secured' },
+./apps/web/src/app/(staff)/ips/reviews/new/page.tsx:  { id: '313', key: 'score_313_caseload_size', label: 'Provider Caseload Size', category: 'Staffing', desc: 'Ideally less than 25 clients per specialist' },
+./apps/web/src/app/(staff)/ips/reviews/new/page.tsx:  { id: '328', key: 'score_328_individualized_job_search', label: 'Individualized Job Search', category: 'Services', desc: 'Based on client preferences' },
+./apps/web/src/app/(staff)/ips/reviews/new/page.tsx:  { id: '334', key: 'score_334_individualized_follow_along', label: 'Individualized Follow-along Supports', category: 'Services', desc: 'Based on job and client history' },
+./apps/web/src/app/(staff)/ips/reviews/[id]/page.tsx:'use client';
+./apps/web/src/app/(staff)/referrals/page.tsx:'use client';
+./apps/web/src/app/(staff)/referrals/page.tsx:  client_id: string;
+./apps/web/src/app/(staff)/referrals/page.tsx:  clientName: string;
+./apps/web/src/app/(staff)/referrals/page.tsx:    { key: 'clientName', header: 'Participant Name' },
+./apps/web/src/app/(staff)/referrals/new/page.tsx:'use client';
+./apps/web/src/app/(staff)/referrals/new/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(staff)/referrals/new/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/referrals/new/page.tsx:interface ClientOption {
+./apps/web/src/app/(staff)/referrals/new/page.tsx:interface ClientSearchResponse {
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  data: ClientOption[];
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  const [clientSearch, setClientSearch] = useState('');
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  const [clientOptions, setClientOptions] = useState<ClientOption[]>([]);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  const [selectedClient, setSelectedClient] = useState<ClientOption | null>(null);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  const createReferral = useApiMutation<NewReferral, { client_id: string; provider_agency_name: string; notes: string }>(
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        queryClient.invalidateQueries({ queryKey: ['referrals'] });
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        queryClient.invalidateQueries({ queryKey: ['recent-referrals'] });
+./apps/web/src/app/(staff)/referrals/new/page.tsx:    if (clientSearch.length < 2) {
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      setClientOptions([]);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        const response = await apiClient.get<ClientSearchResponse>(
+./apps/web/src/app/(staff)/referrals/new/page.tsx:          `/clients?search=${encodeURIComponent(clientSearch)}&limit=10`,
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        setClientOptions(response.data || []);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        setClientOptions([]);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:  }, [clientSearch]);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:    function handleSelectClient(client: ClientOption) {
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      console.log("DEBUG: Setting participant to:", client);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      setSelectedClient(client);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      const firstName = client.demographics?.first_name || '';
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      const lastName = client.demographics?.last_name || '';
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      setClientSearch(`${firstName} ${lastName}`.trim());
+./apps/web/src/app/(staff)/referrals/new/page.tsx:    if (!selectedClient) return;
+./apps/web/src/app/(staff)/referrals/new/page.tsx:      client_id: selectedClient.id,
+./apps/web/src/app/(staff)/referrals/new/page.tsx:        {/* Client Search */}
+./apps/web/src/app/(staff)/referrals/new/page.tsx:          <label htmlFor="client-search" className="block text-sm font-medium text-slate-700 mb-1">
+./apps/web/src/app/(staff)/referrals/new/page.tsx:            id="client-search"
+./apps/web/src/app/(staff)/referrals/new/page.tsx:            value={clientSearch}
+./apps/web/src/app/(staff)/referrals/new/page.tsx:              setClientSearch(e.target.value);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:              setSelectedClient(null);
+./apps/web/src/app/(staff)/referrals/new/page.tsx:          {showDropdown && clientOptions.length > 0 && (
+./apps/web/src/app/(staff)/referrals/new/page.tsx:              {clientOptions.map((client) => (
+./apps/web/src/app/(staff)/referrals/new/page.tsx:                <li key={client.id}>
+./apps/web/src/app/(staff)/referrals/new/page.tsx:                    onClick={() => handleSelectClient(client)}
+./apps/web/src/app/(staff)/referrals/new/page.tsx:                    {client.demographics?.first_name} {client.demographics?.last_name}
+./apps/web/src/app/(staff)/referrals/new/page.tsx:          {showDropdown && clientOptions.length === 0 && !searching && (
+./apps/web/src/app/(staff)/referrals/new/page.tsx:              No clients found.
+./apps/web/src/app/(staff)/referrals/new/page.tsx:              const isDisabled = !selectedClient || !providerAgency || createReferral.isPending;
+./apps/web/src/app/(staff)/referrals/new/page.tsx:                selectedClient,
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:'use client';
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:  clientName: string;
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:        queryClient.invalidateQueries({ queryKey: ['referral', id] });
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:        queryClient.invalidateQueries({ queryKey: ['referrals'] }); // Assuming a list query exists
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:    // Optionally, refetch referral details or navigate to client's enrollment tab
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:            {referral.clientName}
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:            <dt className="text-sm font-medium text-slate-500">Client</dt>
+./apps/web/src/app/(staff)/referrals/[id]/page.tsx:                {referral.clientName}
+./apps/web/src/app/(staff)/admin/page.tsx:'use client';
+./apps/web/src/app/(staff)/rfe/page.tsx:'use client';
+./apps/web/src/app/(staff)/rfe/import/page.tsx:'use client';
+./apps/web/src/app/(staff)/rfe/import/page.tsx:import { ApiError } from '@/lib/api-client';
+./apps/web/src/app/(staff)/rfe/new/page.tsx:'use client';
+./apps/web/src/app/(staff)/encounters/page.tsx:'use client';
+./apps/web/src/app/(staff)/encounters/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/encounters/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(staff)/encounters/page.tsx:      const data = await apiClient.get<EncounterExportRow[]>(
+./apps/web/src/app/(staff)/reports/ips/page.tsx:'use client';
+./apps/web/src/app/(staff)/reports/ips/page.tsx:interface WorkRequirementClient {
+./apps/web/src/app/(staff)/reports/ips/page.tsx:  clientsBelow: WorkRequirementClient[];
+./apps/web/src/app/(staff)/reports/ips/page.tsx:          Tracking client progress toward the 80 hour/month work threshold.
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                    / {workReq.totalCount} clients
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                    clients
+./apps/web/src/app/(staff)/reports/ips/page.tsx:            {/* Clients below threshold */}
+./apps/web/src/app/(staff)/reports/ips/page.tsx:            {workReq.clientsBelow && workReq.clientsBelow.length > 0 && (
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                  Clients Below Threshold
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                  {workReq.clientsBelow.map((client) => {
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                    const percent = (client.hoursWorked / client.threshold) * 100;
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                      <div key={client.id} className="rounded-lg bg-slate-50 px-4 py-3">
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                            {client.name}
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                            {client.hoursWorked}h / {client.threshold}h
+./apps/web/src/app/(staff)/reports/ips/page.tsx:                              ({client.gap}h gap)
+./apps/web/src/app/(staff)/reports/page.tsx:'use client';
+./apps/web/src/app/(staff)/reports/ai/page.tsx:'use client';
+./apps/web/src/app/(staff)/reports/ai/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(staff)/reports/ai/page.tsx:      const res = await apiClient.post<AiResponse>('/reports/conversational', { q: q.trim() });
+./apps/web/src/app/(staff)/workflows/page.tsx:'use client';
+./apps/web/src/app/(staff)/workflows/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/workflows/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/workflows/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workflows'] });
+./apps/web/src/app/(staff)/workflows/page.tsx:            Manage client service workflows and track stage progress.
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:'use client';
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:  clientId: string;
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:  clientName: string;
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workflow', id] });
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workflow', id] });
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workflow', id] }),
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:      onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workflow', id] }),
+./apps/web/src/app/(staff)/workflows/[id]/page.tsx:            {workflow.clientName}
+./apps/web/src/app/(staff)/layout.tsx:'use client';
+./apps/web/src/app/(staff)/dashboard/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/new/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/[id]/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/[id]/page.tsx:  ips_client_established_date?: string | null;
+./apps/web/src/app/(staff)/participants/[id]/page.tsx:  case_management_established_client_date?: string | null;
+./apps/web/src/app/(staff)/participants/[id]/page.tsx:    refetch(); // Refetch client data to show updated enrollments
+./apps/web/src/app/(staff)/participants/[id]/page.tsx:  // For now, assuming the /clients/:id/360 endpoint returns enrollments if available.
+./apps/web/src/app/(staff)/participants/[id]/assessments/new/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workforce-plan', participantId] });
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workforce-plan', participantId] });
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:        queryClient.invalidateQueries({ queryKey: ['workforce-plan-tasks', plan?.id ?? ''] });
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:    const { apiClient } = await import('@/lib/api-client');
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:    await apiClient.patch(`/plan-tasks/${taskId}/complete`, {});
+./apps/web/src/app/(staff)/participants/[id]/workforce-plan/page.tsx:    queryClient.invalidateQueries({ queryKey: ['workforce-plan-tasks', plan?.id ?? ''] });
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:'use client';
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:      queryClient.invalidateQueries({ queryKey: ['participant-matches', participantId] });
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:        const result = await apiClient.get<RFESearchResult>(
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:      await apiClient.patch(`/matches/${matchId}`, {
+./apps/web/src/app/(staff)/participants/[id]/matches/page.tsx:      queryClient.invalidateQueries({ queryKey: ['participant-matches', participantId] });
+./apps/web/src/app/(staff)/calendar/page.tsx:'use client';
+./apps/web/src/app/(staff)/calendar/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/calendar/page.tsx:interface Client {
+./apps/web/src/app/(staff)/calendar/page.tsx:interface ClientSearchResponse {
+./apps/web/src/app/(staff)/calendar/page.tsx:  items: Client[];
+./apps/web/src/app/(staff)/calendar/page.tsx:  client_name?: string;
+./apps/web/src/app/(staff)/calendar/page.tsx:  clientName?: string;
+./apps/web/src/app/(staff)/calendar/page.tsx:    clientName: raw.client_name,
+./apps/web/src/app/(staff)/calendar/page.tsx:  clientId?: string;
+./apps/web/src/app/(staff)/calendar/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/calendar/page.tsx:  const [clientSearch, setClientSearch] = useState('');
+./apps/web/src/app/(staff)/calendar/page.tsx:  const [debouncedClientSearch, setDebouncedClientSearch] = useState('');
+./apps/web/src/app/(staff)/calendar/page.tsx:  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+./apps/web/src/app/(staff)/calendar/page.tsx:  // Debounce client search
+./apps/web/src/app/(staff)/calendar/page.tsx:      setDebouncedClientSearch(clientSearch);
+./apps/web/src/app/(staff)/calendar/page.tsx:  }, [clientSearch]);
+./apps/web/src/app/(staff)/calendar/page.tsx:  const { data: clientResults } = useApiQuery<ClientSearchResponse>(
+./apps/web/src/app/(staff)/calendar/page.tsx:    ['client-search-cal', debouncedClientSearch],
+./apps/web/src/app/(staff)/calendar/page.tsx:    `/clients?search=${encodeURIComponent(debouncedClientSearch)}&limit=10`,
+./apps/web/src/app/(staff)/calendar/page.tsx:    { enabled: debouncedClientSearch.length >= 2 },
+./apps/web/src/app/(staff)/calendar/page.tsx:        queryClient.invalidateQueries({ queryKey: ['events'] });
+./apps/web/src/app/(staff)/calendar/page.tsx:        queryClient.invalidateQueries({ queryKey: ['events-upcoming'] });
+./apps/web/src/app/(staff)/calendar/page.tsx:    setClientSearch('');
+./apps/web/src/app/(staff)/calendar/page.tsx:    setDebouncedClientSearch('');
+./apps/web/src/app/(staff)/calendar/page.tsx:    setSelectedClient(null);
+./apps/web/src/app/(staff)/calendar/page.tsx:      clientId: selectedClient?.id,
+./apps/web/src/app/(staff)/calendar/page.tsx:            Schedule and manage client events.
+./apps/web/src/app/(staff)/calendar/page.tsx:                              title={`${ev.title}${ev.clientName ? ` - ${ev.clientName}` : ''}`}
+./apps/web/src/app/(staff)/calendar/page.tsx:                    {ev.clientName && (
+./apps/web/src/app/(staff)/calendar/page.tsx:                        {ev.clientName}
+./apps/web/src/app/(staff)/calendar/page.tsx:              {/* Client search */}
+./apps/web/src/app/(staff)/calendar/page.tsx:                  Client (optional)
+./apps/web/src/app/(staff)/calendar/page.tsx:                  placeholder="Search client..."
+./apps/web/src/app/(staff)/calendar/page.tsx:                  value={clientSearch}
+./apps/web/src/app/(staff)/calendar/page.tsx:                    setClientSearch(e.target.value);
+./apps/web/src/app/(staff)/calendar/page.tsx:                    setSelectedClient(null);
+./apps/web/src/app/(staff)/calendar/page.tsx:                  clientResults &&
+./apps/web/src/app/(staff)/calendar/page.tsx:                  clientResults.items.length > 0 &&
+./apps/web/src/app/(staff)/calendar/page.tsx:                  !selectedClient && (
+./apps/web/src/app/(staff)/calendar/page.tsx:                      {clientResults.items.map((c) => (
+./apps/web/src/app/(staff)/calendar/page.tsx:                              setSelectedClient(c);
+./apps/web/src/app/(staff)/calendar/page.tsx:                              setClientSearch(`${c.firstName} ${c.lastName}`);
+./apps/web/src/app/(staff)/calendar/page.tsx:                  placeholder="Office, client site, etc."
+./apps/web/src/app/(staff)/integrations/page.tsx:'use client';
+./apps/web/src/app/(staff)/integrations/page.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/app/(staff)/integrations/page.tsx:import { apiClient } from '@/lib/api-client';
+./apps/web/src/app/(staff)/integrations/page.tsx:  const queryClient = useQueryClient();
+./apps/web/src/app/(staff)/integrations/page.tsx:        queryClient.invalidateQueries({ queryKey: ['integration-providers'] });
+./apps/web/src/app/(staff)/integrations/page.tsx:        queryClient.invalidateQueries({ queryKey: ['integration-mappings', selectedProviderId ?? ''] });
+./apps/web/src/app/(staff)/integrations/page.tsx:      await apiClient.post(`/integrations/providers/${selectedProviderId}/import`, {
+./apps/web/src/app/(staff)/integrations/page.tsx:      queryClient.invalidateQueries({ queryKey: ['integration-imports'] });
+./apps/web/src/app/(staff)/settings/branding/page.tsx:'use client';
+./apps/web/src/app/(staff)/settings/branding/page.tsx:          Customize the look and feel of your client-facing application.
+./apps/web/src/app/(staff)/settings/branding/page.tsx:            Client PWA Preview
+./apps/web/src/components/EmploymentOutcomeList.tsx:'use client';
+./apps/web/src/components/ips/fidelity-snapshot.tsx:'use client';
+./apps/web/src/components/DischargeForm.tsx:'use client';
+./apps/web/src/components/assessments/dynamic-form.tsx:'use client';
+./apps/web/src/components/assessments/assessment-results.tsx:'use client';
+./apps/web/src/components/EmploymentOutcomeForm.tsx:'use client';
+./apps/web/src/components/EncounterForm.tsx:'use client';
+./apps/web/src/components/EncounterForm.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/components/EncounterForm.tsx:  const queryClient = useQueryClient();
+./apps/web/src/components/EncounterForm.tsx:        queryClient.invalidateQueries({ queryKey: ['participant', pid] });
+./apps/web/src/components/EncounterForm.tsx:        queryClient.invalidateQueries({ queryKey: ['encounters'] });
+./apps/web/src/components/reports/reporting-table.tsx:'use client';
+./apps/web/src/components/reports/employability-graph.tsx:'use client';
+./apps/web/src/components/data-table.tsx:'use client';
+./apps/web/src/components/FollowUpList.tsx:'use client';
+./apps/web/src/components/TrainingList.tsx:'use client';
+./apps/web/src/components/ParticipantEditForm.tsx:'use client';
+./apps/web/src/components/ParticipantEditForm.tsx:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/components/ParticipantEditForm.tsx:  const queryClient = useQueryClient();
+./apps/web/src/components/ParticipantEditForm.tsx:        queryClient.invalidateQueries({ queryKey: ['participant', participant.id] });
+./apps/web/src/components/TrainingForm.tsx:'use client';
+./apps/web/src/components/EnrollmentForm.tsx:'use client';
+./apps/web/src/components/EnrollmentForm.tsx:      ips_client_established_date: '',
+./apps/web/src/components/EnrollmentForm.tsx:      case_management_established_client_date: '',
+./apps/web/src/components/EnrollmentForm.tsx:        ips_client_established_date: initialData.ips_client_established_date ? format(parseISO(initialData.ips_client_established_date), 'yyyy-MM-dd') : '',
+./apps/web/src/components/EnrollmentForm.tsx:        case_management_established_client_date: initialData.case_management_established_client_date ? format(parseISO(initialData.case_management_established_client_date), 'yyyy-MM-dd') : '',
+./apps/web/src/components/EnrollmentForm.tsx:      ips_client_established_date: data.ips_client_established_date ? new Date(data.ips_client_established_date).toISOString() : undefined,
+./apps/web/src/components/EnrollmentForm.tsx:      case_management_established_client_date: data.case_management_established_client_date ? new Date(data.case_management_established_client_date).toISOString() : undefined,
+./apps/web/src/components/EnrollmentForm.tsx:      {/* IPS Client Established Date */}
+./apps/web/src/components/EnrollmentForm.tsx:        name="ips_client_established_date"
+./apps/web/src/components/EnrollmentForm.tsx:              IPS Client Established Date
+./apps/web/src/components/EnrollmentForm.tsx:            {errors.ips_client_established_date && <p className="text-red-500 text-sm mt-1">{errors.ips_client_established_date.message}</p>}
+./apps/web/src/components/EnrollmentForm.tsx:      {/* Case Management Established Client Date */}
+./apps/web/src/components/EnrollmentForm.tsx:        name="case_management_established_client_date"
+./apps/web/src/components/EnrollmentForm.tsx:              Case Management Established Client Date
+./apps/web/src/components/EnrollmentForm.tsx:            {errors.case_management_established_client_date && <p className="text-red-500 text-sm mt-1">{errors.case_management_established_client_date.message}</p>}
+./apps/web/src/components/EnrollmentList.tsx:'use client';
+./apps/web/src/components/status-badge.tsx:'use client';
+./apps/web/src/components/FollowUpForm.tsx:'use client';
+./apps/web/src/components/pagination.tsx:'use client';
+./apps/web/src/lib/api-client.ts:export const apiClient = {
+./apps/web/src/hooks/use-employment-outcomes.ts:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/hooks/use-employment-outcomes.ts:  const queryClient = useQueryClient();
+./apps/web/src/hooks/use-employment-outcomes.ts:        queryClient.invalidateQueries({ queryKey: ['employment-outcomes', participantId] });
+./apps/web/src/hooks/use-auth.ts:'use client';
+./apps/web/src/hooks/use-follow-ups.ts:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/hooks/use-follow-ups.ts:  const queryClient = useQueryClient();
+./apps/web/src/hooks/use-follow-ups.ts:        queryClient.invalidateQueries({ queryKey: ['follow-ups', id] });
+./apps/web/src/hooks/use-trainings.ts:'use client';
+./apps/web/src/hooks/use-trainings.ts:import { useQueryClient } from '@tanstack/react-query';
+./apps/web/src/hooks/use-trainings.ts:  const queryClient = useQueryClient();
+./apps/web/src/hooks/use-trainings.ts:        queryClient.invalidateQueries({ queryKey: ['trainings'] });
+./apps/web/src/hooks/use-trainings.ts:          queryClient.invalidateQueries({ queryKey: ['trainings'] });
+./apps/web/src/hooks/use-trainings.ts:          queryClient.invalidateQueries({ queryKey: ['trainings'] });
+./apps/web/src/hooks/use-api.ts:'use client';
+./apps/web/src/hooks/use-api.ts:import { apiClient } from '@/lib/api-client';
+./apps/web/src/hooks/use-api.ts:    queryFn: () => apiClient.get<T>(url),
+./apps/web/src/hooks/use-api.ts:          return apiClient.post<TData>(url, variables);
+./apps/web/src/hooks/use-api.ts:          return apiClient.patch<TData>(url, variables);
+./apps/web/src/hooks/use-api.ts:          return apiClient.delete<TData>(url);
+./apps/api/test/clients.e2e-spec.ts:import { createMockClient } from './helpers/mock-data';
+./apps/api/test/clients.e2e-spec.ts:  describe('GET /clients', () => {
+./apps/api/test/clients.e2e-spec.ts:    it('returns a paginated list of clients', async () => {
+./apps/api/test/clients.e2e-spec.ts:      const client1 = { ...createMockClient({ tenant_id: tenantId }), total_count: '2' };
+./apps/api/test/clients.e2e-spec.ts:      const client2 = { ...createMockClient({ tenant_id: tenantId }), total_count: '2' };
+./apps/api/test/clients.e2e-spec.ts:        // The clients repository uses executeInTenantContext -> mock PoolClient -> mockDb.query
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [client1, client2], rowCount: 2 };
+./apps/api/test/clients.e2e-spec.ts:        .get('/clients')
+./apps/api/test/clients.e2e-spec.ts:      // The clients service returns PaginatedClients { data, total, page, limit }.
+./apps/api/test/clients.e2e-spec.ts:      await request(testApp.httpServer).get('/clients').expect(401);
+./apps/api/test/clients.e2e-spec.ts:      const johnClient = {
+./apps/api/test/clients.e2e-spec.ts:        ...createMockClient({
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [johnClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:        .get('/clients?search=john')
+./apps/api/test/clients.e2e-spec.ts:        .get('/clients?page=2&limit=10')
+./apps/api/test/clients.e2e-spec.ts:  describe('GET /clients/:id', () => {
+./apps/api/test/clients.e2e-spec.ts:    it('returns client detail', async () => {
+./apps/api/test/clients.e2e-spec.ts:      const clientId = uuidv4();
+./apps/api/test/clients.e2e-spec.ts:      const mockClient = createMockClient({ id: clientId, tenant_id: tenantId });
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [mockClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:        .get(`/clients/${clientId}`)
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data).toHaveProperty('id', clientId);
+./apps/api/test/clients.e2e-spec.ts:        .get('/clients/not-a-uuid')
+./apps/api/test/clients.e2e-spec.ts:  describe('GET /clients/:id/360', () => {
+./apps/api/test/clients.e2e-spec.ts:    it('returns 360-degree view for a client', async () => {
+./apps/api/test/clients.e2e-spec.ts:      const clientId = uuidv4();
+./apps/api/test/clients.e2e-spec.ts:      const mockClient = createMockClient({ id: clientId, tenant_id: tenantId });
+./apps/api/test/clients.e2e-spec.ts:        // Client record
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [mockClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:              { id: uuidv4(), referral_status: 'completed', client_id: clientId },
+./apps/api/test/clients.e2e-spec.ts:        .get(`/clients/${clientId}/360`)
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data).toHaveProperty('client');
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data.client).toHaveProperty('id', clientId);
+./apps/api/test/clients.e2e-spec.ts:  describe('POST /clients', () => {
+./apps/api/test/clients.e2e-spec.ts:    it('creates a client and returns 201', async () => {
+./apps/api/test/clients.e2e-spec.ts:      const createdClient = createMockClient({
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [createdClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:        .post('/clients')
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data.client.demographics).toHaveProperty('housing_status', 'Stable');
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data.client.demographics).toHaveProperty('transit_status', 'Car');
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data.client.demographics).toHaveProperty('need_childcare', true);
+./apps/api/test/clients.e2e-spec.ts:      expect(res.body.data.client.demographics).toHaveProperty('needs_drivers_license', false);
+./apps/api/test/clients.e2e-spec.ts:        .post('/clients')
+./apps/api/test/clients.e2e-spec.ts:  describe('PATCH /clients/:id/consent', () => {
+./apps/api/test/clients.e2e-spec.ts:    it('updates consent for a client', async () => {
+./apps/api/test/clients.e2e-spec.ts:      const clientId = uuidv4();
+./apps/api/test/clients.e2e-spec.ts:      const mockClient = createMockClient({
+./apps/api/test/clients.e2e-spec.ts:        id: clientId,
+./apps/api/test/clients.e2e-spec.ts:      const updatedClient = {
+./apps/api/test/clients.e2e-spec.ts:        ...mockClient,
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [mockClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:          return { rows: [updatedClient], rowCount: 1 };
+./apps/api/test/clients.e2e-spec.ts:        .patch(`/clients/${clientId}/consent`)
+./apps/api/test/helpers/mock-data.ts:export function createMockClient(overrides: Partial<Record<string, any>> = {}) {
+./apps/api/test/helpers/mock-data.ts:    client_id: overrides.client_id || uuidv4(),
+./apps/api/test/helpers/mock-data.ts:    client_id: overrides.client_id || uuidv4(),
+./apps/api/test/helpers/test-app.ts: * A mock PoolClient that records queries for assertion and returns
+./apps/api/test/helpers/test-app.ts:function createMockPoolClient(mockDb: MockDatabaseService) {
+./apps/api/test/helpers/test-app.ts: * - `executeInTenantContext()` invokes the callback with a mock PoolClient
+./apps/api/test/helpers/test-app.ts:  /** Default result returned by query() and the mock PoolClient */
+./apps/api/test/helpers/test-app.ts:    fn: (client: any) => Promise<T>,
+./apps/api/test/helpers/test-app.ts:    const poolClient = createMockPoolClient(this);
+./apps/api/test/helpers/test-app.ts:    return fn(poolClient);
+./apps/api/test/helpers/test-app.ts:      connect: jest.fn().mockResolvedValue(createMockPoolClient(this)),
+./apps/api/test/referrals.e2e-spec.ts:        // The repository calls executeInTenantContext which uses the mock PoolClient.
+./apps/api/test/referrals.e2e-spec.ts:        // The mock PoolClient delegates to mockDb.query, so we intercept here.
+./apps/api/test/referrals.e2e-spec.ts:    it('returns referral detail with client info', async () => {
+./apps/api/test/referrals.e2e-spec.ts:        client_first_name: 'John',
+./apps/api/test/referrals.e2e-spec.ts:        client_last_name: 'Doe',
+./apps/api/test/referrals.e2e-spec.ts:        client_date_of_birth: '1990-05-20',
+./apps/api/test/referrals.e2e-spec.ts:        client_gender: 'male',
+./apps/api/test/referrals.e2e-spec.ts:      expect(res.body.data).toHaveProperty('client_first_name', 'John');
+./apps/api/test/referrals.e2e-spec.ts:      const clientId = uuidv4();
+./apps/api/test/referrals.e2e-spec.ts:        client_id: clientId,
+./apps/api/test/referrals.e2e-spec.ts:        // Client existence check (executeInTenantContext -> PoolClient.query)
+./apps/api/test/referrals.e2e-spec.ts:          return { rows: [{ id: clientId }], rowCount: 1 };
+./apps/api/test/referrals.e2e-spec.ts:          client_id: clientId,
+./apps/api/test/referrals.e2e-spec.ts:      expect(res.body.data).toHaveProperty('client_id', clientId);
+./apps/api/test/referrals.e2e-spec.ts:        client_first_name: 'John',
+./apps/api/test/referrals.e2e-spec.ts:        client_last_name: 'Doe',
+./apps/api/test/referrals.e2e-spec.ts:        client_date_of_birth: '1990-05-20',
+./apps/api/test/referrals.e2e-spec.ts:        client_gender: 'male',
+./apps/api/test/auth.e2e-spec.ts:        .get('/clients')
+./apps/api/src/modules/bulk/bulk.controller.ts:  @Post('clients/import')
+./apps/api/src/modules/bulk/bulk.controller.ts:  async importClients(
+./apps/api/src/modules/bulk/bulk.controller.ts:    return this.bulkService.importClients(
+./apps/api/src/modules/bulk/bulk.service.ts:interface ClientCsvRow {
+./apps/api/src/modules/bulk/bulk.service.ts:  async importClients(
+./apps/api/src/modules/bulk/bulk.service.ts:    const rows = parseCsv<ClientCsvRow>(csvContent, {
+./apps/api/src/modules/bulk/bulk.service.ts:      async (client) => {
+./apps/api/src/modules/bulk/bulk.service.ts:              const existing = await client.query(
+./apps/api/src/modules/bulk/bulk.service.ts:                `SELECT id FROM protected.clients
+./apps/api/src/modules/bulk/bulk.service.ts:              const fuzzy = await client.query(
+./apps/api/src/modules/bulk/bulk.service.ts:                 FROM protected.clients
+./apps/api/src/modules/bulk/bulk.service.ts:            await client.query(
+./apps/api/src/modules/bulk/bulk.service.ts:              `INSERT INTO protected.clients
+./apps/api/src/modules/bulk/bulk.service.ts:      async (client) => {
+./apps/api/src/modules/bulk/bulk.service.ts:            // Find client by external_ehr_id
+./apps/api/src/modules/bulk/bulk.service.ts:            const clientResult = await client.query(
+./apps/api/src/modules/bulk/bulk.service.ts:              `SELECT id FROM protected.clients WHERE external_ehr_id = $1`,
+./apps/api/src/modules/bulk/bulk.service.ts:            if (clientResult.rows.length === 0) {
+./apps/api/src/modules/bulk/bulk.service.ts:                `Row ${rowNum}: no client found with external_ehr_id ${row.external_ehr_id}`,
+./apps/api/src/modules/bulk/bulk.service.ts:            const clientId = clientResult.rows[0].id;
+./apps/api/src/modules/bulk/bulk.service.ts:            await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+./apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/ips/ips.repository.ts:        const competitiveWorkRes = await client.query(`
+./apps/api/src/modules/ips/ips.repository.ts:        const caseloadRes = await client.query(`
+./apps/api/src/modules/ips/ips.repository.ts:        const rapidSearchRes = await client.query(`
+./apps/api/src/modules/ips/ips.repository.ts:        const freqContactRes = await client.query(`
+./apps/api/src/modules/referrals/referrals.controller.ts:      client_id?: string; // Fallback
+./apps/api/src/modules/referrals/referrals.controller.ts:        participant_id: body.participant_id || body.client_id!,
+./apps/api/src/modules/referrals/referrals.repository.ts:export interface ReferralWithClient extends ReferralRow {
+./apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/referrals/referrals.repository.ts:      const countResult = await client.query(
+./apps/api/src/modules/referrals/referrals.repository.ts:      const dataResult = await client.query(
+./apps/api/src/modules/referrals/referrals.repository.ts:                ((c.demographics->>'first_name') || ' ' || (c.demographics->>'last_name')) AS "clientName",
+./apps/api/src/modules/referrals/referrals.repository.ts:  ): Promise<ReferralWithClient | null> {
+./apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+./apps/api/src/modules/referrals/referrals.repository.ts:                ((c.demographics->>'first_name') || ' ' || (c.demographics->>'last_name')) AS "clientName",
+./apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+./apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+./apps/api/src/modules/referrals/referrals.service.ts:  ReferralWithClient,
+./apps/api/src/modules/referrals/referrals.service.ts:  ): Promise<ReferralWithClient> {
+./apps/api/src/modules/referrals/referrals.service.ts:      async (client) => {
+./apps/api/src/modules/referrals/referrals.service.ts:        const result = await client.query(
+./apps/api/src/modules/rfe/rfe.service.ts:      async (client) => {
+./apps/api/src/modules/rfe/rfe.service.ts:        const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const countResult = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:      const dataResult = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:        const existing = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+./apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+./apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+./apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+./apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+./apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+./apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:      const result = await client.query(
+./apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:      const result = await client.query(query, params);
+./apps/api/src/modules/assessments/assessments.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+./apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+./apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/assessments/assessments.repository.ts:      const assessmentResult = await client.query(
+./apps/api/src/modules/assessments/assessments.repository.ts:      const summaryResult = await client.query(
+./apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+./apps/api/src/modules/discharges/discharges.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/discharges/discharges.repository.ts:      const result = await client.query(
+./apps/api/src/modules/discharges/discharges.repository.ts:      await client.query(
+./apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/discharges/discharges.repository.ts:      const result = await client.query(
+./apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/encounters/encounters.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/encounters/encounters.repository.ts:      const countResult = await client.query(
+./apps/api/src/modules/encounters/encounters.repository.ts:      const dataResult = await client.query(
+./apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+./apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+./apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+./apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+./apps/api/src/modules/encounters/encounters.repository.spec.ts:  const mockClient = {
+./apps/api/src/modules/encounters/encounters.repository.spec.ts:      return callback(mockClient);
+./apps/api/src/modules/encounters/encounters.repository.spec.ts:      expect(mockClient.query).toHaveBeenCalled();
+./apps/api/src/modules/encounters/encounters.repository.spec.ts:      expect(mockClient.query).toHaveBeenCalledWith(
+./apps/api/src/modules/encounters/encounters.controller.ts:    @Query('client_id') clientId?: string, // Fallback
+./apps/api/src/modules/encounters/encounters.controller.ts:      participantId: participantId || clientId,
+./apps/api/src/modules/encounters/encounters.controller.ts:      clientId?: string;
+./apps/api/src/modules/encounters/encounters.controller.ts:        participantId: body.participantId || body.clientId!,
+./apps/api/src/modules/encounters/encounters.service.ts:      async (client) => {
+./apps/api/src/modules/encounters/encounters.service.ts:        const result = await client.query(
+./apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+./apps/api/src/modules/reports/reports.service.ts:        const result = await client.query(
+./apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+./apps/api/src/modules/reports/reports.service.ts:        const overallResult = await client.query(
+./apps/api/src/modules/reports/reports.service.ts:        const breakdownResult = await client.query(breakdownSql);
+./apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+./apps/api/src/modules/reports/reports.service.ts:          client.query(
+./apps/api/src/modules/reports/reports.service.ts:          client.query(
+./apps/api/src/modules/reports/reports.service.ts:          client.query(
+./apps/api/src/modules/reports/reports.service.ts:          client.query(
+./apps/api/src/modules/reports/reports.service.ts:          client.query(
+./apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+./apps/api/src/modules/reports/reports.service.ts:            totals: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:            avgTime: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:            avgServices: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:            topBarriers: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:            topSources: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:            topIndustries: client.query(`
+./apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+./apps/api/src/modules/reports/reports.service.ts:        const result = await client.query(
+./apps/api/src/modules/reports/reports.service.spec.ts:        participant_id: 'client-1',
+./apps/api/src/modules/reports/reports.service.spec.ts:      expect(metric.participantId).toBe('client-1');
+./apps/api/src/modules/reports/reports.service.spec.ts:      const mockClient = {
+./apps/api/src/modules/reports/reports.service.spec.ts:      (mockDatabaseService.executeInTenantContext as jest.Mock).mockImplementationOnce((t, u, r, cb) => cb(mockClient));
+./apps/api/src/modules/workflows/workflows.service.ts:    // Check for existing active workflow for this client
+./apps/api/src/modules/workflows/workflows.service.ts:    // Evaluate conditions against client data
+./apps/api/src/modules/workflows/workflows.service.ts:            description: 'Review plan with client',
+./apps/api/src/modules/workflows/workflows.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/workflows/workflows.repository.ts:  owner_type: 'staff' | 'client';
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+./apps/api/src/modules/trainings/trainings.repository.spec.ts:  const mockClient = {
+./apps/api/src/modules/trainings/trainings.repository.spec.ts:      return callback(mockClient);
+./apps/api/src/modules/trainings/trainings.repository.spec.ts:      expect(mockClient.query).toHaveBeenCalledWith(
+./apps/api/src/modules/trainings/trainings.repository.spec.ts:      expect(mockClient.query).toHaveBeenCalledWith(
+./apps/api/src/modules/trainings/trainings.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, values);
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, [id, tenantId]);
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, queryParams);
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, [participantId, tenantId]);
+./apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/trainings/trainings.repository.ts:      const countResult = await client.query(countQuery, values);
+./apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(dataQuery, values);
+./apps/api/src/modules/participants/participants.service.ts:  ClientFilters,
+./apps/api/src/modules/participants/participants.service.ts:    filters: ClientFilters,
+./apps/api/src/modules/participants/participants.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/participants/participants.repository.ts:export interface ClientFilters {
+./apps/api/src/modules/participants/participants.repository.ts:    filters: ClientFilters,
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:      const result = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:      await client.query("SELECT set_config('app.consent_management_mode', 'true', true)");
+./apps/api/src/modules/participants/participants.repository.ts:      // Client data
+./apps/api/src/modules/participants/participants.repository.ts:      const clientResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      if (clientResult.rows.length === 0) {
+./apps/api/src/modules/participants/participants.repository.ts:      const referralsResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      const assessmentsResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      const workforcePlanResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      const encountersResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      const employerMatchesResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:      const enrollmentsResult = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:        participant: clientResult.rows[0],
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:      await client.query("SELECT set_config('app.consent_management_mode', 'true', true)");
+./apps/api/src/modules/participants/participants.repository.ts:      const result = await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:        await client.query(
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:      await client.query("SELECT set_config('app.consent_management_mode', 'true', true)");
+./apps/api/src/modules/participants/participants.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/participants/participants.repository.ts:      const result = await client.query(
+./apps/api/src/modules/enrollments/enrollment.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:          ips_client_established_date,
+./apps/api/src/modules/enrollments/enrollment.repository.ts:          case_management_established_client_date,
+./apps/api/src/modules/enrollments/enrollment.repository.ts:        data.ips_client_established_date,
+./apps/api/src/modules/enrollments/enrollment.repository.ts:        data.case_management_established_client_date,
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, values);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [id, tenantId]);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(finalUpdateQuery, queryParams);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [participantId, tenantId]);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [referralId, tenantId]);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    // This queryParams object should match what the service/controller expects from the client
+./apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const countResult = await client.query(countQuery, queryParamsValues);
+./apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(dataQuery, queryParamsValues);
+./apps/api/src/modules/scheduling/scheduling.controller.ts:    @Query('clientId') clientId?: string, // Fallback
+./apps/api/src/modules/scheduling/scheduling.controller.ts:      participantId: participantId || clientId,
+./apps/api/src/modules/scheduling/scheduling.controller.ts:  @Get('client/:clientId')
+./apps/api/src/modules/scheduling/scheduling.controller.ts:  async clientSchedule(
+./apps/api/src/modules/scheduling/scheduling.controller.ts:    @Param('clientId', ParseUUIDPipe) clientId: string,
+./apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId,
+./apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId?: string;
+./apps/api/src/modules/scheduling/scheduling.controller.ts:        participantId: body.participantId || body.clientId,
+./apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId: string;
+./apps/api/src/modules/scheduling/scheduling.controller.ts:        participantId: body.participantId || body.clientId,
+./apps/api/src/modules/scheduling/scheduling.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const planResult = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const tasksResult = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:        const current = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/integrations/integrations.repository.ts:        const result = await client.query(
+./apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+./apps/api/src/modules/integrations/integrations.service.ts:        // target tables (clients, referrals, etc.) would be done here
+./apps/api/src/modules/follow-ups/follow-ups.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/modules/follow-ups/follow-ups.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/follow-ups/follow-ups.repository.ts:      const result = await client.query(
+./apps/api/src/modules/follow-ups/follow-ups.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+./apps/api/src/modules/follow-ups/follow-ups.repository.ts:      const result = await client.query(
+./apps/api/src/database/seeds/tsrg-assessment-templates.ts: * program to evaluate clients exiting treatment/incarceration for employment
+./apps/api/src/database/seeds/tsrg-assessment-templates.ts:    'Evaluates vocational and practical skills, work history, education, and transportation access for clients exiting treatment or incarceration.',
+./apps/api/src/database/seeds/tsrg-assessment-templates.ts:    'Holland Code (RIASEC) style interest assessment with 30 questions to identify career interest areas and work preferences for clients entering the workforce.',
+./apps/api/src/database/seeds/mock-data.ts:import { Pool, PoolClient } from 'pg';
+./apps/api/src/database/seeds/mock-data.ts:  { resource: 'clients', action: 'create', data_zone: 'protected' },
+./apps/api/src/database/seeds/mock-data.ts:  { resource: 'clients', action: 'read', data_zone: 'protected' },
+./apps/api/src/database/seeds/mock-data.ts:  { resource: 'clients', action: 'update', data_zone: 'protected' },
+./apps/api/src/database/seeds/mock-data.ts:  { resource: 'clients', action: 'delete', data_zone: 'protected' },
+./apps/api/src/database/seeds/mock-data.ts:async function upsertTenant(client: PoolClient): Promise<string> {
+./apps/api/src/database/seeds/mock-data.ts:  const r = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function upsertOrgAdminRole(client: PoolClient, tenantId: string): Promise<string> {
+./apps/api/src/database/seeds/mock-data.ts:  const r = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const p = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function upsertMockAdmin(client: PoolClient, tenantId: string, roleId: string) {
+./apps/api/src/database/seeds/mock-data.ts:  await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function ensureMockStaff(client: PoolClient, tenantId: string): Promise<string[]> {
+./apps/api/src/database/seeds/mock-data.ts:  const existing = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const r = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function ensureMockEmployers(client: PoolClient, tenantId: string): Promise<string[]> {
+./apps/api/src/database/seeds/mock-data.ts:    const found = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const r = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function ensureMockRfes(client: PoolClient, tenantId: string): Promise<string[]> {
+./apps/api/src/database/seeds/mock-data.ts:    const found = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const inserted = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:  client: PoolClient,
+./apps/api/src/database/seeds/mock-data.ts:  const pRes = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:  const refRes = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:  await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:      const aRes = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:      await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const planRes = await client.query(
+./apps/api/src/database/seeds/mock-data.ts:      await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    await client.query(
+./apps/api/src/database/seeds/mock-data.ts:async function insertIpsReview(client: PoolClient, tenantId: string, reviewerId: string, counts: InsertCounts) {
+./apps/api/src/database/seeds/mock-data.ts:  await client.query(
+./apps/api/src/database/seeds/mock-data.ts:    const client = await pool.connect();
+./apps/api/src/database/seeds/mock-data.ts:      await client.query('BEGIN');
+./apps/api/src/database/seeds/mock-data.ts:      const tenantId = await upsertTenant(client);
+./apps/api/src/database/seeds/mock-data.ts:      const roleId = await upsertOrgAdminRole(client, tenantId);
+./apps/api/src/database/seeds/mock-data.ts:      await upsertMockAdmin(client, tenantId, roleId);
+./apps/api/src/database/seeds/mock-data.ts:      const staffIds = await ensureMockStaff(client, tenantId);
+./apps/api/src/database/seeds/mock-data.ts:      const employerIds = await ensureMockEmployers(client, tenantId);
+./apps/api/src/database/seeds/mock-data.ts:      const rfeIds = await ensureMockRfes(client, tenantId);
+./apps/api/src/database/seeds/mock-data.ts:        await seedParticipantJourney(client, tenantId, staffIds, employerIds, rfeIds, counts);
+./apps/api/src/database/seeds/mock-data.ts:      await insertIpsReview(client, tenantId, pick(staffIds), counts);
+./apps/api/src/database/seeds/mock-data.ts:      await client.query('COMMIT');
+./apps/api/src/database/seeds/mock-data.ts:      await client.query('ROLLBACK');
+./apps/api/src/database/seeds/mock-data.ts:      client.release();
+./apps/api/src/database/seeds/rfe-colorado.csv:Boulder Home Health,Healthcare Support,Boulder,CO,true,yes,303-555-0705,apply@boulderhomehealth.com,Non-medical home care with flexible client matching
+./apps/api/src/database/seeds/run-seeds.ts: *      provider_case_manager, client)
+./apps/api/src/database/seeds/run-seeds.ts:  client: [
+./apps/api/src/database/seeds/run-seeds.ts:    const client = await pool.connect();
+./apps/api/src/database/seeds/run-seeds.ts:      await client.query('BEGIN');
+./apps/api/src/database/seeds/run-seeds.ts:      const tenantResult = await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:        'client',
+./apps/api/src/database/seeds/run-seeds.ts:        client: 'Client self-service role with limited read access',
+./apps/api/src/database/seeds/run-seeds.ts:        const roleResult = await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:          const permResult = await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:          await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:      await client.query(`DELETE FROM application.form_templates WHERE tenant_id = $1`, [tenantId]);
+./apps/api/src/database/seeds/run-seeds.ts:        await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:      const userResult = await client.query(
+./apps/api/src/database/seeds/run-seeds.ts:      await client.query('COMMIT');
+./apps/api/src/database/seeds/run-seeds.ts:      await client.query('ROLLBACK');
+./apps/api/src/database/seeds/run-seeds.ts:      client.release();
+./apps/api/src/database/database.service.ts:import { Pool, PoolClient, QueryResult } from 'pg';
+./apps/api/src/database/database.service.ts:    fn: (client: PoolClient) => Promise<T>,
+./apps/api/src/database/database.service.ts:    const client = await this.getPool().connect();
+./apps/api/src/database/database.service.ts:      await client.query('BEGIN');
+./apps/api/src/database/database.service.ts:      await client.query(
+./apps/api/src/database/database.service.ts:      await client.query(
+./apps/api/src/database/database.service.ts:      await client.query(
+./apps/api/src/database/database.service.ts:      const result = await fn(client);
+./apps/api/src/database/database.service.ts:      await client.query('COMMIT');
+./apps/api/src/database/database.service.ts:      await client.query('ROLLBACK');
+./apps/api/src/database/database.service.ts:      client.release();
+./apps/api/src/common/interceptors/audit.interceptor.ts:      request.params?.id || request.params?.clientId || NIL_UUID;
+./apps/api/src/common/database/tenant-aware.repository.ts:import { PoolClient } from 'pg';
+./apps/api/src/common/database/tenant-aware.repository.ts:   * All queries run through the provided PoolClient will have RLS
+./apps/api/src/common/database/tenant-aware.repository.ts:    fn: (client: PoolClient) => Promise<T>,
+./apps/api/src/common/secrets/secrets.service.ts:import { SecretClient } from '@azure/keyvault-secrets';
+./apps/api/src/common/secrets/secrets.service.ts:  private client: SecretClient | null = null;
+./apps/api/src/common/secrets/secrets.service.ts:  private getClient(): SecretClient {
+./apps/api/src/common/secrets/secrets.service.ts:    if (this.client) return this.client;
+./apps/api/src/common/secrets/secrets.service.ts:    this.client = new SecretClient(url, new DefaultAzureCredential());
+./apps/api/src/common/secrets/secrets.service.ts:    return this.client;
+./apps/api/src/common/secrets/secrets.service.ts:      const secret = await this.getClient().getSecret(secretName);
+./apps/api/src/common/guards/consent.guard.ts:    const result = await this.databaseService.getPool().connect().then(async (client) => {
+./apps/api/src/common/guards/consent.guard.ts:        await client.query("SELECT set_config('app.current_tenant', $1, true)", [user.tenantId]);
+./apps/api/src/common/guards/consent.guard.ts:        await client.query("SELECT set_config('app.consent_management_mode', 'true', true)");
+./apps/api/src/common/guards/consent.guard.ts:        return await client.query(
+./apps/api/src/common/guards/consent.guard.ts:        client.release();
+./apps/api/api_startup_log.txt:[96msrc/modules/participants/participants.controller.ts[0m:[93m151[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'findByClientId' does not exist on type 'EnrollmentService'.
+./apps/api/api_startup_log.txt:[7m151[0m     return this.enrollmentService.findByClientId(
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 76416  - [39m05/26/2026, 12:51:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.service.ts[0m:[93m83[0m:[93m68[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.service.ts[0m:[93m83[0m:[93m68[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m110[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m110[0m       client_id: dto.clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m144[0m:[93m38[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersRepository'.
+./apps/api/api_startup_log.txt:[7m144[0m     return this.encountersRepository.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.service.ts[0m:[93m83[0m:[93m68[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.service.ts[0m:[93m26[0m:[93m39[0m - [91merror[0m[90m TS2339: [0mProperty 'findByClientId' does not exist on type 'AssessmentsRepository'.
+./apps/api/api_startup_log.txt:[7m26[0m     return this.assessmentsRepository.findByClientId(
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.service.ts[0m:[93m76[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId: string; assessmentType: string; rawResponses: Record<string, any>; computedSummary: Record<string, any>; }'.
+./apps/api/api_startup_log.txt:[7m76[0m         clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.service.ts[0m:[93m93[0m:[93m39[0m - [91merror[0m[90m TS2339: [0mProperty 'getSummariesByClient' does not exist on type 'AssessmentsRepository'.
+./apps/api/api_startup_log.txt:[7m93[0m     return this.assessmentsRepository.getSummariesByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m110[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m110[0m       client_id: dto.clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m144[0m:[93m38[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersRepository'.
+./apps/api/api_startup_log.txt:[7m144[0m     return this.encountersRepository.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.service.ts[0m:[93m83[0m:[93m68[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m110[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m110[0m       client_id: dto.clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m144[0m:[93m38[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersRepository'.
+./apps/api/api_startup_log.txt:[7m144[0m     return this.encountersRepository.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.service.ts[0m:[93m83[0m:[93m68[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ referral_status: string; client_id: string; provider_agency_id?: string; provider_agency_name?: string; notes?: string; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m110[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m110[0m       client_id: dto.clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.service.ts[0m:[93m144[0m:[93m38[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersRepository'.
+./apps/api/api_startup_log.txt:[7m144[0m     return this.encountersRepository.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m6[0m:[93m52[0m - [91merror[0m[90m TS2305: [0mModule '"./rfe.repository"' has no exported member 'ClientEmployerMatchRow'.
+./apps/api/api_startup_log.txt:[7m6[0m import { RfeRepository, RfeRow, MatchWithEmployer, ClientEmployerMatchRow } from './rfe.repository';
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m293[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; rfe_id: string; application_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m293[0m       client_id: clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m349[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'getMatchesByClient' does not exist on type 'RfeRepository'.
+./apps/api/api_startup_log.txt:[7m349[0m     return this.rfeRepository.getMatchesByClient(
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 89846  - [39m05/26/2026, 1:20:13 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m6[0m:[93m52[0m - [91merror[0m[90m TS2305: [0mModule '"./rfe.repository"' has no exported member 'ClientEmployerMatchRow'.
+./apps/api/api_startup_log.txt:[7m6[0m import { RfeRepository, RfeRow, MatchWithEmployer, ClientEmployerMatchRow } from './rfe.repository';
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m293[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; rfe_id: string; application_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m293[0m       client_id: clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m349[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'getMatchesByClient' does not exist on type 'RfeRepository'.
+./apps/api/api_startup_log.txt:[7m349[0m     return this.rfeRepository.getMatchesByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m38[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type 'EventFilters'.
+./apps/api/api_startup_log.txt:[7m38[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.service.ts[0m:[93m63[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ title: string; description?: string | undefined; event_type: string; participant_id?: string | undefined; staff_id?: string | undefined; rfe_id?: string | undefined; start_time: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m63[0m       client_id: dto.clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.service.ts[0m:[93m167[0m:[93m38[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientEvents' does not exist on type 'SchedulingRepository'.
+./apps/api/api_startup_log.txt:[7m167[0m     return this.schedulingRepository.getClientEvents(
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m6[0m:[93m52[0m - [91merror[0m[90m TS2305: [0mModule '"./rfe.repository"' has no exported member 'ClientEmployerMatchRow'.
+./apps/api/api_startup_log.txt:[7m6[0m import { RfeRepository, RfeRow, MatchWithEmployer, ClientEmployerMatchRow } from './rfe.repository';
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m293[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'client_id' does not exist in type '{ participant_id: string; rfe_id: string; application_status: string; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[7m293[0m       client_id: clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.service.ts[0m:[93m349[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'getMatchesByClient' does not exist on type 'RfeRepository'.
+./apps/api/api_startup_log.txt:[7m349[0m     return this.rfeRepository.getMatchesByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/assessments/assessments.controller.ts[0m:[93m30[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'listByClient' does not exist on type 'AssessmentsService'.
+./apps/api/api_startup_log.txt:[7m30[0m     return this.assessmentsService.listByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.controller.ts[0m:[93m146[0m:[93m28[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientMatches' does not exist on type 'RfeService'.
+./apps/api/api_startup_log.txt:[7m146[0m     return this.rfeService.getClientMatches(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m40[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'clientId' does not exist in type '{ participantId?: string | undefined; staffId?: string | undefined; startDate?: string | undefined; endDate?: string | undefined; billable?: boolean | undefined; page: number; limit: number; }'.
+./apps/api/api_startup_log.txt:[7m40[0m       clientId,
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m58[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getByClient' does not exist on type 'EncountersService'.
+./apps/api/api_startup_log.txt:[7m58[0m     return this.encountersService.getByClient(
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.controller.ts[0m:[93m119[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' is not assignable to parameter of type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participantId' is missing in type '{ clientId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }' but required in type '{ participantId: string; encounterDate: string; durationMinutes: number; notes?: string | undefined; billable: boolean; serviceType?: string | undefined; serviceSubcategory?: string | undefined; ... 17 more ...; traumaInformedSupport?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.controller.ts[0m:[93m146[0m:[93m28[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientMatches' does not exist on type 'RfeService'.
+./apps/api/api_startup_log.txt:[7m146[0m     return this.rfeService.getClientMatches(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/referrals/referrals.controller.ts[0m:[93m72[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }' but required in type '{ participant_id: string; provider_agency_id?: string | undefined; provider_agency_name?: string | undefined; referral_status?: string | undefined; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.controller.ts[0m:[93m146[0m:[93m28[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientMatches' does not exist on type 'RfeService'.
+./apps/api/api_startup_log.txt:[7m146[0m     return this.rfeService.getClientMatches(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/rfe/rfe.controller.ts[0m:[93m146[0m:[93m28[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientMatches' does not exist on type 'RfeService'.
+./apps/api/api_startup_log.txt:[7m146[0m     return this.rfeService.getClientMatches(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m71[0m:[93m35[0m - [91merror[0m[90m TS2339: [0mProperty 'getClientSchedule' does not exist on type 'SchedulingService'.
+./apps/api/api_startup_log.txt:[7m71[0m     return this.schedulingService.getClientSchedule(
+./apps/api/api_startup_log.txt:[96msrc/modules/scheduling/scheduling.controller.ts[0m:[93m112[0m:[93m7[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'event_type' is missing in type '{ title: string; eventType: string; clientId?: string | undefined; staffId?: string | undefined; startTime: string; endTime: string; location?: string | undefined; isVirtual?: boolean | undefined; meetingUrl?: string | undefined; notes?: string | undefined; }' but required in type '{ title: string; description?: string | undefined; event_type: string; participantId?: string | undefined; staffId?: string | undefined; rfeId?: string | undefined; startTime: string; ... 4 more ...; notes?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/encounters/encounters.repository.spec.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' is not assignable to parameter of type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:  Property 'participant_id' is missing in type '{ client_id: string; encounter_date: string; duration_minutes: number; notes: string; billable: boolean; service_type: string; service_subcategory: string; partner_organization_name: string; ... 16 more ...; trauma_informed_support: string; }' but required in type '{ participant_id: string; encounter_date: string; duration_minutes: number; notes?: string | undefined; billable: boolean; service_type?: string | undefined; service_subcategory?: string | undefined; ... 17 more ...; trauma_informed_support?: string | undefined; }'.
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[96msrc/modules/reports/reports.service.spec.ts[0m:[93m53[0m:[93m21[0m - [91merror[0m[90m TS2339: [0mProperty 'clientId' does not exist on type 'EmployabilityMetric'.
+./apps/api/api_startup_log.txt:[7m53[0m       expect(metric.clientId).toBe('client-1');
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 99948  - [39m05/26/2026, 1:42:28 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 122370  - [39m05/26/2026, 2:29:35 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 126937  - [39m05/26/2026, 2:39:29 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAssessmentsController {/v1/clients/:clientId}:[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments/:id, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessments, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/assessment-summaries, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 127079  - [39m05/26/2026, 2:39:42 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 129555  - [39m05/26/2026, 2:44:46 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 129555  - [39m05/26/2026, 2:44:46 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/clients/:clientId/matches, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 129555  - [39m05/26/2026, 2:44:46 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 129555  - [39m05/26/2026, 2:44:46 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 129555  - [39m05/26/2026, 2:44:46 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 134979  - [39m05/26/2026, 4:32:06 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/encounters/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 134979  - [39m05/26/2026, 4:32:06 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 134979  - [39m05/26/2026, 4:32:06 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 136080  - [39m05/26/2026, 4:34:25 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 136080  - [39m05/26/2026, 4:34:25 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 154588  - [39m05/26/2026, 5:14:08 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 154588  - [39m05/26/2026, 5:14:08 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:(node:154588) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+./apps/api/api_startup_log.txt:[32m[Nest] 184365  - [39m05/26/2026, 6:10:25 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 184365  - [39m05/26/2026, 6:10:25 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 186326  - [39m05/26/2026, 6:14:20 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 186326  - [39m05/26/2026, 6:14:20 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 186479  - [39m05/26/2026, 6:14:24 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 186479  - [39m05/26/2026, 6:14:24 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +1ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 187992  - [39m05/26/2026, 6:17:15 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/bulk/clients/import, POST} route[39m[38;5;3m +0ms[39m
+./apps/api/api_startup_log.txt:[32m[Nest] 187992  - [39m05/26/2026, 6:17:15 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/v1/events/client/:clientId, GET} route[39m[38;5;3m +0ms[39m
+./test-db.js:const { Client } = require('pg');
+./test-db.js:const client = new Client({
+./test-db.js:client.connect()

@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gateway2Work - TSRG Workforce Development Platform</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --primary-light: #2d5a8e;
+    --accent: #0ea5e9;
+    --accent-warm: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --gradient-1: linear-gradient(135deg, #1e3a5f 0%, #0ea5e9 100%);
+    --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+    --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0f172a;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+  }
+  .nav-logo { color: white; font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.2); }
+  .nav-btn.active { background: var(--accent); border-color: var(--accent); }
+  .slide-counter { color: rgba(255,255,255,0.6); font-size: 13px; margin: 0 12px; }
+
+  /* Slides container */
+  .slides-wrapper {
+    padding-top: 60px;
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+    height: 100vh;
+  }
+
+  .slide {
+    min-height: calc(100vh - 60px);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    position: relative;
+  }
+
+  .slide-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* Slide backgrounds */
+  .slide-title-bg {
+    background: var(--gradient-1);
+    color: white;
+  }
+  .slide-light {
+    background: var(--bg);
+  }
+  .slide-dark {
+    background: #0f172a;
+    color: white;
+  }
+  .slide-accent-bg {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    color: white;
+  }
+
+  /* Typography */
+  .slide-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .tag-blue { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
+  .tag-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+  .tag-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+  .tag-white { background: rgba(255,255,255,0.15); color: white; }
+  .tag-dark { background: rgba(30,58,95,0.1); color: var(--primary); }
+
+  h1.hero-title {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  h2.slide-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  h3.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .slide-subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 700px;
+  }
+  .slide-subtitle-dark {
+    color: var(--text-muted);
+  }
+
+  /* Grid layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .card-dark {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .icon-blue { background: rgba(14, 165, 233, 0.12); }
+  .icon-green { background: rgba(16, 185, 129, 0.12); }
+  .icon-amber { background: rgba(245, 158, 11, 0.12); }
+  .icon-red { background: rgba(239, 68, 68, 0.12); }
+  .icon-purple { background: rgba(139, 92, 246, 0.12); }
+
+  .card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .card p, .card-dark p { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+  .card-dark p { color: rgba(255,255,255,0.6); }
+  .card-dark h4 { color: white; }
+
+  /* Stats */
+  .stat-number {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 14px; opacity: 0.7; }
+  .stat-blue { color: var(--accent); }
+  .stat-green { color: var(--success); }
+  .stat-amber { color: var(--accent-warm); }
+
+  /* Mockup frames */
+  .mockup-browser {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .mockup-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .mockup-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ef4444; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-green { background: #10b981; }
+  .mockup-url {
+    flex: 1;
+    margin-left: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+  }
+  .mockup-content {
+    padding: 0;
+    min-height: 400px;
+  }
+
+  .mockup-phone {
+    background: #0f172a;
+    border-radius: 32px;
+    padding: 12px;
+    width: 280px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+    border: 2px solid rgba(255,255,255,0.15);
+    margin: 0 auto;
+  }
+  .mockup-phone-screen {
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    min-height: 500px;
+  }
+  .mockup-phone-notch {
+    width: 100px;
+    height: 24px;
+    background: #0f172a;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+  }
+
+  /* Dashboard mockup internals */
+  .mock-sidebar {
+    width: 220px;
+    background: var(--primary);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+  }
+  .mock-sidebar-logo {
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .mock-sidebar-logo span { color: var(--accent); }
+  .mock-sidebar-item {
+    padding: 10px 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: default;
+  }
+  .mock-sidebar-item.active {
+    color: white;
+    background: rgba(255,255,255,0.08);
+    border-left: 3px solid var(--accent);
+  }
+  .mock-main {
+    flex: 1;
+    background: var(--bg);
+    padding: 24px;
+  }
+  .mock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .mock-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .mock-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: default;
+  }
+  .mock-stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mock-stat-card {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+  .mock-stat-card .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -1px;
+  }
+  .mock-stat-card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .mock-table {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .mock-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+    padding: 10px 16px;
+    background: #f1f5f9;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .mock-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+    padding: 12px 16px;
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .mock-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-green { background: #dcfce7; color: #16a34a; }
+  .badge-blue { background: #dbeafe; color: #2563eb; }
+  .badge-amber { background: #fef3c7; color: #d97706; }
+  .badge-red { background: #fee2e2; color: #dc2626; }
+
+  /* Phone mockup internals */
+  .phone-header {
+    background: var(--primary);
+    padding: 16px 20px 20px;
+    color: white;
+  }
+  .phone-header h4 { font-size: 18px; font-weight: 700; }
+  .phone-header p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+  .phone-body { padding: 16px; }
+  .phone-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .phone-card h5 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .phone-card p { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  .phone-task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text);
+  }
+  .phone-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .phone-checkbox.checked {
+    background: var(--success);
+    border-color: var(--success);
+    position: relative;
+  }
+  .phone-checkbox.checked::after {
+    content: '\2713';
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: -1px;
+    left: 2px;
+  }
+  .phone-tab-bar {
+    display: flex;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 8px 0 12px;
+  }
+  .phone-tab {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+  .phone-tab.active { color: var(--accent); font-weight: 600; }
+  .phone-tab-icon { font-size: 18px; margin-bottom: 2px; }
+
+  /* Flow diagrams */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .flow-step {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 130px;
+  }
+  .flow-step .icon { font-size: 24px; margin-bottom: 6px; }
+  .flow-step .label { font-size: 12px; font-weight: 600; }
+  .flow-arrow { font-size: 20px; color: rgba(255,255,255,0.3); }
+
+  /* Timeline */
+  .timeline { margin-top: 40px; }
+  .timeline-item {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 32px;
+    position: relative;
+  }
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255,255,255,0.1);
+  }
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .dot-complete { background: var(--success); }
+  .dot-current { background: var(--accent); animation: pulse 2s infinite; }
+  .dot-future { background: rgba(255,255,255,0.15); }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(14,165,233,0.4); } 50% { box-shadow: 0 0 0 10px rgba(14,165,233,0); } }
+
+  .timeline-content h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .timeline-content p { font-size: 13px; opacity: 0.6; }
+  .timeline-content .date { font-size: 11px; opacity: 0.4; margin-top: 4px; }
+
+  /* Compliance grid */
+  .compliance-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .check-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--success);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* CTA slide */
+  .cta-box {
+    text-align: center;
+    padding: 48px;
+  }
+  .cta-box h2 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+  }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Assessment mockup */
+  .assess-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .assess-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .assess-header h4 { font-size: 15px; font-weight: 700; color: var(--text); }
+  .assess-progress {
+    width: 100%;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .assess-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--gradient-2);
+  }
+  .assess-result {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+  }
+  .assess-result:last-child { border-bottom: none; }
+  .assess-result .cat { color: var(--text); font-weight: 500; }
+  .assess-bar-wrap {
+    width: 120px;
+    height: 8px;
+    background: #f1f5f9;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .assess-bar {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .bar-high { background: var(--success); }
+  .bar-mid { background: var(--accent); }
+  .bar-low { background: var(--accent-warm); }
+
+  /* Report mockup */
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    height: 140px;
+    padding-top: 10px;
+  }
+  .chart-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+  .chart-bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    min-height: 10px;
+  }
+  .chart-label { font-size: 10px; color: var(--text-muted); text-align: center; }
+
+  /* Print styles */
+  @media print {
+    .nav { display: none; }
+    .slide { break-after: page; min-height: 100vh; padding-top: 48px; }
+    .slides-wrapper { overflow: visible; scroll-snap-type: none; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-logo">Impact<span>Forge</span></div>
+  <div class="nav-controls">
+    <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">12</span></span>
+    <button class="nav-btn" onclick="prevSlide()">Prev</button>
+    <button class="nav-btn" onclick="nextSlide()">Next</button>
+    <button class="nav-btn" onclick="toggleFullscreen()">Fullscreen</button>
+  </div>
+</nav>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+<!-- ==================== SLIDE 1: Title ==================== -->
+<div class="slide slide-title-bg" id="slide-1">
+  <div class="slide-inner fade-in">
+    <span class="slide-tag tag-white">Prepared for Terri &mdash; Spring Transits / TSRG</span>
+    <h1 class="hero-title">
+      Gateway2Work<br>
+      <span style="font-weight: 400; font-size: 36px; letter-spacing: -1px; opacity: 0.9;">
+        TSRG Workforce Development Platform
+      </span>
+    </h1>
+    <p class="slide-subtitle">
+      A modern, HIPAA-compliant case management platform that bridges the
+      post-treatment cliff &mdash; from referral to employment.
+    </p>
+    <div style="margin-top: 40px; display: flex; gap: 24px; font-size: 14px; opacity: 0.7;">
+      <span>April 2026</span>
+      <span>&bull;</span>
+      <span>Colorado Pilot &mdash; Phase 1 MVP</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: The Problem ==================== -->
+<div class="slide slide-dark" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-tag tag-amber">The Challenge</span>
+    <h2 class="slide-title">The Post-Treatment Cliff</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.65);">
+      Individuals exiting substance use treatment or incarceration face a critical gap between recovery and sustainable employment. Current tools aren't built for this.
+    </p>
+    <div class="grid-3" style="margin-top: 48px;">
+      <div class="card-dark">
+        <div class="card-icon icon-red" style="background: rgba(239,68,68,0.15);">
+          <span>&#x1F4C4;</span>
+        </div>
+        <h4>Fragmented Systems</h4>
+        <p>Spreadsheets, legacy tools like Apricot, and disconnected EHRs make coordinated case management nearly impossible.</p>
+      </div>
+      <div class="card-dark">
+        <div class="card-icon icon-amber" style="background: rgba(245,158,11,0.15);">
+          <span>&#x26A0;</span>
+        </div>
+        <h4>Compliance Risk</h4>
+        <p>HIPAA and 42 CFR Part 2 substance use data requires strict protections that general tools don't provide.</p>
+      </div>
+      <div class="card-dark">
+        <div class="card-icon icon-purple" style="background: rgba(139,92,246,0.15);">
+          <span>&#x1F4CA;</span>
+        </div>
+        <h4>No Outcome Visibility</h4>
+        <p>Funders and programs can't measure placement rates, IPS fidelity, or Medicaid encounter billing without manual work.</p>
+      </div>
+    </div>
+    <div style="margin-top: 40px; padding: 24px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px;">
+      <p style="font-size: 16px; color: rgba(255,255,255,0.85); text-align: center;">
+        <strong>2027 Medicaid Work Requirements</strong> &mdash; Clients must log 80 hours/month of employment activity. Programs need tools to track and report compliance <em>now</em>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: Solution Overview ==================== -->
+<div class="slide slide-light" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">The Solution</span>
+    <h2 class="slide-title" style="color: var(--primary);">One Platform, End to End</h2>
+    <p class="slide-subtitle slide-subtitle-dark">
+      Gateway2Work unifies every step of the workforce development journey into a single, compliant platform.
+    </p>
+    <div class="flow" style="margin-top: 48px;">
+      <div class="flow-step" style="background: white; border-color: var(--border);">
+        <div class="icon">&#x1F4E5;</div>
+        <div class="label" style="color: var(--text);">EHR Referral</div>
+      </div>
+      <div class="flow-arrow" style="color: var(--primary);">&#x27A1;</div>
+      <div class="flow-step" style="background: white; border-color: var(--border);">
+        <div class="icon">&#x1F4DD;</div>
+        <div class="label" style="color: var(--text);">Intake</div>
+      </div>
+      <div class="flow-arrow" style="color: var(--primary);">&#x27A1;</div>
+      <div class="flow-step" style="background: white; border-color: var(--border);">
+        <div class="icon">&#x1F4CB;</div>
+        <div class="label" style="color: var(--text);">3 Assessments</div>
+      </div>
+      <div class="flow-arrow" style="color: var(--primary);">&#x27A1;</div>
+      <div class="flow-step" style="background: white; border-color: var(--border);">
+        <div class="icon">&#x1F3AF;</div>
+        <div class="label" style="color: var(--text);">Workforce Plan</div>
+      </div>
+      <div class="flow-arrow" style="color: var(--primary);">&#x27A1;</div>
+      <div class="flow-step" style="background: white; border-color: var(--border);">
+        <div class="icon">&#x1F3E2;</div>
+        <div class="label" style="color: var(--text);">Employer Match</div>
+      </div>
+      <div class="flow-arrow" style="color: var(--primary);">&#x27A1;</div>
+      <div class="flow-step" style="background: var(--success); border-color: var(--success);">
+        <div class="icon">&#x2705;</div>
+        <div class="label" style="color: white;">Placement</div>
+      </div>
+    </div>
+    <div class="grid-4" style="margin-top: 48px;">
+      <div class="card" style="text-align: center;">
+        <div class="stat-number stat-blue">3</div>
+        <div class="stat-label" style="color: var(--text-muted);">TSRG Assessments<br>(auto-scored)</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div class="stat-number stat-green">137+</div>
+        <div class="stat-label" style="color: var(--text-muted);">Recovery-Friendly<br>Employers</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div class="stat-number stat-amber">100%</div>
+        <div class="stat-label" style="color: var(--text-muted);">HIPAA + 42 CFR<br>Part 2 Compliant</div>
+      </div>
+      <div class="card" style="text-align: center;">
+        <div class="stat-number" style="color: var(--primary);">&lt;30m</div>
+        <div class="stat-label" style="color: var(--text-muted);">Onboarding with<br>pre-loaded templates</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Dashboard Mockup ==================== -->
+<div class="slide slide-dark" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">Staff Experience</span>
+    <h2 class="slide-title">Command Center Dashboard</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6); margin-bottom: 32px;">
+      Real-time visibility into your caseload, referrals, and outcomes at a glance.
+    </p>
+    <div class="mockup-browser">
+      <div class="mockup-toolbar">
+        <div class="mockup-dot dot-red"></div>
+        <div class="mockup-dot dot-yellow"></div>
+        <div class="mockup-dot dot-green"></div>
+        <div class="mockup-url">app.impactforge.io/dashboard</div>
+      </div>
+      <div class="mockup-content" style="display: flex;">
+        <!-- Sidebar -->
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-logo">Impact<span>Forge</span></div>
+          <div class="mock-sidebar-item active"><span>&#x1F4CA;</span> Dashboard</div>
+          <div class="mock-sidebar-item"><span>&#x1F465;</span> Clients</div>
+          <div class="mock-sidebar-item"><span>&#x1F4E5;</span> Referrals</div>
+          <div class="mock-sidebar-item"><span>&#x1F4CB;</span> Assessments</div>
+          <div class="mock-sidebar-item"><span>&#x1F3AF;</span> Plans</div>
+          <div class="mock-sidebar-item"><span>&#x1F3E2;</span> Employers</div>
+          <div class="mock-sidebar-item"><span>&#x1F4C6;</span> Encounters</div>
+          <div class="mock-sidebar-item"><span>&#x1F4C8;</span> Reports</div>
+          <div class="mock-sidebar-item"><span>&#x2699;</span> Settings</div>
+        </div>
+        <!-- Main content -->
+        <div class="mock-main">
+          <div class="mock-header">
+            <h3>Dashboard</h3>
+            <div style="display: flex; gap: 8px;">
+              <button class="mock-btn">+ New Referral</button>
+              <button class="mock-btn" style="background: var(--primary);">Import Clients</button>
+            </div>
+          </div>
+          <div class="mock-stats-row">
+            <div class="mock-stat-card">
+              <div class="num" style="color: var(--accent);">42</div>
+              <div class="label">Active Clients</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="num" style="color: var(--accent-warm);">8</div>
+              <div class="label">Pending Referrals</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="num" style="color: var(--success);">31</div>
+              <div class="label">Active Plans</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="num" style="color: var(--primary);">67</div>
+              <div class="label">Monthly Encounters</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="num" style="color: var(--success);">38%</div>
+              <div class="label">Placement Rate</div>
+            </div>
+          </div>
+          <div class="mock-table">
+            <div style="padding: 14px 16px; font-weight: 600; font-size: 14px; color: var(--text);">Recent Referrals</div>
+            <div class="mock-table-header">
+              <span>Client</span>
+              <span>Source</span>
+              <span>Date</span>
+              <span>Status</span>
+              <span>Action</span>
+            </div>
+            <div class="mock-table-row">
+              <span style="font-weight: 500;">Marcus J.</span>
+              <span style="color: var(--text-muted);">Denver BHA Clinic</span>
+              <span style="color: var(--text-muted);">Apr 3</span>
+              <span><span class="mock-badge badge-amber">Pending</span></span>
+              <span style="color: var(--accent); font-weight: 500; font-size: 12px;">Begin Intake</span>
+            </div>
+            <div class="mock-table-row">
+              <span style="font-weight: 500;">Angela R.</span>
+              <span style="color: var(--text-muted);">Jefferson County Jail</span>
+              <span style="color: var(--text-muted);">Apr 2</span>
+              <span><span class="mock-badge badge-blue">In Progress</span></span>
+              <span style="color: var(--accent); font-weight: 500; font-size: 12px;">View Profile</span>
+            </div>
+            <div class="mock-table-row">
+              <span style="font-weight: 500;">David T.</span>
+              <span style="color: var(--text-muted);">Self-Referral</span>
+              <span style="color: var(--text-muted);">Apr 1</span>
+              <span><span class="mock-badge badge-green">Active</span></span>
+              <span style="color: var(--accent); font-weight: 500; font-size: 12px;">View Profile</span>
+            </div>
+            <div class="mock-table-row">
+              <span style="font-weight: 500;">Sarah M.</span>
+              <span style="color: var(--text-muted);">Aurora Recovery Ctr</span>
+              <span style="color: var(--text-muted);">Mar 30</span>
+              <span><span class="mock-badge badge-green">Active</span></span>
+              <span style="color: var(--accent); font-weight: 500; font-size: 12px;">View Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: Assessments ==================== -->
+<div class="slide slide-light" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Core Feature</span>
+    <h2 class="slide-title" style="color: var(--primary);">TSRG Assessment Suite</h2>
+    <p class="slide-subtitle slide-subtitle-dark">
+      Three standardized, auto-scored assessments that generate a complete workforce readiness profile.
+    </p>
+    <div class="grid-3" style="margin-top: 40px;">
+      <!-- Skills -->
+      <div class="assess-card">
+        <div class="assess-header">
+          <h4>&#x1F527; Skills Assessment</h4>
+          <span class="mock-badge badge-green">Complete</span>
+        </div>
+        <div class="assess-progress"><div class="assess-progress-fill" style="width: 100%;"></div></div>
+        <div class="assess-result">
+          <span class="cat">Computer Skills</span>
+          <div class="assess-bar-wrap"><div class="assess-bar bar-mid" style="width: 65%;"></div></div>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Communication</span>
+          <div class="assess-bar-wrap"><div class="assess-bar bar-high" style="width: 85%;"></div></div>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Customer Service</span>
+          <div class="assess-bar-wrap"><div class="assess-bar bar-high" style="width: 78%;"></div></div>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Food Safety</span>
+          <div class="assess-bar-wrap"><div class="assess-bar bar-low" style="width: 35%;"></div></div>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Construction</span>
+          <div class="assess-bar-wrap"><div class="assess-bar bar-mid" style="width: 55%;"></div></div>
+        </div>
+        <div style="margin-top: 12px; padding: 10px; background: #f0fdf4; border-radius: 8px; text-align: center;">
+          <span style="font-size: 12px; font-weight: 600; color: #16a34a;">Readiness: Developing</span>
+        </div>
+      </div>
+      <!-- Interests -->
+      <div class="assess-card">
+        <div class="assess-header">
+          <h4>&#x2B50; Interests Assessment</h4>
+          <span class="mock-badge badge-green">Complete</span>
+        </div>
+        <div class="assess-progress"><div class="assess-progress-fill" style="width: 100%;"></div></div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Top matched interests:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <span class="mock-badge badge-blue">Healthcare</span>
+          <span class="mock-badge badge-blue">Helping Others</span>
+          <span class="mock-badge badge-blue">Hands-on Work</span>
+          <span class="mock-badge" style="background: #ede9fe; color: #7c3aed;">Independence</span>
+          <span class="mock-badge" style="background: #ede9fe; color: #7c3aed;">Stability</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 16px 0 8px;">Recommended sectors:</p>
+        <div style="font-size: 13px; color: var(--text);">
+          <div style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;">&#x1F3E5; Healthcare Aide</div>
+          <div style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;">&#x1F6E0; Skilled Trades</div>
+          <div style="padding: 6px 0;">&#x1F4E6; Warehouse / Logistics</div>
+        </div>
+      </div>
+      <!-- Barriers -->
+      <div class="assess-card">
+        <div class="assess-header">
+          <h4>&#x1F6A7; Barriers Assessment</h4>
+          <span class="mock-badge badge-amber">In Progress</span>
+        </div>
+        <div class="assess-progress"><div class="assess-progress-fill" style="width: 60%;"></div></div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Identified barriers:</p>
+        <div class="assess-result">
+          <span class="cat">Transportation</span>
+          <span class="mock-badge badge-red" style="font-size: 10px;">High</span>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Housing</span>
+          <span class="mock-badge badge-amber" style="font-size: 10px;">Medium</span>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Criminal Record</span>
+          <span class="mock-badge badge-amber" style="font-size: 10px;">Medium</span>
+        </div>
+        <div class="assess-result">
+          <span class="cat">Childcare</span>
+          <span class="mock-badge badge-green" style="font-size: 10px;">Low</span>
+        </div>
+        <div style="margin-top: 12px; padding: 10px; background: #fef3c7; border-radius: 8px;">
+          <span style="font-size: 11px; color: #92400e;">Auto-generated recommendations link to local resources</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: Employer Matching + Plans ==================== -->
+<div class="slide slide-dark" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-tag tag-green">Core Feature</span>
+    <h2 class="slide-title">Employer Matching &amp; Workforce Plans</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6); margin-bottom: 32px;">
+      Assessment results drive individualized plans and smart employer matches from 137+ Recovery-Friendly Employers.
+    </p>
+    <div class="grid-2">
+      <!-- Employer match mockup -->
+      <div class="mockup-browser" style="box-shadow: 0 16px 60px rgba(0,0,0,0.3);">
+        <div class="mockup-toolbar">
+          <div class="mockup-dot dot-red"></div>
+          <div class="mockup-dot dot-yellow"></div>
+          <div class="mockup-dot dot-green"></div>
+          <div class="mockup-url">app.impactforge.io/clients/marcus-j/matches</div>
+        </div>
+        <div style="background: white; padding: 20px;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Employer Matches for Marcus J.</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Based on skills, interests, and barrier profile</div>
+
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 14px; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text);">Denver Health</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Healthcare &bull; Environmental Services</div>
+              </div>
+              <span class="mock-badge badge-green">95% Match</span>
+            </div>
+            <div style="font-size: 11px; color: #16a34a; margin-top: 8px;">&#x2713; Recovery-Friendly &bull; Transit Accessible &bull; Training Provided</div>
+          </div>
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text);">Goodwill Industries</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Retail &bull; Warehouse / Sorting</div>
+              </div>
+              <span class="mock-badge badge-blue">82% Match</span>
+            </div>
+            <div style="font-size: 11px; color: var(--accent); margin-top: 8px;">&#x2713; Recovery-Friendly &bull; Flexible Schedule</div>
+          </div>
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--text);">Mile High Workshop</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Construction &bull; Maintenance</div>
+              </div>
+              <span class="mock-badge badge-blue">76% Match</span>
+            </div>
+            <div style="font-size: 11px; color: var(--accent); margin-top: 8px;">&#x2713; Recovery-Friendly &bull; Certification Support</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan mockup -->
+      <div class="mockup-browser" style="box-shadow: 0 16px 60px rgba(0,0,0,0.3);">
+        <div class="mockup-toolbar">
+          <div class="mockup-dot dot-red"></div>
+          <div class="mockup-dot dot-yellow"></div>
+          <div class="mockup-dot dot-green"></div>
+          <div class="mockup-url">app.impactforge.io/plans/wfp-004</div>
+        </div>
+        <div style="background: white; padding: 20px;">
+          <div style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Workforce Development Plan</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Marcus J. &mdash; Created Apr 1, 2026</div>
+
+          <div style="background: #eff6ff; border-radius: 8px; padding: 12px; margin-bottom: 14px;">
+            <div style="font-size: 11px; font-weight: 600; color: #2563eb; margin-bottom: 4px;">LONG-TERM GOAL</div>
+            <div style="font-size: 13px; color: var(--text);">Obtain stable employment in healthcare or skilled trades within 90 days</div>
+          </div>
+
+          <div style="font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 8px;">Tasks</div>
+          <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px;">
+              <div style="width: 16px; height: 16px; border-radius: 3px; background: var(--success);"></div>
+              <span style="text-decoration: line-through; color: var(--text-muted);">Complete Skills Assessment</span>
+              <span style="margin-left: auto; font-size: 10px; color: var(--text-muted);">Apr 1</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px;">
+              <div style="width: 16px; height: 16px; border-radius: 3px; background: var(--success);"></div>
+              <span style="text-decoration: line-through; color: var(--text-muted);">Complete Interests Assessment</span>
+              <span style="margin-left: auto; font-size: 10px; color: var(--text-muted);">Apr 2</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; background: #fefce8;">
+              <div style="width: 16px; height: 16px; border-radius: 3px; border: 2px solid var(--accent-warm);"></div>
+              <span style="color: var(--text);">Apply to Denver Health (Environmental Svc)</span>
+              <span style="margin-left: auto; font-size: 10px; color: var(--accent-warm);">Apr 8</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px;">
+              <div style="width: 16px; height: 16px; border-radius: 3px; border: 2px solid var(--border);"></div>
+              <span style="color: var(--text);">Enroll in RTD transit pass program</span>
+              <span style="margin-left: auto; font-size: 10px; color: var(--text-muted);">Apr 10</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; font-size: 12px;">
+              <div style="width: 16px; height: 16px; border-radius: 3px; border: 2px solid var(--border);"></div>
+              <span style="color: var(--text);">Interview prep session with coach</span>
+              <span style="margin-left: auto; font-size: 10px; color: var(--text-muted);">Apr 14</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: Client Mobile PWA ==================== -->
+<div class="slide slide-light" id="slide-7">
+  <div class="slide-inner" style="text-align: center;">
+    <span class="slide-tag tag-dark">Client Experience</span>
+    <h2 class="slide-title" style="color: var(--primary);">Mobile-First Client PWA</h2>
+    <p class="slide-subtitle slide-subtitle-dark" style="margin: 0 auto 40px;">
+      Clients stay engaged from their phone &mdash; check-ins, plan progress, and task completion.
+    </p>
+    <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+      <!-- Phone 1: Check-in -->
+      <div>
+        <div class="mockup-phone">
+          <div class="mockup-phone-screen">
+            <div class="mockup-phone-notch"></div>
+            <div class="phone-header">
+              <h4>Weekly Check-In</h4>
+              <p>How are you doing this week?</p>
+            </div>
+            <div class="phone-body" style="background: var(--bg);">
+              <div class="phone-card">
+                <h5>How are you feeling?</h5>
+                <div style="display: flex; gap: 12px; font-size: 28px; margin-top: 8px;">
+                  <span style="opacity: 0.3;">&#x1F614;</span>
+                  <span style="opacity: 0.3;">&#x1F610;</span>
+                  <span style="background: #dbeafe; border-radius: 8px; padding: 2px 6px;">&#x1F60A;</span>
+                  <span style="opacity: 0.3;">&#x1F604;</span>
+                  <span style="opacity: 0.3;">&#x1F929;</span>
+                </div>
+              </div>
+              <div class="phone-card">
+                <h5>Employment Status</h5>
+                <div style="padding: 8px 12px; background: #dbeafe; border: 1px solid #93c5fd; border-radius: 8px; font-size: 12px; color: #1d4ed8; font-weight: 500;">Actively Searching</div>
+              </div>
+              <div class="phone-card">
+                <h5>Hours Worked This Week</h5>
+                <div style="font-size: 32px; font-weight: 700; color: var(--primary);">12</div>
+              </div>
+              <div style="background: var(--accent); color: white; text-align: center; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 14px; margin-top: 8px;">Submit Check-In</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 16px; font-weight: 500;">Weekly Check-In</p>
+      </div>
+
+      <!-- Phone 2: Plan -->
+      <div>
+        <div class="mockup-phone">
+          <div class="mockup-phone-screen">
+            <div class="mockup-phone-notch"></div>
+            <div class="phone-header" style="background: var(--success);">
+              <h4>My Plan</h4>
+              <p>Your path to employment</p>
+            </div>
+            <div class="phone-body" style="background: var(--bg);">
+              <div class="phone-card">
+                <h5 style="color: var(--primary);">&#x1F3AF; My Goal</h5>
+                <p>Obtain stable employment in healthcare or skilled trades within 90 days</p>
+              </div>
+              <div class="phone-card">
+                <h5>My Tasks</h5>
+                <div class="phone-task">
+                  <div class="phone-checkbox checked"></div>
+                  <span style="text-decoration: line-through; color: var(--text-muted);">Complete Skills Assessment</span>
+                </div>
+                <div class="phone-task">
+                  <div class="phone-checkbox checked"></div>
+                  <span style="text-decoration: line-through; color: var(--text-muted);">Complete Interests Assessment</span>
+                </div>
+                <div class="phone-task">
+                  <div class="phone-checkbox"></div>
+                  <span>Apply to Denver Health</span>
+                </div>
+                <div class="phone-task" style="border-bottom: none;">
+                  <div class="phone-checkbox"></div>
+                  <span>Get transit pass</span>
+                </div>
+              </div>
+              <div style="text-align: center; padding: 12px; font-size: 12px; color: var(--success); font-weight: 600;">2 of 4 tasks complete</div>
+            </div>
+            <div class="phone-tab-bar">
+              <div class="phone-tab"><div class="phone-tab-icon">&#x1F4CB;</div>Check-In</div>
+              <div class="phone-tab active"><div class="phone-tab-icon">&#x1F3AF;</div>My Plan</div>
+              <div class="phone-tab"><div class="phone-tab-icon">&#x2705;</div>Tasks</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 16px; font-weight: 500;">Workforce Plan View</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: Reports & AI ==================== -->
+<div class="slide slide-accent-bg" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-tag tag-green">Analytics</span>
+    <h2 class="slide-title">Reports &amp; AI-Powered Insights</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6); margin-bottom: 32px;">
+      Funder-ready reports, Medicaid encounter exports, and conversational AI queries on your data.
+    </p>
+    <div class="grid-2">
+      <!-- Placement chart -->
+      <div class="mockup-browser" style="box-shadow: 0 16px 60px rgba(0,0,0,0.3);">
+        <div class="mockup-toolbar">
+          <div class="mockup-dot dot-red"></div>
+          <div class="mockup-dot dot-yellow"></div>
+          <div class="mockup-dot dot-green"></div>
+          <div class="mockup-url">app.impactforge.io/reports</div>
+        </div>
+        <div style="background: white; padding: 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 16px;">Placement Rate by Sector</div>
+          <div class="chart-bars">
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 72%; background: var(--accent);"></div>
+              <div class="chart-label">Healthcare</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 58%; background: var(--accent);"></div>
+              <div class="chart-label">Warehouse</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 45%; background: var(--accent);"></div>
+              <div class="chart-label">Food Svc</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 65%; background: var(--accent);"></div>
+              <div class="chart-label">Construct.</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 35%; background: var(--accent);"></div>
+              <div class="chart-label">Retail</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 50%; background: var(--accent);"></div>
+              <div class="chart-label">Trades</div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <div style="text-align: center;">
+              <div style="font-size: 24px; font-weight: 700; color: var(--primary);">38%</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Overall Rate</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 24px; font-weight: 700; color: var(--success);">23 days</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Avg to Placement</div>
+            </div>
+            <div style="text-align: center;">
+              <div style="font-size: 24px; font-weight: 700; color: var(--accent);">16</div>
+              <div style="font-size: 11px; color: var(--text-muted);">Placed This Month</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Chat -->
+      <div class="mockup-browser" style="box-shadow: 0 16px 60px rgba(0,0,0,0.3);">
+        <div class="mockup-toolbar">
+          <div class="mockup-dot dot-red"></div>
+          <div class="mockup-dot dot-yellow"></div>
+          <div class="mockup-dot dot-green"></div>
+          <div class="mockup-url">app.impactforge.io/reports/ai</div>
+        </div>
+        <div style="background: white; padding: 20px; min-height: 320px; display: flex; flex-direction: column;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 16px;">&#x2728; AI Conversational Reports</div>
+
+          <div style="flex: 1;">
+            <!-- User query -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 12px;">
+              <div style="background: var(--primary); color: white; padding: 10px 14px; border-radius: 14px 14px 4px 14px; font-size: 12px; max-width: 70%;">
+                What are the most common barriers for clients referred from jail?
+              </div>
+            </div>
+            <!-- AI response -->
+            <div style="display: flex; margin-bottom: 12px;">
+              <div style="background: #f1f5f9; padding: 12px 14px; border-radius: 14px 14px 14px 4px; font-size: 12px; max-width: 85%; line-height: 1.6;">
+                <strong>Top barriers for jail-referred clients (n=18):</strong><br>
+                1. Transportation &mdash; 78% (High severity)<br>
+                2. Housing Instability &mdash; 61%<br>
+                3. Criminal Record &mdash; 56%<br>
+                4. Education Gaps &mdash; 44%<br><br>
+                <span style="color: var(--text-muted);">Recommendation: Partner with RTD for transit passes; 14 of 18 clients lack reliable transportation.</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <input style="flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 12px; font-family: inherit; outline: none;" placeholder="Ask about your data..." disabled>
+            <div style="background: var(--accent); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white;">&#x27A4;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: Compliance & Security ==================== -->
+<div class="slide slide-light" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Trust &amp; Compliance</span>
+    <h2 class="slide-title" style="color: var(--primary);">Built for HIPAA &amp; 42 CFR Part 2</h2>
+    <p class="slide-subtitle slide-subtitle-dark">
+      Compliance isn't an add-on &mdash; it's the architecture. Two-zone data separation protects your clients and your organization.
+    </p>
+    <div class="grid-2" style="margin-top: 40px;">
+      <div>
+        <div class="card" style="margin-bottom: 16px; border-left: 4px solid var(--danger);">
+          <h4 style="color: var(--danger);">&#x1F512; Protected Data Zone</h4>
+          <p style="margin-top: 8px;">PII, PHI, and 42 CFR Part 2 substance use data. Encrypted at rest via pgcrypto. Audit triggers on every access. Consent-gated endpoints.</p>
+          <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="mock-badge badge-red">Client Demographics</span>
+            <span class="mock-badge badge-red">Referral Details</span>
+            <span class="mock-badge badge-red">Raw Assessments</span>
+            <span class="mock-badge badge-red">Encounter Notes</span>
+            <span class="mock-badge badge-red">Audit Logs</span>
+          </div>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--success);">
+          <h4 style="color: var(--success);">&#x1F4CA; Application Data Zone</h4>
+          <p style="margin-top: 8px;">De-identified operational data safe for dashboards, reports, and analytics. No FK constraints to protected zone &mdash; linked by surrogate UUIDs only.</p>
+          <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px;">
+            <span class="mock-badge badge-green">Workforce Plans</span>
+            <span class="mock-badge badge-green">Employer Directory</span>
+            <span class="mock-badge badge-green">Assessment Summaries</span>
+            <span class="mock-badge badge-green">Workflows</span>
+            <span class="mock-badge badge-green">Form Templates</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="section-title" style="color: var(--primary); margin-bottom: 16px;">Security Posture</h3>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">Row-Level Security (RLS)</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Every table enforces tenant isolation at the database level</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">Role-Based Access Control</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Field-level permissions per role; least-privilege by default</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">Multi-Factor Authentication</div>
+            <div style="font-size: 13px; color: var(--text-muted);">TOTP-based MFA for all staff accounts</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">Full Audit Trail</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Automatic DB triggers log who accessed what, when, and why</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">42 CFR Part 2 Consent Enforcement</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Consent-gated endpoints block access to SUD data without authorization</div>
+          </div>
+        </div>
+        <div class="compliance-item">
+          <div class="check-icon">&#x2713;</div>
+          <div>
+            <div style="font-weight: 600; font-size: 14px;">Encryption at Rest &amp; In Transit</div>
+            <div style="font-size: 13px; color: var(--text-muted);">pgcrypto for PII fields; TLS for all connections</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: IPS & 2027 Readiness ==================== -->
+<div class="slide slide-dark" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-tag tag-amber">Future-Ready</span>
+    <h2 class="slide-title">IPS Fidelity &amp; 2027 Work Requirements</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6); margin-bottom: 32px;">
+      Get ahead of Medicaid's 80-hour/month work requirement with built-in tracking and projections.
+    </p>
+    <div class="grid-2">
+      <div>
+        <div class="card-dark" style="margin-bottom: 20px;">
+          <h4 style="margin-bottom: 16px;">IPS Fidelity Metrics</h4>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <span style="font-size: 13px;">Individualized Placements</span>
+            <span style="font-size: 13px; color: var(--success);">&#x25B2; 4.2 / 5.0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <span style="font-size: 13px;">Competitive Employment</span>
+            <span style="font-size: 13px; color: var(--success);">&#x25B2; 3.8 / 5.0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <span style="font-size: 13px;">Benefits Planning</span>
+            <span style="font-size: 13px; color: var(--accent-warm);">&#x25BA; 2.9 / 5.0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <span style="font-size: 13px;">Rapid Job Search</span>
+            <span style="font-size: 13px; color: var(--success);">&#x25B2; 3.5 / 5.0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <span style="font-size: 13px;">Job Development</span>
+            <span style="font-size: 13px; color: var(--accent-warm);">&#x25BA; 3.1 / 5.0</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card-dark">
+          <h4 style="margin-bottom: 16px;">2027 Work Requirement Tracker</h4>
+          <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 56px; font-weight: 800; color: var(--accent-warm); letter-spacing: -2px;">68%</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.5);">Projected compliance rate</div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+              <span>Clients meeting 80 hrs/month</span>
+              <span style="color: var(--success);">29 / 42</span>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+              <div style="height: 100%; width: 69%; background: var(--success); border-radius: 4px;"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+              <span>Clients in gap (40-79 hrs)</span>
+              <span style="color: var(--accent-warm);">9 / 42</span>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+              <div style="height: 100%; width: 21%; background: var(--accent-warm); border-radius: 4px;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+              <span>Clients at risk (&lt;40 hrs)</span>
+              <span style="color: var(--danger);">4 / 42</span>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+              <div style="height: 100%; width: 10%; background: var(--danger); border-radius: 4px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: Roadmap ==================== -->
+<div class="slide slide-dark" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">Roadmap</span>
+    <h2 class="slide-title">Phased Delivery</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6);">
+      A clear path from pilot to production, with TSRG as the flagship implementation.
+    </p>
+    <div class="grid-2" style="margin-top: 40px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot dot-complete">&#x2713;</div>
+          <div class="timeline-content">
+            <h4>Phase 1a &mdash; Foundation</h4>
+            <p>Auth, multi-tenant DB, Protected/Application zones, RLS policies, API scaffold, CI/CD pipeline.</p>
+            <div class="date">Completed</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-current">&#x25B6;</div>
+          <div class="timeline-content">
+            <h4>Phase 1b &mdash; TSRG Core (Current)</h4>
+            <p>3 TSRG assessments, workforce plans, RFE directory, referral intake, staff dashboard, client PWA, encounter logging.</p>
+            <div class="date">In Progress &mdash; April 2026</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-future">3</div>
+          <div class="timeline-content">
+            <h4>Phase 2 &mdash; Reports &amp; Integrations</h4>
+            <p>Medicaid encounter exports, placement analytics, AI conversational reports, EHR ingestion, IPS fidelity tracking.</p>
+            <div class="date">Target &mdash; Q3 2026</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-future">4</div>
+          <div class="timeline-content">
+            <h4>Phase 3 &mdash; Scale &amp; Expand</h4>
+            <p>Additional provider onboarding, automated Medicaid billing, EHR write-back, job board integrations, additional vertical templates.</p>
+            <div class="date">Target &mdash; Q1 2027</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card-dark" style="margin-bottom: 20px;">
+          <h4 style="margin-bottom: 16px;">Pilot Scope</h4>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px;">
+            <div style="flex: 1; min-width: 120px;">
+              <div style="font-size: 32px; font-weight: 800; color: var(--accent);">3</div>
+              <div style="opacity: 0.6;">BHA-Certified Providers</div>
+            </div>
+            <div style="flex: 1; min-width: 120px;">
+              <div style="font-size: 32px; font-weight: 800; color: var(--success);">137+</div>
+              <div style="opacity: 0.6;">Seeded Employers</div>
+            </div>
+            <div style="flex: 1; min-width: 120px;">
+              <div style="font-size: 32px; font-weight: 800; color: var(--accent-warm);">Metro</div>
+              <div style="opacity: 0.6;">Denver / Colorado</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-dark">
+          <h4 style="margin-bottom: 16px;">Success Metrics (Phase 1)</h4>
+          <div style="font-size: 13px; line-height: 2;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success);">&#x25CF;</span> 3 partner agencies onboarded
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success);">&#x25CF;</span> Workforce Plan within 30 days of referral
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success);">&#x25CF;</span> Placement rate tracked and improving
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success);">&#x25CF;</span> Zero HIPAA / 42 CFR Part 2 violations
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success);">&#x25CF;</span> 99.5% uptime, &lt;2s page loads
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: CTA ==================== -->
+<div class="slide slide-title-bg" id="slide-12">
+  <div class="slide-inner cta-box">
+    <span class="slide-tag tag-white">Next Steps</span>
+    <h2 style="font-size: 48px; font-weight: 800; letter-spacing: -2px; margin-bottom: 16px;">
+      Let's Bridge the Gap Together
+    </h2>
+    <p class="slide-subtitle" style="margin: 0 auto 48px; text-align: center;">
+      Gateway2Work is ready for the Colorado pilot. Let's align on timeline, onboard your first providers, and start changing outcomes.
+    </p>
+    <div class="grid-3" style="max-width: 700px; margin: 0 auto;">
+      <div class="card-dark" style="text-align: center; padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 8px;">&#x1F4C5;</div>
+        <h4>Schedule Demo</h4>
+        <p style="font-size: 12px;">Walk through the platform with your team</p>
+      </div>
+      <div class="card-dark" style="text-align: center; padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 8px;">&#x1F3E2;</div>
+        <h4>Pilot Kickoff</h4>
+        <p style="font-size: 12px;">Onboard 3 BHA providers in Metro Denver</p>
+      </div>
+      <div class="card-dark" style="text-align: center; padding: 24px;">
+        <div style="font-size: 28px; margin-bottom: 8px;">&#x1F680;</div>
+        <h4>Scale</h4>
+        <p style="font-size: 12px;">Expand statewide and add verticals</p>
+      </div>
+    </div>
+    <div style="margin-top: 48px; font-size: 14px; opacity: 0.7;">
+      Gateway2Work &mdash; TSRG Workforce Development Platform<br>
+      <span style="font-size: 12px;">Prepared for Terri &bull; Spring Transits &bull; April 2026</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end slides-wrapper -->
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  document.getElementById('total-slides').textContent = totalSlides;
+  let currentSlide = 1;
+
+  function updateCounter() {
+    document.getElementById('current-slide').textContent = currentSlide;
+  }
+
+  function goToSlide(n) {
+    currentSlide = Math.max(1, Math.min(n, totalSlides));
+    document.getElementById('slide-' + currentSlide).scrollIntoView({ behavior: 'smooth' });
+    updateCounter();
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      prevSlide();
+    } else if (e.key === 'f' || e.key === 'F') {
+      toggleFullscreen();
+    }
+  });
+
+  // Update counter on scroll
+  const wrapper = document.getElementById('slidesWrapper');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        currentSlide = parseInt(id.split('-')[1]);
+        updateCounter();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(slide => observer.observe(slide));
+</script>
+
+</body>
+</html>

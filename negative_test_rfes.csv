@@ -1,0 +1,11 @@
+name,sector,city,state,is_rfe_certified,trainee_readiness,phone,email,notes
+,Food Service,Denver,CO,true,yes,303-555-9999,error@test.com,Missing name row
+No Sector Corp,,Aurora,CO,true,yes,303-555-9998,error@test.com,Missing sector row
+Invalid Readiness,Logistics,Lakewood,CO,true,super_ready,303-555-9997,error@test.com,Invalid trainee_readiness value
+Maybe Certified,Construction,Boulder,CO,maybe,yes,303-555-9996,error@test.com,Non-boolean certification
+' OR 1=1; --,Security,Centennial,CO,true,yes,303-555-9995,error@test.com,SQL Injection attempt
+<script>alert('xss')</script>,IT,Denver,CO,true,yes,303-555-9994,error@test.com,XSS attempt
+This Name Is Extremely Long And Might Break The Layout If The UI Does Not Handle Overflow Correctly Or If The Database Column Has A Specific Length Limit That We Are Currently Exceeding With This Ridiculously Long String Of Text That Just Keeps Going And Going,Retail,Denver,CO,true,yes,303-555-9993,error@test.com,Extremely long name
+123456789,987654321,80202,CO,false,no,555,not-an-email,Numeric fields and invalid email
+  Trimmer Co  ,  Food  ,Denver,CO,true,yes,303-555-9992,trim@test.com,Leading and trailing spaces
+"Company With, Comma",Sector,Denver,CO,true,yes,303-555-9991,comma@test.com,Quoted comma in name

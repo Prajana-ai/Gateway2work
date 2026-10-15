@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Journey - Participant Experience Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --accent: #0ea5e9;
+    --success: #10b981;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0f172a;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-logo { color: white; font-weight: 700; font-size: 16px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;
+  }
+  .slide-counter { color: rgba(255,255,255,0.5); font-size: 12px; margin: 0 12px; }
+
+  /* Slides */
+  .slides-wrapper {
+    padding-top: 60px;
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+    height: 100vh;
+  }
+  .slide {
+    min-height: calc(100vh - 60px);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .slide-inner { max-width: 1000px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+
+  /* Hero slide special layout */
+  .slide-hero .slide-inner { display: block; text-align: center; }
+
+  /* Typography */
+  h1 { font-size: 56px; font-weight: 800; color: white; line-height: 1.1; margin-bottom: 20px; }
+  h2 { font-size: 42px; font-weight: 700; color: white; margin-bottom: 16px; }
+  p { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.7); }
+  .tag { display: inline-block; padding: 6px 12px; border-radius: 20px; background: rgba(14, 165, 233, 0.2); color: var(--accent); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+
+  /* Phone Mockup */
+  .phone {
+    background: #1e293b;
+    width: 280px;
+    height: 560px;
+    border-radius: 36px;
+    padding: 10px;
+    border: 4px solid #334155;
+    margin: 0 auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+  .phone-screen {
+    background: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-header {
+    background: var(--primary);
+    color: white;
+    padding: 20px 16px;
+    padding-top: 30px;
+  }
+  .phone-header h4 { font-size: 16px; font-weight: 700; }
+  .phone-header p { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  .phone-content { flex: 1; padding: 16px; background: #f1f5f9; overflow-y: auto; }
+  .phone-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid var(--border); }
+  .phone-card h5 { font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--primary); }
+  .phone-card p { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+  .phone-btn { background: var(--accent); color: white; text-align: center; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 600; margin-top: 10px; cursor: pointer; }
+
+  /* App Elements */
+  .task-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 11px; }
+  .checkbox { width: 16px; height: 16px; border: 2px solid #cbd5e1; border-radius: 4px; flex-shrink: 0; }
+  .checkbox.checked { background: var(--success); border-color: var(--success); }
+
+  .phone-tabs { display: flex; border-top: 1px solid #e2e8f0; background: white; padding: 8px 0; }
+  .tab { flex: 1; text-align: center; font-size: 9px; color: var(--text-muted); }
+  .tab.active { color: var(--accent); font-weight: 700; }
+
+  /* Backgrounds */
+  .bg-dark { background: #0f172a; }
+  .bg-gradient { background: linear-gradient(135deg, #1e3a5f 0%, #0ea5e9 100%); }
+
+  @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  .animate { animation: slideIn 0.5s ease-out; }
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Impact<span>Bridge</span> | My Journey</div>
+  <div class="nav-controls">
+    <span class="slide-counter"><span id="current-slide">1</span> / 7</span>
+    <button class="nav-btn" onclick="prevSlide()">Prev</button>
+    <button class="nav-btn" onclick="nextSlide()">Next</button>
+  </div>
+</nav>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+<!-- SLIDE 1: Intro -->
+<div class="slide bg-gradient slide-hero" id="slide-1">
+  <div class="slide-inner">
+    <span class="tag" style="background: white; color: var(--primary);">Your Path to Success</span>
+    <h1>My Journey with ImpactBridge</h1>
+    <p style="max-width: 600px; margin: 0 auto;">
+      A simple, secure, and supportive app designed to help you bridge the gap from recovery to a rewarding career.
+    </p>
+    <div style="margin-top: 40px; font-size: 14px; color: white; opacity: 0.8;">
+      Available on any smartphone &bull; No download required
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Onboarding -->
+<div class="slide bg-dark" id="slide-2">
+  <div class="slide-inner">
+    <div>
+      <span class="tag">Step 1: Get Started</span>
+      <h2>Secure Access</h2>
+      <p>Your journey starts with a simple invitation from your Case Manager. One secure login gives you access to your entire career plan.</p>
+      <ul style="color: rgba(255,255,255,0.6); margin-top: 24px; font-size: 16px; line-height: 2;">
+        <li>✅ Secure referral from your provider</li>
+        <li>✅ Privacy-first data protection</li>
+        <li>✅ Easy mobile login</li>
+      </ul>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-header" style="text-align: center; padding-bottom: 40px;">
+          <h4>Welcome back</h4>
+          <p>Sign in to your journey</p>
+        </div>
+        <div class="phone-content" style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="phone-card">
+            <h5 style="margin-bottom: 12px;">Email Address</h5>
+            <div style="height: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;"></div>
+          </div>
+          <div class="phone-card">
+            <h5 style="margin-bottom: 12px;">Password</h5>
+            <div style="height: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;"></div>
+          </div>
+          <div class="phone-btn">Sign In</div>
+          <p style="text-align: center; font-size: 10px; color: #94a3b8; margin-top: 16px;">Protected by ImpactBridge Security</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Assessments -->
+<div class="slide bg-dark" id="slide-3">
+  <div class="slide-inner">
+    <div>
+      <span class="tag">Step 2: Discover</span>
+      <h2>Know Your Strengths</h2>
+      <p>Quick, interactive assessments help us understand your skills, interests, and where you might need extra support.</p>
+      <div style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px;">
+          <div style="font-size: 20px;">🛠️</div>
+          <div style="font-weight: 700; color: white; margin-top: 8px;">Skills</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px;">
+          <div style="font-size: 20px;">⭐</div>
+          <div style="font-weight: 700; color: white; margin-top: 8px;">Interests</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <h4>Discovery</h4>
+          <p>Tell us about yourself</p>
+        </div>
+        <div class="phone-content">
+          <div class="phone-card" style="border-left: 4px solid var(--accent);">
+            <h5>Interests Assessment</h5>
+            <p>What kind of work environment do you enjoy most?</p>
+            <div style="display: grid; gap: 8px; margin-top: 12px;">
+              <div style="padding: 8px; background: #f8fafc; border-radius: 6px; font-size: 10px; font-weight: 600;">Building/Fixing Things</div>
+              <div style="padding: 8px; background: #f8fafc; border-radius: 6px; font-size: 10px; font-weight: 600;">Helping People</div>
+              <div style="padding: 8px; background: var(--accent); color: white; border-radius: 6px; font-size: 10px; font-weight: 600;">Office/Tech Work</div>
+            </div>
+          </div>
+          <div style="text-align: center; font-size: 11px; color: var(--text-muted);">Step 3 of 12</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: The Plan -->
+<div class="slide bg-dark" id="slide-4">
+  <div class="slide-inner">
+    <div>
+      <span class="tag">Step 3: Plan</span>
+      <h2>Your Personalized Roadmap</h2>
+      <p>We build a Workforce Plan just for you. Track your goals and see exactly what steps to take next.</p>
+      <ul style="color: rgba(255,255,255,0.6); margin-top: 24px; font-size: 16px; line-height: 2;">
+        <li>🎯 Set long-term career goals</li>
+        <li>📅 Clear milestones and deadlines</li>
+        <li>🔗 Direct links to training resources</li>
+      </ul>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-header" style="background: var(--success);">
+          <h4>My Plan</h4>
+          <p>Roadmap to Employment</p>
+        </div>
+        <div class="phone-content">
+          <div class="phone-card">
+            <h5 style="color: var(--success);">GOAL</h5>
+            <p style="font-weight: 600; color: var(--primary);">Become a Certified Healthcare Assistant</p>
+          </div>
+          <div class="phone-card">
+            <h5>TO-DO LIST</h5>
+            <div class="task-item">
+              <div class="checkbox checked"></div>
+              <span style="text-decoration: line-through;">Complete Interests Profile</span>
+            </div>
+            <div class="task-item">
+              <div class="checkbox"></div>
+              <span>Apply for Transit Pass</span>
+            </div>
+            <div class="task-item">
+              <div class="checkbox"></div>
+              <span>Resume Workshop (Tues 2PM)</span>
+            </div>
+          </div>
+        </div>
+        <div class="phone-tabs">
+          <div class="tab">🏠<br>Home</div>
+          <div class="tab active">🎯<br>Plan</div>
+          <div class="tab">🤝<br>Matches</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Check-ins -->
+<div class="slide bg-dark" id="slide-5">
+  <div class="slide-inner">
+    <div>
+      <span class="tag">Daily Life</span>
+      <h2>Weekly Support</h2>
+      <p>ImpactBridge isn't just about work. Our weekly check-ins help you share how you're feeling and where you might need a hand.</p>
+      <div style="margin-top: 32px; padding: 20px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.2);">
+        <p style="font-size: 14px; color: var(--success);">
+          "The check-in helps your coach stay in sync with you, even between meetings."
+        </p>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <h4>Weekly Check-In</h4>
+          <p>How are you doing today?</p>
+        </div>
+        <div class="phone-content">
+          <div class="phone-card">
+            <h5>CURRENT MOOD</h5>
+            <div style="display: flex; justify-content: space-between; font-size: 24px; margin-top: 8px;">
+              <span>😔</span>
+              <span>😐</span>
+              <span style="transform: scale(1.3);">😊</span>
+              <span>😄</span>
+            </div>
+          </div>
+          <div class="phone-card">
+            <h5>CHALLENGES?</h5>
+            <p>Do you need help with anything this week?</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
+              <span style="font-size: 9px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Housing</span>
+              <span style="font-size: 9px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Transport</span>
+              <span style="font-size: 9px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">None</span>
+            </div>
+          </div>
+          <div class="phone-btn">Submit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Matching -->
+<div class="slide bg-dark" id="slide-6">
+  <div class="slide-inner">
+    <div>
+      <span class="tag">Employment</span>
+      <h2>Finding Your Match</h2>
+      <p>When you're ready, we match you with "Recovery-Friendly Employers" who value your journey and your skills.</p>
+      <div style="margin-top: 24px; display: flex; gap: 12px;">
+        <div style="font-size: 12px; background: #1e3a5f; color: white; padding: 8px 16px; border-radius: 20px;">Healthcare</div>
+        <div style="font-size: 12px; background: #1e3a5f; color: white; padding: 8px 16px; border-radius: 20px;">Warehouse</div>
+        <div style="font-size: 12px; background: #1e3a5f; color: white; padding: 8px 16px; border-radius: 20px;">Trades</div>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-header" style="background: var(--accent);">
+          <h4>Job Matches</h4>
+          <p>Top Employers for You</p>
+        </div>
+        <div class="phone-content">
+          <div class="phone-card">
+            <div style="display: flex; justify-content: space-between;">
+              <h5 style="color: var(--accent);">95% Match</h5>
+              <span style="font-size: 10px; color: var(--success);">Vetted RFE</span>
+            </div>
+            <p style="font-weight: 700; color: var(--primary); font-size: 13px;">Denver Health</p>
+            <p>Environmental Services Aide</p>
+            <div style="font-size: 9px; color: var(--success); margin-top: 8px;">✔ On Transit Route</div>
+          </div>
+          <div class="phone-card">
+            <h5 style="color: var(--accent);">88% Match</h5>
+            <p style="font-weight: 700; color: var(--primary); font-size: 13px;">Mile High Workshop</p>
+            <p>Apprentice Craftsman</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Retention -->
+<div class="slide bg-gradient slide-hero" id="slide-7">
+  <div class="slide-inner">
+    <h1>Success is a Marathon</h1>
+    <p style="max-width: 600px; margin: 0 auto; margin-bottom: 40px;">
+      ImpactBridge stays with you long after the hire. We track your milestones together &mdash; celebrating 30, 60, and 90 days of success.
+    </p>
+    <div style="display: flex; gap: 20px; justify-content: center;">
+      <div style="background: white; color: var(--primary); padding: 20px; border-radius: 16px; min-width: 120px;">
+        <div style="font-size: 24px;">🏆</div>
+        <div style="font-weight: 800; font-size: 20px;">30 Days</div>
+      </div>
+      <div style="background: white; color: var(--primary); padding: 20px; border-radius: 16px; min-width: 120px;">
+        <div style="font-size: 24px;">🎖️</div>
+        <div style="font-weight: 800; font-size: 20px;">60 Days</div>
+      </div>
+      <div style="background: white; color: var(--primary); padding: 20px; border-radius: 16px; min-width: 120px;">
+        <div style="font-size: 24px;">👑</div>
+        <div style="font-weight: 800; font-size: 20px;">90 Days</div>
+      </div>
+    </div>
+    <div style="margin-top: 60px; font-weight: 700;">ImpactBridge | Built for Your Success</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  let currentSlide = 1;
+
+  function updateCounter() {
+    document.getElementById('current-slide').textContent = currentSlide;
+  }
+
+  function goToSlide(n) {
+    currentSlide = Math.max(1, Math.min(n, totalSlides));
+    document.getElementById('slide-' + currentSlide).scrollIntoView({ behavior: 'smooth' });
+    updateCounter();
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        currentSlide = parseInt(entry.target.id.split('-')[1]);
+        updateCounter();
+        entry.target.classList.add('animate');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(slide => observer.observe(slide));
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure DevOps Pipeline — ImpactForge</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-bg: #ffffff;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-border: rgba(0,0,0,0.12);
+    --font-sans: system-ui, -apple-system, sans-serif;
+
+    /* color ramps */
+    --teal-50:  #E1F5EE; --teal-100: #9FE1CB; --teal-600: #0F6E56; --teal-800: #085041;
+    --purple-50:#EEEDFE; --purple-100:#CECBF6; --purple-600:#534AB7; --purple-800:#3C3489;
+    --coral-50: #FAECE7; --coral-100:#F5C4B3; --coral-600:#993C1D; --coral-800:#712B13;
+    --blue-50:  #E6F1FB; --blue-100: #B5D4F4; --blue-600: #185FA5; --blue-800: #0C447C;
+    --amber-50: #FAEEDA; --amber-100:#FAC775; --amber-600:#854F0B; --amber-800:#633806;
+    --gray-50:  #F1EFE8; --gray-100: #D3D1C7; --gray-600: #5F5E5A; --gray-800: #444441;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #1c1c1a;
+      --color-text-primary: #e8e6de;
+      --color-text-secondary: #9c9a92;
+      --color-border: rgba(255,255,255,0.12);
+
+      --teal-50:  #04342C; --teal-100: #085041; --teal-600: #5DCAA5; --teal-800: #9FE1CB;
+      --purple-50:#26215C; --purple-100:#3C3489; --purple-600:#AFA9EC; --purple-800:#CECBF6;
+      --coral-50: #4A1B0C; --coral-100:#712B13; --coral-600:#F0997B; --coral-800:#F5C4B3;
+      --blue-50:  #042C53; --blue-100: #0C447C; --blue-600: #85B7EB; --blue-800: #B5D4F4;
+      --amber-50: #412402; --amber-100:#633806; --amber-600:#EF9F27; --amber-800:#FAC775;
+      --gray-50:  #2C2C2A; --gray-100: #444441; --gray-600: #B4B2A9; --gray-800: #D3D1C7;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    padding: 32px 24px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--color-text-primary);
+  }
+
+  p.subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 28px;
+  }
+
+  .svg-wrap {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--color-bg);
+  }
+
+  svg { width: 100%; height: auto; display: block; }
+
+  /* SVG text classes */
+  .t  { font-family: var(--font-sans); font-size: 14px; font-weight: 400; fill: var(--color-text-primary); }
+  .ts { font-family: var(--font-sans); font-size: 12px; font-weight: 400; fill: var(--color-text-secondary); }
+  .th { font-family: var(--font-sans); font-size: 14px; font-weight: 500; fill: var(--color-text-primary); }
+
+  /* color ramp fills */
+  .c-teal   rect, .c-teal   circle { fill: var(--teal-50);   stroke: var(--teal-600); }
+  .c-teal   .th { fill: var(--teal-800); }
+  .c-teal   .ts { fill: var(--teal-600); }
+
+  .c-purple rect, .c-purple circle { fill: var(--purple-50); stroke: var(--purple-600); }
+  .c-purple .th { fill: var(--purple-800); }
+  .c-purple .ts { fill: var(--purple-600); }
+
+  .c-coral  rect, .c-coral  circle { fill: var(--coral-50);  stroke: var(--coral-600); }
+  .c-coral  .th { fill: var(--coral-800); }
+  .c-coral  .ts { fill: var(--coral-600); }
+
+  .c-blue   rect, .c-blue   circle { fill: var(--blue-50);   stroke: var(--blue-600); }
+  .c-blue   .th { fill: var(--blue-800); }
+  .c-blue   .ts { fill: var(--blue-600); }
+
+  .c-amber  rect, .c-amber  circle { fill: var(--amber-50);  stroke: var(--amber-600); }
+  .c-amber  .th { fill: var(--amber-800); }
+  .c-amber  .ts { fill: var(--amber-600); }
+
+  .c-gray   rect, .c-gray   circle { fill: var(--gray-50);   stroke: var(--gray-600); }
+  .c-gray   .th { fill: var(--gray-800); }
+  .c-gray   .ts { fill: var(--gray-600); }
+
+  .arr { stroke: var(--color-text-secondary); stroke-width: 1.5; fill: none; }
+</style>
+</head>
+<body>
+
+<div class="svg-wrap">
+  <h1>Azure DevOps — CI/CD Pipeline</h1>
+  <p class="subtitle">ImpactForge · Test → Staging → Production · branch strategy + approval gates</p>
+
+<svg viewBox="0 0 680 860" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Title -->
+<text class="th" x="340" y="26" text-anchor="middle" font-size="15">Azure DevOps — CI/CD pipeline</text>
+
+<!-- ── TRIGGER ROW ── -->
+<text class="ts" x="340" y="52" text-anchor="middle">Branch strategy</text>
+
+<g class="c-gray">
+  <rect x="20" y="60" width="130" height="44" rx="6" stroke-width="0.5"/>
+  <text class="th" x="85" y="79" text-anchor="middle">feature/*</text>
+  <text class="ts" x="85" y="93" text-anchor="middle">PR trigger only</text>
+</g>
+<g class="c-teal">
+  <rect x="170" y="60" width="130" height="44" rx="6" stroke-width="0.5"/>
+  <text class="th" x="235" y="79" text-anchor="middle">develop</text>
+  <text class="ts" x="235" y="93" text-anchor="middle">→ Test env</text>
+</g>
+<g class="c-purple">
+  <rect x="320" y="60" width="130" height="44" rx="6" stroke-width="0.5"/>
+  <text class="th" x="385" y="79" text-anchor="middle">release/*</text>
+  <text class="ts" x="385" y="93" text-anchor="middle">→ Staging env</text>
+</g>
+<g class="c-coral">
+  <rect x="470" y="60" width="190" height="44" rx="6" stroke-width="0.5"/>
+  <text class="th" x="565" y="79" text-anchor="middle">main</text>
+  <text class="ts" x="565" y="93" text-anchor="middle">→ Production (approval gate)</text>
+</g>
+
+<!-- ── STAGE 1: CI ── -->
+<g class="c-blue">
+  <rect x="20" y="128" width="640" height="56" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="150" text-anchor="middle">Stage 1 — CI (runs on every branch + PR)</text>
+  <text class="ts" x="340" y="166" text-anchor="middle">npx turbo build · npx jest --passWithNoTests · npx jest --config ./test/jest-e2e.json · docker build + push to ACR</text>
+</g>
+
+<line x1="340" y1="184" x2="340" y2="204" class="arr" marker-end="url(#arrow)"/>
+
+<!-- ── STAGE 2: TEST ── -->
+<g class="c-teal">
+  <rect x="20" y="204" width="640" height="168" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="226" text-anchor="middle">Stage 2 — Deploy to Test</text>
+  <text class="ts" x="340" y="242" text-anchor="middle">Triggered by: develop branch · Environment: test (no approval required)</text>
+</g>
+
+<g class="c-gray">
+  <rect x="36" y="254" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="129" y="273" text-anchor="middle">Variable Group</text>
+  <text class="ts" x="129" y="287" text-anchor="middle">impactforge-test</text>
+  <text class="ts" x="129" y="300" text-anchor="middle">DATABASE_*, JWT_SECRET</text>
+</g>
+<g class="c-gray">
+  <rect x="246" y="254" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="339" y="273" text-anchor="middle">db:migrate</text>
+  <text class="ts" x="339" y="287" text-anchor="middle">node-pg-migrate</text>
+  <text class="ts" x="339" y="300" text-anchor="middle">against test DB</text>
+</g>
+<g class="c-gray">
+  <rect x="458" y="254" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="551" y="273" text-anchor="middle">AzureWebApp deploy</text>
+  <text class="ts" x="551" y="287" text-anchor="middle">API + Web containers</text>
+  <text class="ts" x="551" y="300" text-anchor="middle">from ACR</text>
+</g>
+<g class="c-gray">
+  <rect x="36" y="316" width="608" height="36" rx="6" stroke-width="0.5"/>
+  <text class="th" x="340" y="331" text-anchor="middle">db:seed (optional)</text>
+  <text class="ts" x="340" y="345" text-anchor="middle">Tenant, roles, permissions, assessment templates, admin user — from your seed script</text>
+</g>
+
+<line x1="340" y1="372" x2="340" y2="392" class="arr" marker-end="url(#arrow)"/>
+
+<!-- ── STAGE 3: STAGING ── -->
+<g class="c-purple">
+  <rect x="20" y="392" width="640" height="192" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="414" text-anchor="middle">Stage 3 — Deploy to Staging</text>
+  <text class="ts" x="340" y="430" text-anchor="middle">Triggered by: release/* branch · Environment: staging (1 approver required)</text>
+</g>
+
+<g class="c-gray">
+  <rect x="36" y="442" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="129" y="461" text-anchor="middle">Key Vault link</text>
+  <text class="ts" x="129" y="475" text-anchor="middle">Variable Group linked</text>
+  <text class="ts" x="129" y="488" text-anchor="middle">to Key Vault secrets</text>
+</g>
+<g class="c-gray">
+  <rect x="246" y="442" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="339" y="461" text-anchor="middle">db:migrate (staging)</text>
+  <text class="ts" x="339" y="475" text-anchor="middle">Run + validate</text>
+  <text class="ts" x="339" y="488" text-anchor="middle">before deploy</text>
+</g>
+<g class="c-gray">
+  <rect x="458" y="442" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="551" y="461" text-anchor="middle">Deploy to slot</text>
+  <text class="ts" x="551" y="475" text-anchor="middle">staging-slot (not live)</text>
+  <text class="ts" x="551" y="488" text-anchor="middle">swap after smoke tests</text>
+</g>
+<g class="c-gray">
+  <rect x="36" y="506" width="608" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="340" y="522" text-anchor="middle">Smoke tests + manual approval gate</text>
+  <text class="ts" x="340" y="536" text-anchor="middle">Hit /health endpoint · verify RLS tenant context · check audit_log triggers · QA sign-off in ADO UI</text>
+  <text class="ts" x="340" y="550" text-anchor="middle">Slot swap only after approval → zero-downtime cutover</text>
+</g>
+
+<line x1="340" y1="584" x2="340" y2="604" class="arr" marker-end="url(#arrow)"/>
+
+<!-- ── STAGE 4: PROD ── -->
+<g class="c-coral">
+  <rect x="20" y="604" width="640" height="192" rx="10" stroke-width="0.5"/>
+  <text class="th" x="340" y="626" text-anchor="middle">Stage 4 — Deploy to Production</text>
+  <text class="ts" x="340" y="642" text-anchor="middle">Triggered by: main branch · Environment: production (2 approvers required)</text>
+</g>
+
+<g class="c-gray">
+  <rect x="36" y="654" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="129" y="673" text-anchor="middle">Key Vault (prod)</text>
+  <text class="ts" x="129" y="687" text-anchor="middle">Managed Identity auth</text>
+  <text class="ts" x="129" y="700" text-anchor="middle">pgcrypto keys resolved</text>
+</g>
+<g class="c-gray">
+  <rect x="246" y="654" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="339" y="673" text-anchor="middle">db:migrate (prod)</text>
+  <text class="ts" x="339" y="687" text-anchor="middle">protected + application</text>
+  <text class="ts" x="339" y="700" text-anchor="middle">schema migrations</text>
+</g>
+<g class="c-gray">
+  <rect x="458" y="654" width="186" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="551" y="673" text-anchor="middle">Slot swap</text>
+  <text class="ts" x="551" y="687" text-anchor="middle">Zero-downtime deploy</text>
+  <text class="ts" x="551" y="700" text-anchor="middle">instant rollback available</text>
+</g>
+<g class="c-gray">
+  <rect x="36" y="718" width="608" height="52" rx="6" stroke-width="0.5"/>
+  <text class="th" x="340" y="734" text-anchor="middle">Post-deploy validation</text>
+  <text class="ts" x="340" y="748" text-anchor="middle">Azure Monitor alert · audit_log stream to Log Analytics · Front Door health probe confirms</text>
+  <text class="ts" x="340" y="762" text-anchor="middle">Auto-rollback slot swap if health probe fails within 10 min</text>
+</g>
+
+<!-- ── FOOTER ── -->
+<g class="c-amber">
+  <rect x="20" y="812" width="640" height="36" rx="8" stroke-width="0.5"/>
+  <text class="th" x="340" y="828" text-anchor="middle">ADO native advantages over GitHub Actions</text>
+  <text class="ts" x="340" y="843" text-anchor="middle">Environments UI · approval gates · Key Vault variable groups · service connections · audit trail built-in</text>
+</g>
+
+</svg>
+</div>
+</body>
+</html>

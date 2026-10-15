@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="31" failures="0" errors="0" time="0.662">
+  <testsuite name="SupportNeedsScorer" errors="0" failures="0" skipped="0" timestamp="2026-08-18T21:13:21" time="0.324" tests="10">
+    <testcase classname="SupportNeedsScorer should return highly_ready or ready when no barriers exist" name="SupportNeedsScorer should return highly_ready or ready when no barriers exist" time="0.003">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should set housing barrier to high when status is homeless" name="SupportNeedsScorer should set housing barrier to high when status is homeless" time="0">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should set legal barrier to high when has felony with recent conviction" name="SupportNeedsScorer should set legal barrier to high when has felony with recent conviction" time="0.001">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should set health barrier to high with active substance use" name="SupportNeedsScorer should set health barrier to high with active substance use" time="0">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should return not_ready when multiple high barriers are present" name="SupportNeedsScorer should return not_ready when multiple high barriers are present" time="0.001">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should address highest-severity barriers first in recommendations" name="SupportNeedsScorer should address highest-severity barriers first in recommendations" time="0">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should return 9 barrier categories" name="SupportNeedsScorer should return 9 barrier categories" time="0.001">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should return empty interests and aptitudes arrays" name="SupportNeedsScorer should return empty interests and aptitudes arrays" time="0.001">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should set identification barrier to high when missing work authorization" name="SupportNeedsScorer should set identification barrier to high when missing work authorization" time="0">
+    </testcase>
+    <testcase classname="SupportNeedsScorer should handle empty input gracefully" name="SupportNeedsScorer should handle empty input gracefully" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ScoringService" errors="0" failures="0" skipped="0" timestamp="2026-08-18T21:13:22" time="0.167" tests="5">
+    <testcase classname="ScoringService should dispatch to skills scorer for current_work_profile" name="ScoringService should dispatch to skills scorer for current_work_profile" time="0.008">
+    </testcase>
+    <testcase classname="ScoringService should dispatch to interests scorer for workstyle_strengths" name="ScoringService should dispatch to interests scorer for workstyle_strengths" time="0.002">
+    </testcase>
+    <testcase classname="ScoringService should dispatch to barriers scorer for support_needs" name="ScoringService should dispatch to barriers scorer for support_needs" time="0.001">
+    </testcase>
+    <testcase classname="ScoringService should throw BadRequestException for unknown assessment type" name="ScoringService should throw BadRequestException for unknown assessment type" time="0.005">
+    </testcase>
+    <testcase classname="ScoringService should return a result with the ScoredResult shape" name="ScoringService should return a result with the ScoredResult shape" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="CurrentWorkProfileScorer" errors="0" failures="0" skipped="0" timestamp="2026-08-18T21:13:22" time="0.056" tests="6">
+    <testcase classname="CurrentWorkProfileScorer should return aptitudes with levels for a complete response" name="CurrentWorkProfileScorer should return aptitudes with levels for a complete response" time="0.002">
+    </testcase>
+    <testcase classname="CurrentWorkProfileScorer should still produce a result with minimal response" name="CurrentWorkProfileScorer should still produce a result with minimal response" time="0.001">
+    </testcase>
+    <testcase classname="CurrentWorkProfileScorer should boost readiness with strong work experience" name="CurrentWorkProfileScorer should boost readiness with strong work experience" time="0">
+    </testcase>
+    <testcase classname="CurrentWorkProfileScorer should lower readiness when transportation is missing" name="CurrentWorkProfileScorer should lower readiness when transportation is missing" time="0.001">
+    </testcase>
+    <testcase classname="CurrentWorkProfileScorer should generate recommendations for missing skills and certs" name="CurrentWorkProfileScorer should generate recommendations for missing skills and certs" time="0">
+    </testcase>
+    <testcase classname="CurrentWorkProfileScorer should return empty interests and barriers arrays" name="CurrentWorkProfileScorer should return empty interests and barriers arrays" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="WorkstyleStrengthsScorer" errors="0" failures="0" skipped="0" timestamp="2026-08-18T21:13:22" time="0.045" tests="10">
+    <testcase classname="WorkstyleStrengthsScorer should return top 3 interests from all realistic answers" name="WorkstyleStrengthsScorer should return top 3 interests from all realistic answers" time="0.001">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should rank Realistic as top interest when all scores are high Realistic" name="WorkstyleStrengthsScorer should rank Realistic as top interest when all scores are high Realistic" time="0.001">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should map interests to career sectors in recommendations" name="WorkstyleStrengthsScorer should map interests to career sectors in recommendations" time="0">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should include career_goals text context in recommendations when industries align" name="WorkstyleStrengthsScorer should include career_goals text context in recommendations when industries align" time="0">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should note when self-reported industries differ from RIASEC profile" name="WorkstyleStrengthsScorer should note when self-reported industries differ from RIASEC profile" time="0">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should return aptitudes for all 6 RIASEC dimensions" name="WorkstyleStrengthsScorer should return aptitudes for all 6 RIASEC dimensions" time="0.001">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should produce highly_ready when top score is high and spread is large" name="WorkstyleStrengthsScorer should produce highly_ready when top score is high and spread is large" time="0">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should produce not_ready when all scores are very low" name="WorkstyleStrengthsScorer should produce not_ready when all scores are very low" time="0">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should return empty barriers array" name="WorkstyleStrengthsScorer should return empty barriers array" time="0.001">
+    </testcase>
+    <testcase classname="WorkstyleStrengthsScorer should handle missing riasec data gracefully" name="WorkstyleStrengthsScorer should handle missing riasec data gracefully" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>

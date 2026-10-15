@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: impactforge_dev
+      POSTGRES_USER: impactforge
+      POSTGRES_PASSWORD: secret123
+    ports:
+      - "5436:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./apps/api/src/database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U impactforge -d impactforge_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://impactforge:secret123@postgres:5432/impactforge_dev
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: impactforge
+      DATABASE_PASSWORD: secret123
+      DATABASE_NAME: impactforge_dev
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-jwt-secret-replace-in-production
+      API_PORT: 3001
+      CORS_ORIGIN: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001/v1
+      NODE_ENV: development
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+.turbo
+.git
+*.md
+.env.local
+.env.docker
+*.env
+coverage

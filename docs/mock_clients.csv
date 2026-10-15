@@ -1,0 +1,21 @@
+externalEhrId,firstName,lastName,dateOfBirth,gender,phone,email,referralSource,consent42cfr
+EHR-2001,James,Miller,1982-03-12T00:00:00Z,Male,303-555-0101,j.miller@example.com,Denver County Jail,TRUE
+EHR-2002,Sarah,Garcia,1990-07-22T00:00:00Z,Female,303-555-0102,s.garcia@example.com,Self-Referral,TRUE
+EHR-2003,Robert,Chen,1975-11-05T00:00:00Z,Male,303-555-0103,r.chen@example.com,Drug Court,TRUE
+EHR-2004,Maria,Rodriguez,1988-01-30T00:00:00Z,Female,303-555-0104,m.rod@example.com,Probation Office,TRUE
+EHR-2005,William,Taylor,1993-09-14T00:00:00Z,Male,303-555-0105,w.taylor@example.com,Denver County Jail,TRUE
+EHR-2006,Linda,Smith,1980-05-25T00:00:00Z,Female,303-555-0106,l.smith@example.com,Detox Center,TRUE
+EHR-2007,David,Wilson,1985-12-12T00:00:00Z,Male,303-555-0107,d.wilson@example.com,Self-Referral,TRUE
+EHR-2008,Elizabeth,Brown,1995-04-08T00:00:00Z,Female,303-555-0108,e.brown@example.com,Drug Court,TRUE
+EHR-2009,Joseph,Jones,1978-08-19T00:00:00Z,Male,303-555-0109,j.jones@example.com,Probation Office,TRUE
+EHR-2010,Susan,Davis,1983-02-14T00:00:00Z,Female,303-555-0110,s.davis@example.com,Denver County Jail,TRUE
+EHR-2011,Michael,Martinez,1991-06-30T00:00:00Z,Male,303-555-0111,m.martinez@example.com,Self-Referral,TRUE
+EHR-2012,Jessica,Hernandez,1987-10-22T00:00:00Z,Female,303-555-0112,j.hernandez@example.com,Drug Court,TRUE
+EHR-2013,Thomas,Lopez,1972-04-05T00:00:00Z,Male,303-555-0113,t.lopez@example.com,Probation Office,TRUE
+EHR-2014,Karen,Gonzalez,1994-11-18T00:00:00Z,Female,303-555-0114,k.gonzalez@example.com,Denver County Jail,TRUE
+EHR-2015,Charles,Wilson,1981-07-09T00:00:00Z,Male,303-555-0115,c.wilson@example.com,Detox Center,TRUE
+EHR-2016,Nancy,Anderson,1989-03-27T00:00:00Z,Female,303-555-0116,n.anderson@example.com,Self-Referral,TRUE
+EHR-2017,Daniel,Thomas,1976-09-11T00:00:00Z,Male,303-555-0117,d.thomas@example.com,Drug Court,TRUE
+EHR-2018,Lisa,Moore,1992-05-04T00:00:00Z,Female,303-555-0118,l.moore@example.com,Probation Office,TRUE
+EHR-2019,Matthew,Jackson,1984-12-25T00:00:00Z,Male,303-555-0119,m.jackson@example.com,Denver County Jail,TRUE
+EHR-2020,Betty,White,1970-01-17T00:00:00Z,Female,303-555-0120,b.white@example.com,Self-Referral,TRUE

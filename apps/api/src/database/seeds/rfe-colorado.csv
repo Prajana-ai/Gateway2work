@@ -1,0 +1,51 @@
+name,sector,city,state,is_rfe_certified,trainee_readiness,phone,email,notes
+Mile High Grill,Food Service,Denver,CO,true,yes,303-555-0101,hiring@milehighgrill.com,Full-service restaurant with peer recovery support on site
+Rocky Mountain Catering Co,Food Service,Aurora,CO,true,yes,303-555-0102,jobs@rmcatering.com,Catering company with flexible scheduling for recovery appointments
+Peak Street Tacos,Food Service,Lakewood,CO,false,limited,303-555-0103,info@peakstreettacos.com,Food truck fleet with entry-level positions available
+Front Range Eatery,Food Service,Boulder,CO,true,yes,303-555-0104,careers@frontrangeeatery.com,Farm-to-table restaurant partnered with local recovery organizations
+Centennial Kitchen,Food Service,Centennial,CO,false,yes,303-555-0105,apply@centennialkitchen.com,Fast-casual dining with structured mentorship program
+Summit Builders LLC,Construction,Denver,CO,true,yes,303-555-0201,hr@summitbuilders.com,General contractor offering apprenticeships to people in recovery
+Red Rock Roofing,Construction,Arvada,CO,true,limited,303-555-0202,jobs@redrockroofing.com,Residential and commercial roofing with on-the-job training
+Platte Valley Concrete,Construction,Commerce City,CO,false,yes,303-555-0203,hiring@plattevalleyconcrete.com,Concrete and masonry with CDL training assistance
+Mile High Framing,Construction,Thornton,CO,true,yes,303-555-0204,careers@milehighframing.com,Structural framing crew with sober workplace policy
+Foothills Excavation,Construction,Golden,CO,false,limited,303-555-0205,apply@foothillsexcavation.com,Heavy equipment operator positions with paid training
+Alpine General Contractors,Construction,Westminster,CO,true,yes,303-555-0206,hr@alpinegc.com,Commercial construction with recovery-friendly HR policies
+Front Range Distribution Center,Warehousing/Logistics,Commerce City,CO,true,yes,303-555-0301,jobs@frontrangedist.com,Large warehouse operation with multiple shift options
+Peak Logistics Group,Warehousing/Logistics,Aurora,CO,true,yes,303-555-0302,careers@peaklogistics.com,Third-party logistics with forklift certification provided
+Rocky Mountain Movers,Warehousing/Logistics,Denver,CO,false,limited,303-555-0303,hiring@rmmovers.com,Local and long-distance moving company
+Mile High Fulfillment,Warehousing/Logistics,Broomfield,CO,true,yes,303-555-0304,apply@milehighfulfillment.com,E-commerce fulfillment center with flexible hours
+Centennial Shipping Co,Warehousing/Logistics,Centennial,CO,false,yes,303-555-0305,jobs@centennialshipping.com,Package handling and sorting with advancement opportunities
+Second Chance Thrift,Retail,Denver,CO,true,yes,303-555-0401,hr@secondchancethrift.com,Social enterprise thrift store specifically hiring people in recovery
+Fresh Start Grocers,Retail,Lakewood,CO,true,yes,303-555-0402,careers@freshstartgrocers.com,Community grocery with recovery peer support program
+Arvada Hardware Supply,Retail,Arvada,CO,false,limited,303-555-0403,jobs@arvadahardware.com,Independent hardware store with steady daytime hours
+Littleton Garden Center,Retail,Littleton,CO,true,yes,303-555-0404,hiring@littletongarden.com,Nursery and garden center with seasonal and permanent positions
+Westminster Pet Supply,Retail,Westminster,CO,false,yes,303-555-0405,apply@westminsterpet.com,Pet retail with training program for management track
+Compass Rose Retail Group,Retail,Englewood,CO,true,yes,303-555-0406,hr@compassroseretail.com,Multi-location retail with structured re-entry employment
+Green Valley Landscaping,Landscaping,Denver,CO,true,yes,303-555-0501,jobs@greenvalleylandscaping.com,Full-service landscaping with year-round employment
+Thornton Lawn & Garden,Landscaping,Thornton,CO,false,limited,303-555-0502,info@thorntonlawn.com,Residential lawn care with equipment training provided
+Rocky Mountain Tree Service,Landscaping,Golden,CO,true,yes,303-555-0503,careers@rmtreeservice.com,Tree trimming and removal with arborist certification path
+Aurora Grounds Maintenance,Landscaping,Aurora,CO,false,yes,303-555-0504,hiring@auroragrounds.com,Commercial grounds maintenance for office parks and HOAs
+Peak Vista Irrigation,Landscaping,Lakewood,CO,true,limited,303-555-0505,apply@peakvistairrigation.com,Sprinkler installation and repair with seasonal work available
+Front Range Manufacturing,Manufacturing,Commerce City,CO,true,yes,303-555-0601,hr@frontrangemfg.com,Metal fabrication with CNC training program
+Centennial Assembly Works,Manufacturing,Centennial,CO,true,yes,303-555-0602,jobs@centennialassembly.com,Electronics assembly with clean room experience opportunity
+Denver Packaging Solutions,Manufacturing,Denver,CO,false,limited,303-555-0603,careers@denverpackaging.com,Food packaging facility with multiple shifts available
+Mile High Plastics,Manufacturing,Federal Heights,CO,true,yes,303-555-0604,hiring@milehighplastics.com,Injection molding with machine operator training
+Northglenn Metalworks,Manufacturing,Northglenn,CO,false,yes,303-555-0605,apply@northglennmetal.com,Welding and fabrication shop with apprenticeship program
+Broomfield Precision Parts,Manufacturing,Broomfield,CO,true,yes,303-555-0606,jobs@broomfieldprecision.com,Aerospace parts manufacturing with security clearance assistance
+Caring Hands Home Care,Healthcare Support,Denver,CO,true,yes,303-555-0701,hr@caringhandshc.com,Home health aide positions with CNA certification support
+Mountain View Nursing,Healthcare Support,Lakewood,CO,true,yes,303-555-0702,careers@mountainviewnursing.com,Skilled nursing facility with tuition reimbursement
+Aurora Senior Living,Healthcare Support,Aurora,CO,false,limited,303-555-0703,jobs@auroraseniorliving.com,Assisted living facility with entry-level caregiver roles
+Englewood Rehab Center,Healthcare Support,Englewood,CO,true,yes,303-555-0704,hiring@englewoodrehab.com,Physical therapy clinic with recovery-informed workplace culture
+Boulder Home Health,Healthcare Support,Boulder,CO,true,yes,303-555-0705,apply@boulderhomehealth.com,Non-medical home care with flexible participant matching
+Denver Auto Repair,Automotive,Denver,CO,true,yes,303-555-0801,hr@denverautorepair.com,Full-service mechanic shop with ASE certification support
+Sparkle Car Wash,Automotive,Westminster,CO,false,yes,303-555-0802,jobs@sparklecarwash.com,Express car wash chain with rapid advancement track
+Arvada Tire & Brake,Automotive,Arvada,CO,true,limited,303-555-0803,careers@arvadatire.com,Tire and brake specialists with on-the-job training
+Littleton Auto Group,Automotive,Littleton,CO,true,yes,303-555-0804,hiring@littletonauto.com,Car dealership with detailing and lot positions available
+Commerce City Auto Body,Automotive,Commerce City,CO,false,yes,303-555-0805,apply@ccautobody.com,Collision repair with paint booth training provided
+Pristine Clean Janitorial,Cleaning,Denver,CO,true,yes,303-555-0901,hr@pristineclean.com,Commercial janitorial with evening and weekend shifts
+Lakewood Cleaning Pros,Cleaning,Lakewood,CO,false,limited,303-555-0902,jobs@lakewoodcleaningpros.com,Residential cleaning service with flexible scheduling
+Front Range Facility Services,Cleaning,Aurora,CO,true,yes,303-555-0903,careers@frontrangefacility.com,Building maintenance and cleaning for office complexes
+Mile High Sanitation,Cleaning,Federal Heights,CO,true,yes,303-555-0904,hiring@milehighsanitation.com,Industrial cleaning and hazmat with certification training
+Thornton Commercial Cleaning,Cleaning,Thornton,CO,false,yes,303-555-0905,apply@thorntoncleaning.com,Overnight commercial cleaning with reliable transportation provided
+Golden Shine Services,Cleaning,Golden,CO,true,yes,303-555-0906,info@goldenshine.com,Window cleaning and pressure washing with equipment provided
+Broomfield Building Care,Cleaning,Broomfield,CO,false,limited,303-555-0907,jobs@broomfieldbuildingcare.com,Post-construction cleanup and ongoing building maintenance

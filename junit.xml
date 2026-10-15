@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="63" failures="0" errors="0" time="1.268">
+  <testsuite name="TsrgBarriersScorer" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:29" time="0.276" tests="10">
+    <testcase classname="TsrgBarriersScorer should return highly_ready or ready when no barriers exist" name="TsrgBarriersScorer should return highly_ready or ready when no barriers exist" time="0.003">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should set housing barrier to high when status is homeless" name="TsrgBarriersScorer should set housing barrier to high when status is homeless" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should set legal barrier to high when has felony with recent conviction" name="TsrgBarriersScorer should set legal barrier to high when has felony with recent conviction" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should set health barrier to high with active substance use" name="TsrgBarriersScorer should set health barrier to high with active substance use" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should return not_ready when multiple high barriers are present" name="TsrgBarriersScorer should return not_ready when multiple high barriers are present" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should address highest-severity barriers first in recommendations" name="TsrgBarriersScorer should address highest-severity barriers first in recommendations" time="0.001">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should return 9 barrier categories" name="TsrgBarriersScorer should return 9 barrier categories" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should return empty interests and aptitudes arrays" name="TsrgBarriersScorer should return empty interests and aptitudes arrays" time="0.001">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should set identification barrier to high when missing work authorization" name="TsrgBarriersScorer should set identification barrier to high when missing work authorization" time="0">
+    </testcase>
+    <testcase classname="TsrgBarriersScorer should handle empty input gracefully" name="TsrgBarriersScorer should handle empty input gracefully" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="TsrgSkillsScorer" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.078" tests="7">
+    <testcase classname="TsrgSkillsScorer should return aptitudes with levels for a complete response" name="TsrgSkillsScorer should return aptitudes with levels for a complete response" time="0.003">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should still produce a result with minimal response" name="TsrgSkillsScorer should still produce a result with minimal response" time="0">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should boost readiness with strong work experience" name="TsrgSkillsScorer should boost readiness with strong work experience" time="0">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should lower readiness when transportation is missing" name="TsrgSkillsScorer should lower readiness when transportation is missing" time="0">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should increase readiness with high soft skills" name="TsrgSkillsScorer should increase readiness with high soft skills" time="0">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should generate recommendations for missing skills and certs" name="TsrgSkillsScorer should generate recommendations for missing skills and certs" time="0.001">
+    </testcase>
+    <testcase classname="TsrgSkillsScorer should return empty interests and barriers arrays" name="TsrgSkillsScorer should return empty interests and barriers arrays" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="RolesGuard" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.175" tests="17">
+    <testcase classname="RolesGuard should allow when no roles are required" name="RolesGuard should allow when no roles are required" time="0.001">
+    </testcase>
+    <testcase classname="RolesGuard should allow when roles array is empty" name="RolesGuard should allow when roles array is empty" time="0.001">
+    </testcase>
+    <testcase classname="RolesGuard should allow when user role matches required roles" name="RolesGuard should allow when user role matches required roles" time="0">
+    </testcase>
+    <testcase classname="RolesGuard should block when user role does not match required roles" name="RolesGuard should block when user role does not match required roles" time="0.001">
+    </testcase>
+    <testcase classname="RolesGuard should allow public routes regardless of roles" name="RolesGuard should allow public routes regardless of roles" time="0">
+    </testcase>
+    <testcase classname="MfaGuard should allow public routes" name="MfaGuard should allow public routes" time="0.001">
+    </testcase>
+    <testcase classname="MfaGuard should allow non-protected data zone routes" name="MfaGuard should allow non-protected data zone routes" time="0">
+    </testcase>
+    <testcase classname="MfaGuard should allow routes with no data zone annotation" name="MfaGuard should allow routes with no data zone annotation" time="0">
+    </testcase>
+    <testcase classname="MfaGuard should block protected routes when MFA is enabled but not verified" name="MfaGuard should block protected routes when MFA is enabled but not verified" time="0.005">
+    </testcase>
+    <testcase classname="MfaGuard should allow protected routes when MFA is not enabled" name="MfaGuard should allow protected routes when MFA is not enabled" time="0">
+    </testcase>
+    <testcase classname="MfaGuard should allow protected routes when user has no mfaEnabled property" name="MfaGuard should allow protected routes when user has no mfaEnabled property" time="0">
+    </testcase>
+    <testcase classname="MfaGuard should allow protected routes with MFA enabled and verified" name="MfaGuard should allow protected routes with MFA enabled and verified" time="0">
+    </testcase>
+    <testcase classname="DataZoneGuard should allow when no zone is required" name="DataZoneGuard should allow when no zone is required" time="0.001">
+    </testcase>
+    <testcase classname="DataZoneGuard should allow when user has the matching zone" name="DataZoneGuard should allow when user has the matching zone" time="0">
+    </testcase>
+    <testcase classname="DataZoneGuard should block when user does not have the required zone" name="DataZoneGuard should block when user does not have the required zone" time="0.001">
+    </testcase>
+    <testcase classname="DataZoneGuard should block when user has no zones at all" name="DataZoneGuard should block when user has no zones at all" time="0.001">
+    </testcase>
+    <testcase classname="DataZoneGuard should allow public routes regardless of zone" name="DataZoneGuard should allow public routes regardless of zone" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="TsrgInterestsScorer" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.062" tests="10">
+    <testcase classname="TsrgInterestsScorer should return top 3 interests from all realistic answers" name="TsrgInterestsScorer should return top 3 interests from all realistic answers" time="0.002">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should rank Realistic as top interest when all scores are high Realistic" name="TsrgInterestsScorer should rank Realistic as top interest when all scores are high Realistic" time="0">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should map interests to career sectors in recommendations" name="TsrgInterestsScorer should map interests to career sectors in recommendations" time="0.001">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should include career_goals text context in recommendations when industries align" name="TsrgInterestsScorer should include career_goals text context in recommendations when industries align" time="0">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should note when self-reported industries differ from RIASEC profile" name="TsrgInterestsScorer should note when self-reported industries differ from RIASEC profile" time="0">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should return aptitudes for all 6 RIASEC dimensions" name="TsrgInterestsScorer should return aptitudes for all 6 RIASEC dimensions" time="0.001">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should produce highly_ready when top score is high and spread is large" name="TsrgInterestsScorer should produce highly_ready when top score is high and spread is large" time="0">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should produce not_ready when all scores are very low" name="TsrgInterestsScorer should produce not_ready when all scores are very low" time="0">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should return empty barriers array" name="TsrgInterestsScorer should return empty barriers array" time="0.001">
+    </testcase>
+    <testcase classname="TsrgInterestsScorer should handle missing riasec data gracefully" name="TsrgInterestsScorer should handle missing riasec data gracefully" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="RfeService" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.248" tests="6">
+    <testcase classname="RfeService bulkImport should successfully import valid rows" name="RfeService bulkImport should successfully import valid rows" time="0.01">
+    </testcase>
+    <testcase classname="RfeService bulkImport should throw BadRequestException if no valid rows are found" name="RfeService bulkImport should throw BadRequestException if no valid rows are found" time="0.005">
+    </testcase>
+    <testcase classname="RfeService bulkImport should return error if trainee_readiness is invalid" name="RfeService bulkImport should return error if trainee_readiness is invalid" time="0.002">
+    </testcase>
+    <testcase classname="RfeService bulkImport should handle partial success and return errors" name="RfeService bulkImport should handle partial success and return errors" time="0.001">
+    </testcase>
+    <testcase classname="RfeService bulkImport should handle flexible header aliases" name="RfeService bulkImport should handle flexible header aliases" time="0.002">
+    </testcase>
+    <testcase classname="RfeService bulkImport should aggregate multiple rows with the same error" name="RfeService bulkImport should aggregate multiple rows with the same error" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ScoringService" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.069" tests="5">
+    <testcase classname="ScoringService should dispatch to skills scorer for tsrg_skills" name="ScoringService should dispatch to skills scorer for tsrg_skills" time="0.003">
+    </testcase>
+    <testcase classname="ScoringService should dispatch to interests scorer for tsrg_interests" name="ScoringService should dispatch to interests scorer for tsrg_interests" time="0.001">
+    </testcase>
+    <testcase classname="ScoringService should dispatch to barriers scorer for tsrg_barriers" name="ScoringService should dispatch to barriers scorer for tsrg_barriers" time="0">
+    </testcase>
+    <testcase classname="ScoringService should throw BadRequestException for unknown assessment type" name="ScoringService should throw BadRequestException for unknown assessment type" time="0.003">
+    </testcase>
+    <testcase classname="ScoringService should return a result with the ScoredResult shape" name="ScoringService should return a result with the ScoredResult shape" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ReportsService" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.089" tests="2">
+    <testcase classname="ReportsService getEmployabilityMetrics should calculate resources and inhibitors correctly" name="ReportsService getEmployabilityMetrics should calculate resources and inhibitors correctly" time="0.003">
+    </testcase>
+    <testcase classname="ReportsService getEmployabilityMetrics should handle weighted barrier severity correctly" name="ReportsService getEmployabilityMetrics should handle weighted barrier severity correctly" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="TrainingsRepository" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.08" tests="3">
+    <testcase classname="TrainingsRepository should be defined" name="TrainingsRepository should be defined" time="0.003">
+    </testcase>
+    <testcase classname="TrainingsRepository create should insert a new training record" name="TrainingsRepository create should insert a new training record" time="0.002">
+    </testcase>
+    <testcase classname="TrainingsRepository findById should return a training record by id" name="TrainingsRepository findById should return a training record by id" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="EncountersRepository" errors="0" failures="0" skipped="0" timestamp="2026-05-26T19:42:30" time="0.09" tests="3">
+    <testcase classname="EncountersRepository should be defined" name="EncountersRepository should be defined" time="0.004">
+    </testcase>
+    <testcase classname="EncountersRepository create should call the database with all fields" name="EncountersRepository create should call the database with all fields" time="0.002">
+    </testcase>
+    <testcase classname="EncountersRepository findById should include all new fields in the SELECT query" name="EncountersRepository findById should include all new fields in the SELECT query" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

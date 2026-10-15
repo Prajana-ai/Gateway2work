@@ -1,0 +1,289 @@
+apps/api/src/modules/bulk/bulk.controller.ts:  @Post('clients/import')
+apps/api/src/modules/bulk/bulk.controller.ts:  async importClients(
+apps/api/src/modules/bulk/bulk.controller.ts:    return this.bulkService.importClients(
+apps/api/src/modules/bulk/bulk.service.ts:interface ClientCsvRow {
+apps/api/src/modules/bulk/bulk.service.ts:  async importClients(
+apps/api/src/modules/bulk/bulk.service.ts:    const rows = parseCsv<ClientCsvRow>(csvContent, {
+apps/api/src/modules/bulk/bulk.service.ts:      async (client) => {
+apps/api/src/modules/bulk/bulk.service.ts:              const existing = await client.query(
+apps/api/src/modules/bulk/bulk.service.ts:                `SELECT id FROM protected.clients
+apps/api/src/modules/bulk/bulk.service.ts:              const fuzzy = await client.query(
+apps/api/src/modules/bulk/bulk.service.ts:                 FROM protected.clients
+apps/api/src/modules/bulk/bulk.service.ts:            await client.query(
+apps/api/src/modules/bulk/bulk.service.ts:              `INSERT INTO protected.clients
+apps/api/src/modules/bulk/bulk.service.ts:      async (client) => {
+apps/api/src/modules/bulk/bulk.service.ts:            // Find client by external_ehr_id
+apps/api/src/modules/bulk/bulk.service.ts:            const clientResult = await client.query(
+apps/api/src/modules/bulk/bulk.service.ts:              `SELECT id FROM protected.clients WHERE external_ehr_id = $1`,
+apps/api/src/modules/bulk/bulk.service.ts:            if (clientResult.rows.length === 0) {
+apps/api/src/modules/bulk/bulk.service.ts:                `Row ${rowNum}: no client found with external_ehr_id ${row.external_ehr_id}`,
+apps/api/src/modules/bulk/bulk.service.ts:            const clientId = clientResult.rows[0].id;
+apps/api/src/modules/bulk/bulk.service.ts:            await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:      const result = await client.query(
+apps/api/src/modules/ips/ips.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/ips/ips.repository.ts:        const competitiveWorkRes = await client.query(`
+apps/api/src/modules/ips/ips.repository.ts:        const caseloadRes = await client.query(`
+apps/api/src/modules/ips/ips.repository.ts:        const rapidSearchRes = await client.query(`
+apps/api/src/modules/ips/ips.repository.ts:        const freqContactRes = await client.query(`
+apps/api/src/modules/referrals/referrals.controller.ts:      client_id?: string; // Fallback
+apps/api/src/modules/referrals/referrals.controller.ts:        participant_id: body.participant_id || body.client_id!,
+apps/api/src/modules/referrals/referrals.repository.ts:export interface ReferralWithClient extends ReferralRow {
+apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/referrals/referrals.repository.ts:      const countResult = await client.query(
+apps/api/src/modules/referrals/referrals.repository.ts:      const dataResult = await client.query(
+apps/api/src/modules/referrals/referrals.repository.ts:                ((c.demographics->>'first_name') || ' ' || (c.demographics->>'last_name')) AS "clientName",
+apps/api/src/modules/referrals/referrals.repository.ts:  ): Promise<ReferralWithClient | null> {
+apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+apps/api/src/modules/referrals/referrals.repository.ts:                ((c.demographics->>'first_name') || ' ' || (c.demographics->>'last_name')) AS "clientName",
+apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+apps/api/src/modules/referrals/referrals.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/referrals/referrals.repository.ts:      const result = await client.query(
+apps/api/src/modules/referrals/referrals.service.ts:  ReferralWithClient,
+apps/api/src/modules/referrals/referrals.service.ts:  ): Promise<ReferralWithClient> {
+apps/api/src/modules/referrals/referrals.service.ts:      async (client) => {
+apps/api/src/modules/referrals/referrals.service.ts:        const result = await client.query(
+apps/api/src/modules/rfe/rfe.service.ts:      async (client) => {
+apps/api/src/modules/rfe/rfe.service.ts:        const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const countResult = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:      const dataResult = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:        const existing = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/rfe/rfe.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/rfe/rfe.repository.ts:      const result = await client.query(
+apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+apps/api/src/modules/forms/forms.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/forms/forms.repository.ts:      const result = await client.query(
+apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:      const result = await client.query(
+apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/employment-outcomes/employment-outcomes.repository.ts:      const result = await client.query(query, params);
+apps/api/src/modules/assessments/assessments.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/assessments/assessments.repository.ts:      const assessmentResult = await client.query(
+apps/api/src/modules/assessments/assessments.repository.ts:      const summaryResult = await client.query(
+apps/api/src/modules/assessments/assessments.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/assessments/assessments.repository.ts:      const result = await client.query(
+apps/api/src/modules/discharges/discharges.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/discharges/discharges.repository.ts:      const result = await client.query(
+apps/api/src/modules/discharges/discharges.repository.ts:      await client.query(
+apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/discharges/discharges.repository.ts:      const result = await client.query(
+apps/api/src/modules/discharges/discharges.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/discharges/discharges.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/encounters/encounters.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/encounters/encounters.repository.ts:      const countResult = await client.query(
+apps/api/src/modules/encounters/encounters.repository.ts:      const dataResult = await client.query(
+apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+apps/api/src/modules/encounters/encounters.repository.ts:    return this.execute(tenantId, userId, role, async (client) => {
+apps/api/src/modules/encounters/encounters.repository.ts:      const result = await client.query(
+apps/api/src/modules/encounters/encounters.controller.ts:    @Query('client_id') clientId?: string, // Fallback
+apps/api/src/modules/encounters/encounters.controller.ts:      participantId: participantId || clientId,
+apps/api/src/modules/encounters/encounters.controller.ts:      clientId?: string;
+apps/api/src/modules/encounters/encounters.controller.ts:        participantId: body.participantId || body.clientId!,
+apps/api/src/modules/encounters/encounters.service.ts:      async (client) => {
+apps/api/src/modules/encounters/encounters.service.ts:        const result = await client.query(
+apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+apps/api/src/modules/reports/reports.service.ts:        const result = await client.query(
+apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+apps/api/src/modules/reports/reports.service.ts:        const overallResult = await client.query(
+apps/api/src/modules/reports/reports.service.ts:        const breakdownResult = await client.query(breakdownSql);
+apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+apps/api/src/modules/reports/reports.service.ts:          client.query(
+apps/api/src/modules/reports/reports.service.ts:          client.query(
+apps/api/src/modules/reports/reports.service.ts:          client.query(
+apps/api/src/modules/reports/reports.service.ts:          client.query(
+apps/api/src/modules/reports/reports.service.ts:          client.query(
+apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+apps/api/src/modules/reports/reports.service.ts:            totals: client.query(`
+apps/api/src/modules/reports/reports.service.ts:            avgTime: client.query(`
+apps/api/src/modules/reports/reports.service.ts:            avgServices: client.query(`
+apps/api/src/modules/reports/reports.service.ts:            topBarriers: client.query(`
+apps/api/src/modules/reports/reports.service.ts:            topSources: client.query(`
+apps/api/src/modules/reports/reports.service.ts:            topIndustries: client.query(`
+apps/api/src/modules/reports/reports.service.ts:      async (client) => {
+apps/api/src/modules/reports/reports.service.ts:        const result = await client.query(
+apps/api/src/modules/workflows/workflows.service.ts:    // Check for existing active workflow for this client
+apps/api/src/modules/workflows/workflows.service.ts:    // Evaluate conditions against client data
+apps/api/src/modules/workflows/workflows.service.ts:            description: 'Review plan with client',
+apps/api/src/modules/workflows/workflows.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/workflows/workflows.repository.ts:  owner_type: 'staff' | 'client';
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/workflows/workflows.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workflows/workflows.repository.ts:      const result = await client.query(
+apps/api/src/modules/trainings/trainings.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, values);
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, [id, tenantId]);
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, queryParams);
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(query, [participantId, tenantId]);
+apps/api/src/modules/trainings/trainings.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/trainings/trainings.repository.ts:      const countResult = await client.query(countQuery, values);
+apps/api/src/modules/trainings/trainings.repository.ts:      const result = await client.query(dataQuery, values);
+apps/api/src/modules/enrollments/enrollment.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:          ips_client_established_date,
+apps/api/src/modules/enrollments/enrollment.repository.ts:          case_management_established_client_date,
+apps/api/src/modules/enrollments/enrollment.repository.ts:        data.ips_client_established_date,
+apps/api/src/modules/enrollments/enrollment.repository.ts:        data.case_management_established_client_date,
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, values);
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [id, tenantId]);
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(finalUpdateQuery, queryParams);
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [participantId, tenantId]);
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(query, [referralId, tenantId]);
+apps/api/src/modules/enrollments/enrollment.repository.ts:    // This queryParams object should match what the service/controller expects from the client
+apps/api/src/modules/enrollments/enrollment.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const countResult = await client.query(countQuery, queryParamsValues);
+apps/api/src/modules/enrollments/enrollment.repository.ts:      const result = await client.query(dataQuery, queryParamsValues);
+apps/api/src/modules/scheduling/scheduling.controller.ts:    @Query('clientId') clientId?: string, // Fallback
+apps/api/src/modules/scheduling/scheduling.controller.ts:      participantId: participantId || clientId,
+apps/api/src/modules/scheduling/scheduling.controller.ts:  @Get('client/:clientId')
+apps/api/src/modules/scheduling/scheduling.controller.ts:  async clientSchedule(
+apps/api/src/modules/scheduling/scheduling.controller.ts:    @Param('clientId', ParseUUIDPipe) clientId: string,
+apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId,
+apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId?: string;
+apps/api/src/modules/scheduling/scheduling.controller.ts:        participantId: body.participantId || body.clientId,
+apps/api/src/modules/scheduling/scheduling.controller.ts:      clientId: string;
+apps/api/src/modules/scheduling/scheduling.controller.ts:        participantId: body.participantId || body.clientId,
+apps/api/src/modules/scheduling/scheduling.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/scheduling/scheduling.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/scheduling/scheduling.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const planResult = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const tasksResult = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:        const current = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/workforce-plans/workforce-plans.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(sql, params);
+apps/api/src/modules/integrations/integrations.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/integrations/integrations.repository.ts:        const result = await client.query(
+apps/api/src/modules/integrations/integrations.repository.ts:      const result = await client.query(
+apps/api/src/modules/integrations/integrations.service.ts:        // target tables (clients, referrals, etc.) would be done here
+apps/api/src/modules/follow-ups/follow-ups.repository.ts:import { PoolClient } from 'pg';
+apps/api/src/modules/follow-ups/follow-ups.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/follow-ups/follow-ups.repository.ts:      const result = await client.query(
+apps/api/src/modules/follow-ups/follow-ups.repository.ts:    return this.execute(tenantId, userId, role, async (client: PoolClient) => {
+apps/api/src/modules/follow-ups/follow-ups.repository.ts:      const result = await client.query(

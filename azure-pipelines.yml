@@ -1,0 +1,443 @@
+# Azure DevOps CI/CD Pipeline — ImpactForge
+# Matches: docs/azure_devops_pipeline.html diagram
+# Stages: CI → Test → Staging → Production
+# Branch strategy: feature/* (PR only) → develop (Test) → release/* (Staging) → main (Production)
+
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - release/*
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+
+variables:
+  nodeVersion: '20.x'
+  turboCache: $(Pipeline.Workspace)/.turbo
+  acrName: 'impactforgeacr'
+  acrConnection: 'ImpactForge-ACR'
+  apiImageName: '$(acrName).azurecr.io/impactforge-api'
+  webImageName: '$(acrName).azurecr.io/impactforge-web'
+  imageTag: '$(Build.BuildId)'
+  # Service connections (must be literals, not runtime variables)
+  azureSubscriptionTest: 'ImpactForge-Azure-test'
+  # Uncomment when staging/prod stages are enabled:
+  # azureSubscriptionStaging: 'ImpactForge-Azure-staging'
+  # azureSubscriptionProd: 'ImpactForge-Azure-prod'
+
+# ============================================================
+# Stage 1 — CI (runs on every branch + PR)
+# Build, test, security scan, Docker build + push to ACR
+# ============================================================
+stages:
+  - stage: CI
+    displayName: 'Stage 1 — CI'
+    jobs:
+      - job: BuildAndTest
+        displayName: 'Build, Test, Scan'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(nodeVersion)
+            displayName: 'Install Node.js'
+
+          - script: mkdir -p ~/.npm $(turboCache)
+            displayName: 'Ensure cache dirs exist'
+
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              path: '$(HOME)/.npm'
+            displayName: 'Cache npm'
+
+          - task: Cache@2
+            inputs:
+              key: 'turbo | "$(Agent.OS)" | turbo.json | package-lock.json'
+              path: $(turboCache)
+            displayName: 'Cache Turbo'
+
+          - script: npm ci
+            displayName: 'Install dependencies'
+
+          - script: npx turbo build
+            displayName: 'Build all packages'
+            env:
+              TURBO_CACHE_DIR: $(turboCache)
+
+          - script: npx turbo test -- --passWithNoTests
+            displayName: 'Run unit tests'
+            env:
+              TURBO_CACHE_DIR: $(turboCache)
+
+          # E2E tests require a running database; skip in CI until test infra is provisioned
+          # - script: cd apps/api && npx jest --config ./test/jest-e2e.json --passWithNoTests
+          #   displayName: 'Run E2E tests'
+          #   continueOnError: true
+
+          - script: npm audit --audit-level=high --omit=dev || true
+            displayName: 'Security audit (npm)'
+
+          - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
+              failTaskOnFailedTests: false
+            displayName: 'Publish test results'
+
+      - job: DockerBuild
+        displayName: 'Docker Build + Push to ACR'
+        dependsOn: BuildAndTest
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            displayName: 'Build & Push API Image'
+            inputs:
+              containerRegistry: $(acrConnection)
+              repository: 'impactforge-api'
+              command: buildAndPush
+              Dockerfile: Dockerfile.api
+              tags: |
+                $(imageTag)
+                latest
+
+          - task: Docker@2
+            displayName: 'Build Web Image'
+            inputs:
+              containerRegistry: $(acrConnection)
+              repository: 'impactforge-web'
+              command: build
+              Dockerfile: Dockerfile.web
+              arguments: '--build-arg NEXT_PUBLIC_API_URL=https://impactforge-api-test.azurewebsites.net/v1'
+              tags: |
+                $(imageTag)
+                latest
+
+          - task: Docker@2
+            displayName: 'Push Web Image'
+            inputs:
+              containerRegistry: $(acrConnection)
+              repository: 'impactforge-web'
+              command: push
+              tags: |
+                $(imageTag)
+                latest
+
+# ============================================================
+# Stage 2 — Deploy to Test
+# Triggered by: develop branch (no approval required)
+# ============================================================
+  - stage: DeployTest
+    displayName: 'Stage 2 — Deploy to Test'
+    dependsOn: CI
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+    variables:
+      - group: impactforge-test                      # Variable group: DATABASE_*, JWT_SECRET, etc.
+    jobs:
+      - deployment: DeployToTest
+        displayName: 'Deploy to Test Environment'
+        pool:
+          vmImage: 'ubuntu-latest'
+        environment: 'test'                          # No approval gate
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - task: NodeTool@0
+                  inputs:
+                    versionSpec: $(nodeVersion)
+                  displayName: 'Install Node.js'
+
+                - script: npm ci
+                  displayName: 'Install dependencies'
+
+                # ------------------------------------------------------------------
+                # Step: Verify DB connectivity BEFORE running migrations.
+                # A 28P01 (auth failure) here produces a clear, actionable error
+                # message instead of being buried inside migration tool output.
+                # ------------------------------------------------------------------
+                - script: |
+                    set -euo pipefail
+                    echo "Checking DATABASE_URL host: $(echo $DATABASE_URL | sed 's|.*@||' | sed 's|/.*||')"
+                    node -e "
+                    const { Client } = require('pg');
+                    const c = new Client({
+                      connectionString: process.env.DATABASE_URL,
+                      ssl: { rejectUnauthorized: false },
+                      connectionTimeoutMillis: 10000
+                    });
+                    c.connect()
+                      .then(() => c.query('SELECT current_user, current_database(), version()'))
+                      .then(r => {
+                        const row = r.rows[0];
+                        console.log('✅ DB connection OK');
+                        console.log('   user    :', row.current_user);
+                        console.log('   database:', row.current_database);
+                        console.log('   pg ver  :', row.version.split(' ').slice(0,2).join(' '));
+                        return c.end();
+                      })
+                      .catch(e => {
+                        console.error('❌ DB connection FAILED:', e.message);
+                        console.error('   Code:', e.code);
+                        if (e.code === '28P01') {
+                          console.error('   → Check DATABASE_URL and DATABASE_PASSWORD in the impactforge-test variable group.');
+                        }
+                        process.exit(1);
+                      });
+                    "
+                  displayName: 'DB connectivity check'
+                  env:
+                    DATABASE_URL: $(DATABASE_URL)
+
+                # ------------------------------------------------------------------
+                # Step: Run all pending migrations via node-pg-migrate
+                # ------------------------------------------------------------------
+                - script: |
+                    set -euo pipefail
+                    echo "Running migrations from apps/api/src/database/migrations ..."
+                    npx node-pg-migrate up \
+                      --migrations-dir apps/api/src/database/migrations \
+                      --database-url-var DATABASE_URL
+                    echo "✅ Migrations complete"
+                  displayName: 'Run database migrations'
+                  env:
+                    DATABASE_URL: $(DATABASE_URL)
+
+                # ------------------------------------------------------------------
+                # Step: Verify migration count in pgmigrations table
+                # Confirms the migration tool successfully recorded completions.
+                # ------------------------------------------------------------------
+                - script: |
+                    set -euo pipefail
+                    node -e "
+                    const { Client } = require('pg');
+                    const c = new Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+                    c.connect()
+                      .then(() => c.query('SELECT COUNT(*) as total, MAX(run_on) as last_run FROM public.pgmigrations'))
+                      .then(r => {
+                        const { total, last_run } = r.rows[0];
+                        console.log('✅ Migration verification:');
+                        console.log('   Applied migrations:', total);
+                        console.log('   Last applied at   :', last_run);
+                        return c.end();
+                      })
+                      .catch(e => { console.error('❌ Verification failed:', e.message); process.exit(1); });
+                    "
+                  displayName: 'Verify migrations applied'
+                  env:
+                    DATABASE_URL: $(DATABASE_URL)
+
+                # ------------------------------------------------------------------
+                # Step: Seed database (idempotent — safe to re-run)
+                # ------------------------------------------------------------------
+                - script: |
+                    set -euo pipefail
+                    cd apps/api && npx ts-node src/database/seeds/run-seeds.ts
+                  displayName: 'Seed database'
+                  env:
+                    DATABASE_URL: $(DATABASE_URL)
+
+
+                - task: AzureWebAppContainer@1
+                  displayName: 'Deploy API container'
+                  inputs:
+                    azureSubscription: $(azureSubscriptionTest)
+                    appName: 'impactforge-api-test'
+                    containers: '$(apiImageName):$(imageTag)'
+
+                - task: AzureWebAppContainer@1
+                  displayName: 'Deploy Web container'
+                  inputs:
+                    azureSubscription: $(azureSubscriptionTest)
+                    appName: 'impactforge-web-test'
+                    containers: '$(webImageName):$(imageTag)'
+
+                - script: |
+                    HEALTH_URL="https://impactforge-api-test.azurewebsites.net/health"
+                    MAX_ATTEMPTS=24      # 24 * 5s = 2 min total
+                    SLEEP_BETWEEN=5
+
+                    echo "Polling $HEALTH_URL (up to ${MAX_ATTEMPTS} attempts, ${SLEEP_BETWEEN}s apart)..."
+                    for i in $(seq 1 $MAX_ATTEMPTS); do
+                      STATUS=$(curl -sS -o /tmp/health.out -w "%{http_code}" --max-time 10 "$HEALTH_URL" || echo "000")
+                      if [ "$STATUS" = "200" ]; then
+                        echo "Attempt $i: HTTP 200 — health check passed"
+                        cat /tmp/health.out
+                        exit 0
+                      fi
+                      echo "Attempt $i/$MAX_ATTEMPTS: HTTP $STATUS — not ready yet"
+                      sleep $SLEEP_BETWEEN
+                    done
+
+                    echo "Health check failed after $((MAX_ATTEMPTS * SLEEP_BETWEEN))s. Last response body:"
+                    cat /tmp/health.out 2>/dev/null || true
+                    exit 1
+                  displayName: 'Health check'
+
+# ============================================================
+# Stage 3 — Deploy to Staging (DISABLED — uncomment when ready)
+# Triggered by: release/* branch (1 approver required via ADO environment)
+# Prerequisites:
+#   1. Create service connection: ImpactForge-Azure-staging
+#   2. Create variable group: impactforge-staging (with real values)
+#   3. Create ADO environment: staging (with 1 approver)
+#   4. Run: ./infra/setup.sh staging
+#   5. Uncomment this stage
+# ============================================================
+#  - stage: DeployStaging
+#    displayName: 'Stage 3 — Deploy to Staging'
+#    dependsOn: CI
+#    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
+#    variables:
+#      - group: impactforge-staging
+#    jobs:
+#      - deployment: DeployToStaging
+#        displayName: 'Deploy to Staging Environment'
+#        pool:
+#          vmImage: 'ubuntu-latest'
+#        environment: 'staging'
+#        strategy:
+#          runOnce:
+#            deploy:
+#              steps:
+#                - script: |
+#                    npm ci --prefix apps/api
+#                    DATABASE_URL=$(DATABASE_URL) npx --prefix apps/api node-pg-migrate up \
+#                      --migrations-dir apps/api/src/database/migrations \
+#                      --database-url-var DATABASE_URL
+#                  displayName: 'Run database migrations (staging)'
+#
+#                - task: AzureWebAppContainer@1
+#                  displayName: 'Deploy API to staging slot'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionStaging)
+#                    appName: 'impactforge-api-staging'
+#                    slotName: 'staging'
+#                    containers: '$(apiImageName):$(imageTag)'
+#
+#                - task: AzureWebAppContainer@1
+#                  displayName: 'Deploy Web to staging slot'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionStaging)
+#                    appName: 'impactforge-web-staging'
+#                    slotName: 'staging'
+#                    containers: '$(webImageName):$(imageTag)'
+#
+#                - script: |
+#                    echo "Running smoke tests on staging slot..."
+#                    curl -sf https://impactforge-api-staging-staging.azurewebsites.net/health || exit 1
+#                    echo "API health: OK"
+#                    curl -sf https://impactforge-api-staging-staging.azurewebsites.net/health/db || exit 1
+#                    echo "DB connectivity: OK"
+#                  displayName: 'Smoke tests (staging slot)'
+#
+#                - task: AzureAppServiceManage@0
+#                  displayName: 'Swap API staging → live'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionStaging)
+#                    WebAppName: 'impactforge-api-staging'
+#                    ResourceGroupName: $(resourceGroup)
+#                    SourceSlot: 'staging'
+#
+#                - task: AzureAppServiceManage@0
+#                  displayName: 'Swap Web staging → live'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionStaging)
+#                    WebAppName: 'impactforge-web-staging'
+#                    ResourceGroupName: $(resourceGroup)
+#                    SourceSlot: 'staging'
+
+# ============================================================
+# Stage 4 — Deploy to Production (DISABLED — uncomment when ready)
+# Triggered by: main branch (2 approvers required via ADO environment)
+# Prerequisites:
+#   1. Create service connection: ImpactForge-Azure-prod
+#   2. Create variable group: impactforge-prod (with real values)
+#   3. Create ADO environment: production (with 2 approvers)
+#   4. Run: ./infra/setup.sh prod
+#   5. Uncomment this stage
+# ============================================================
+#  - stage: DeployProduction
+#    displayName: 'Stage 4 — Deploy to Production'
+#    dependsOn: CI
+#    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+#    variables:
+#      - group: impactforge-prod
+#    jobs:
+#      - deployment: DeployToProduction
+#        displayName: 'Deploy to Production Environment'
+#        pool:
+#          vmImage: 'ubuntu-latest'
+#        environment: 'production'
+#        strategy:
+#          runOnce:
+#            deploy:
+#              steps:
+#                - script: |
+#                    npm ci --prefix apps/api
+#                    DATABASE_URL=$(DATABASE_URL) npx --prefix apps/api node-pg-migrate up \
+#                      --migrations-dir apps/api/src/database/migrations \
+#                      --database-url-var DATABASE_URL
+#                  displayName: 'Run database migrations (production)'
+#
+#                - task: AzureWebAppContainer@1
+#                  displayName: 'Deploy API to production slot'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionProd)
+#                    appName: 'impactforge-api-prod'
+#                    slotName: 'staging'
+#                    containers: '$(apiImageName):$(imageTag)'
+#
+#                - task: AzureWebAppContainer@1
+#                  displayName: 'Deploy Web to production slot'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionProd)
+#                    appName: 'impactforge-web-prod'
+#                    slotName: 'staging'
+#                    containers: '$(webImageName):$(imageTag)'
+#
+#                - script: |
+#                    echo "Running production smoke tests..."
+#                    curl -sf https://impactforge-api-prod-staging.azurewebsites.net/health || exit 1
+#                    echo "API health: OK"
+#                    curl -sf https://impactforge-api-prod-staging.azurewebsites.net/health/db || exit 1
+#                    echo "DB connectivity: OK"
+#                  displayName: 'Smoke tests (production slot)'
+#
+#                - task: AzureAppServiceManage@0
+#                  displayName: 'Swap API production slot → live'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionProd)
+#                    WebAppName: 'impactforge-api-prod'
+#                    ResourceGroupName: $(resourceGroup)
+#                    SourceSlot: 'staging'
+#
+#                - task: AzureAppServiceManage@0
+#                  displayName: 'Swap Web production slot → live'
+#                  inputs:
+#                    azureSubscription: $(azureSubscriptionProd)
+#                    WebAppName: 'impactforge-web-prod'
+#                    ResourceGroupName: $(resourceGroup)
+#                    SourceSlot: 'staging'
+#
+#                - script: |
+#                    echo "Post-deploy validation..."
+#                    curl -sf https://api.impactforge.app/health || exit 1
+#                    echo "Production API: OK"
+#                    echo "Monitoring: Azure Monitor alerts active"
+#                    echo "Audit: audit_log stream → Log Analytics"
+#                    echo "CDN: Front Door health probe confirming"
+#                    echo ""
+#                    echo "Auto-rollback: slot swap reversal available for 10 min"
+#                  displayName: 'Post-deploy validation'

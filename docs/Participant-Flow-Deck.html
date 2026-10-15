@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participant Flow - ImpactBridge</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #1e3a5f;
+    --primary-light: #2d5a8e;
+    --accent: #0ea5e9;
+    --accent-warm: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --gradient-1: linear-gradient(135deg, #1e3a5f 0%, #0ea5e9 100%);
+    --gradient-2: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0f172a;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+  }
+  .nav-logo { color: white; font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.2); }
+  .slide-counter { color: rgba(255,255,255,0.6); font-size: 13px; margin: 0 12px; }
+
+  /* Slides container */
+  .slides-wrapper {
+    padding-top: 60px;
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+    height: 100vh;
+  }
+
+  .slide {
+    min-height: calc(100vh - 60px);
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    position: relative;
+  }
+
+  .slide-inner {
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  /* Slide backgrounds */
+  .slide-title-bg {
+    background: var(--gradient-1);
+    color: white;
+  }
+  .slide-light {
+    background: var(--bg);
+  }
+  .slide-dark {
+    background: #0f172a;
+    color: white;
+  }
+
+  /* Typography */
+  .slide-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .tag-blue { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
+  .tag-white { background: rgba(255,255,255,0.15); color: white; }
+  .tag-dark { background: rgba(30,58,95,0.1); color: var(--primary); }
+
+  h1.hero-title {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  h2.slide-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .slide-subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 700px;
+  }
+
+  /* Grid layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+  .card-dark {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .icon-blue { background: rgba(14, 165, 233, 0.12); color: var(--accent); }
+  .icon-green { background: rgba(16, 185, 129, 0.12); color: var(--success); }
+
+  /* Flow diagrams */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .flow-step {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 140px;
+  }
+  .flow-step .icon { font-size: 24px; margin-bottom: 6px; }
+  .flow-step .label { font-size: 12px; font-weight: 600; }
+  .flow-arrow { font-size: 20px; color: rgba(255,255,255,0.3); }
+
+  /* Table-like list */
+  .var-list {
+    font-size: 13px;
+    margin-top: 16px;
+  }
+  .var-item {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+  }
+  .var-name { font-weight: 600; color: rgba(255,255,255,0.9); }
+  .var-cat { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .badge-protected { background: #fee2e2; color: #dc2626; }
+  .badge-app { background: #dcfce7; color: #16a34a; }
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">Impact<span>Bridge</span> | Participant Flow</div>
+  <div class="nav-controls">
+    <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">10</span></span>
+    <button class="nav-btn" onclick="prevSlide()">Prev</button>
+    <button class="nav-btn" onclick="nextSlide()">Next</button>
+  </div>
+</nav>
+
+<div class="slides-wrapper" id="slidesWrapper">
+
+<!-- SLIDE 1: Title -->
+<div class="slide slide-title-bg" id="slide-1">
+  <div class="slide-inner fade-in">
+    <span class="slide-tag tag-white">Stakeholder Overview</span>
+    <h1 class="hero-title">The Participant Journey</h1>
+    <p class="slide-subtitle">
+      A comprehensive guide to how participants move through the ImpactBridge platform &mdash; from initial referral to long-term employment success.
+    </p>
+    <div style="margin-top: 40px; font-size: 14px; opacity: 0.7;">
+      Based on TSRG Workforce Development Vertical
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Lifecycle Overview -->
+<div class="slide slide-dark" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">High-Level Flow</span>
+    <h2 class="slide-title">End-to-End Lifecycle</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.65);">
+      The platform unifies clinical intake with workforce development objectives.
+    </p>
+    <div class="flow" style="margin-top: 60px;">
+      <div class="flow-step">
+        <div class="icon">📩</div>
+        <div class="label">Referral & Intake</div>
+      </div>
+      <div class="flow-arrow">➡</div>
+      <div class="flow-step">
+        <div class="icon">📋</div>
+        <div class="label">Assessment</div>
+      </div>
+      <div class="flow-arrow">➡</div>
+      <div class="flow-step">
+        <div class="icon">🎯</div>
+        <div class="label">Workforce Plan</div>
+      </div>
+      <div class="flow-arrow">➡</div>
+      <div class="flow-step">
+        <div class="icon">🤝</div>
+        <div class="label">Employer Match</div>
+      </div>
+      <div class="flow-arrow">➡</div>
+      <div class="flow-step" style="border-color: var(--success); background: rgba(16, 185, 129, 0.1);">
+        <div class="icon">🚀</div>
+        <div class="label">Placement & Outcome</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Referral & Intake -->
+<div class="slide slide-light" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Step 1</span>
+    <h2 class="slide-title">Referral & Intake</h2>
+    <div class="grid-2">
+      <div>
+        <p class="slide-subtitle" style="color: var(--text-muted);">
+          Participants enter via secure EHR feeds or direct partner referrals.
+        </p>
+        <ul style="margin-top: 24px; color: var(--text); line-height: 2; font-size: 16px; padding-left: 20px;">
+          <li><strong>Secure Ingestion:</strong> CSV/API feeds from BHA clinics, jails, or courts.</li>
+          <li><strong>Duplicate Detection:</strong> Fuzzy matching on Name and DOB.</li>
+          <li><strong>Status Tracking:</strong> Transitions from <em>Pending</em> to <em>Active</em> upon intake completion.</li>
+          <li><strong>Consent:</strong> 42 CFR Part 2 and HIPAA consent captured at start.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom: 12px;">Key Variables Captured</h4>
+        <div class="var-list" style="color: var(--text);">
+          <div class="var-item" style="border-color: var(--border);">
+            <span class="var-name" style="color: var(--text);">Referral Source</span>
+            <span class="badge badge-protected">Protected</span>
+          </div>
+          <div class="var-item" style="border-color: var(--border);">
+            <span class="var-name" style="color: var(--text);">Demographics (Race, Gender, DOB)</span>
+            <span class="badge badge-protected">Protected</span>
+          </div>
+          <div class="var-item" style="border-color: var(--border);">
+            <span class="var-name" style="color: var(--text);">Justice Involvement Status</span>
+            <span class="badge badge-protected">Protected</span>
+          </div>
+          <div class="var-item" style="border-color: var(--border);">
+            <span class="var-name" style="color: var(--text);">Funding Stream</span>
+            <span class="badge badge-app">Application</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Assessment -->
+<div class="slide slide-dark" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">Step 2</span>
+    <h2 class="slide-title">Comprehensive Assessment</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6);">
+      The "TSRG Three" assessments build a multi-dimensional profile of the participant.
+    </p>
+    <div class="grid-3">
+      <div class="card-dark">
+        <div class="card-icon icon-blue">🛠️</div>
+        <h4>Skills Assessment</h4>
+        <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Baseline for digital literacy, soft skills, and vocational experience.</p>
+      </div>
+      <div class="card-dark">
+        <div class="card-icon icon-blue">⭐</div>
+        <h4>Interests Assessment</h4>
+        <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Identifies preferred sectors (Healthcare, Skilled Trades, etc.) and job roles.</p>
+      </div>
+      <div class="card-dark">
+        <div class="card-icon icon-blue">⚠️</div>
+        <h4>Barriers Assessment</h4>
+        <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Uncovers housing, transport, or childcare needs that impact retention.</p>
+      </div>
+    </div>
+    <div style="margin-top: 32px; padding: 20px; background: rgba(14, 165, 233, 0.1); border-radius: 12px;">
+      <p style="font-size: 14px; text-align: center;">
+        <strong>Data Handling:</strong> Raw responses are stored in the <strong>Protected Zone</strong>. <br>
+        Computed scores and "Readiness" summaries are written to the <strong>Application Zone</strong> for matching.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Workforce Plan -->
+<div class="slide slide-light" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Step 3</span>
+    <h2 class="slide-title">Individualized Workforce Plan</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-bottom: 12px;">Plan Components</h4>
+        <ul style="color: var(--text-muted); line-height: 1.8; font-size: 14px; padding-left: 20px;">
+          <li><strong>Long-term Goal:</strong> The target career outcome (e.g., CNA Certification).</li>
+          <li><strong>Short-term Milestones:</strong> Incremental steps toward the goal.</li>
+          <li><strong>Actionable Tasks:</strong> Individual items with due dates and owners.</li>
+          <li><strong>Medicaid Encounters:</strong> Case management notes linked directly to plan progress.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="slide-subtitle" style="color: var(--text-muted);">
+          Engagement is bidirectional. Staff manage the plan, and participants own their tasks.
+        </p>
+        <div style="margin-top: 32px; padding: 24px; background: #f0f9ff; border-radius: 16px; border: 1px solid #bae6fd;">
+          <h5 style="color: var(--primary); margin-bottom: 8px;">Participant PWA</h5>
+          <p style="font-size: 14px; color: var(--text-muted);">Participants use a mobile-first Web App to:</p>
+          <div style="display: flex; gap: 12px; margin-top: 12px;">
+            <div style="background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--accent);">Check Tasks</div>
+            <div style="background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--accent);">Weekly Check-in</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Employer Matching -->
+<div class="slide slide-dark" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">Step 4</span>
+    <h2 class="slide-title">Employer Matching</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6);">
+      Connecting participants with 137+ "Recovery-Friendly Employers" (RFEs).
+    </p>
+    <div class="grid-2">
+      <div class="card-dark">
+        <h4 style="color: white; margin-bottom: 16px;">The RFE Directory</h4>
+        <p style="font-size: 14px; opacity: 0.7; line-height: 1.6;">
+          Searchable database of employers vetted for their commitment to supporting individuals in recovery.
+        </p>
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px;">
+          <span class="badge" style="background: rgba(255,255,255,0.1); color: white;">Healthcare</span>
+          <span class="badge" style="background: rgba(255,255,255,0.1); color: white;">Construction</span>
+          <span class="badge" style="background: rgba(255,255,255,0.1); color: white;">Logistics</span>
+          <span class="badge" style="background: rgba(255,255,255,0.1); color: white;">Retail</span>
+        </div>
+      </div>
+      <div class="card-dark">
+        <h4 style="color: white; margin-bottom: 16px;">Smart Matching</h4>
+        <p style="font-size: 14px; opacity: 0.7; line-height: 1.6;">
+          Algorithms suggest matches based on:
+        </p>
+        <ul style="font-size: 13px; margin-top: 8px; padding-left: 20px; line-height: 1.8; opacity: 0.8;">
+          <li>Skill alignment with job requirements</li>
+          <li>Interest match for better retention</li>
+          <li>Location vs. Transportation access</li>
+          <li>Employer readiness for specific barriers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Outcomes -->
+<div class="slide slide-light" id="slide-7">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Step 5</span>
+    <h2 class="slide-title">Placements & Outcomes</h2>
+    <div class="grid-2">
+      <div>
+        <p class="slide-subtitle" style="color: var(--text-muted);">
+          Success is measured by stability and retention, not just a job start.
+        </p>
+        <div class="card" style="margin-top: 32px;">
+          <h4 style="margin-bottom: 12px;">Outcome Variables</h4>
+          <div class="var-list" style="color: var(--text);">
+            <div class="var-item" style="border-color: var(--border);">
+              <span class="var-name" style="color: var(--text);">Job Title & Start Date</span>
+              <span class="badge badge-app">Application</span>
+            </div>
+            <div class="var-item" style="border-color: var(--border);">
+              <span class="var-name" style="color: var(--text);">Starting Wage</span>
+              <span class="badge badge-protected">Protected</span>
+            </div>
+            <div class="var-item" style="border-color: var(--border);">
+              <span class="var-name" style="color: var(--text);">90-Day Retention Status</span>
+              <span class="badge badge-app">Application</span>
+            </div>
+            <div class="var-item" style="border-color: var(--border);">
+              <span class="var-name" style="color: var(--text);">Work Hours per Week</span>
+              <span class="badge badge-app">Application</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 16px; padding: 32px; display: flex; align-items: center; justify-content: center; text-align: center;">
+        <div>
+          <h3 style="color: var(--primary);">2027 Compliance</h3>
+          <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">
+            Automated tracking of <strong>80 hours/month</strong> to meet future Medicaid work requirements.
+          </p>
+          <div style="font-size: 48px; margin-top: 20px;">📊</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Participant 360 -->
+<div class="slide slide-dark" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-tag tag-blue">Consolidated View</span>
+    <h2 class="slide-title">Participant 360° View</h2>
+    <p class="slide-subtitle" style="color: rgba(255,255,255,0.6);">
+      The single source of truth for Case Workers to track every interaction.
+    </p>
+    <div class="grid-3" style="margin-top: 40px;">
+      <div class="card-dark">
+        <h4 style="font-size: 14px;">Profile & History</h4>
+        <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">Demographics, referral source, recovery status, and justice involvement history.</p>
+      </div>
+      <div class="card-dark">
+        <h4 style="font-size: 14px;">Assessment Profile</h4>
+        <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">Radar charts of skills vs. interests, plus a prioritized list of barriers.</p>
+      </div>
+      <div class="card-dark">
+        <h4 style="font-size: 14px;">Live Roadmap</h4>
+        <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">Real-time status of the Workforce Plan, tasks, and encounter history.</p>
+      </div>
+    </div>
+    <div style="margin-top: 40px; padding: 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;">
+      <h5 style="color: var(--accent); margin-bottom: 8px;">The 360° Timeline</h5>
+      <p style="font-size: 14px; color: rgba(255,255,255,0.7);">
+        A chronological audit trail of every touchpoint: <em>Referral ➡ Intake ➡ Assessment 1 ➡ Plan Created ➡ Encounter Note ➡ Job Match ➡ Hired.</em>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Governance -->
+<div class="slide slide-light" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-tag tag-dark">Trust & Safety</span>
+    <h2 class="slide-title">Participant Data Governance</h2>
+    <div class="grid-2">
+      <div class="card" style="border-left: 5px solid var(--danger);">
+        <h4 style="color: var(--danger);">Protected Zone</h4>
+        <p style="font-size: 13px; margin-top: 8px; color: var(--text-muted);">
+          Restricted PHI/PII and 42 CFR Part 2 data. Encrypted demographics. Requires explicit consent for access.
+        </p>
+      </div>
+      <div class="card" style="border-left: 5px solid var(--success);">
+        <h4 style="color: var(--success);">Application Zone</h4>
+        <p style="font-size: 13px; margin-top: 8px; color: var(--text-muted);">
+          Operational data (Plans, Tasks, Outcomes). Safe for aggregate reporting and dashboard visualization.
+        </p>
+      </div>
+    </div>
+    <div style="margin-top: 40px; text-align: center;">
+      <p style="font-size: 15px; font-weight: 600; color: var(--primary);">
+        "Every byte of participant data is governed by Row-Level Security and a full audit trail."
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Summary -->
+<div class="slide slide-title-bg" id="slide-10">
+  <div class="slide-inner" style="text-align: center;">
+    <h2 style="font-size: 48px; font-weight: 800; letter-spacing: -2px; margin-bottom: 24px;">From Recovery to Resilience</h2>
+    <p class="slide-subtitle" style="margin: 0 auto;">
+      The ImpactBridge participant flow is designed to turn fragmented clinical data into concrete employment outcomes.
+    </p>
+    <div style="margin-top: 60px;">
+      <div style="font-size: 14px; opacity: 0.8;">Questions?</div>
+      <div style="font-size: 18px; font-weight: 600; margin-top: 8px;">TSRG Workforce Development Team</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  document.getElementById('total-slides').textContent = totalSlides;
+  let currentSlide = 1;
+
+  function updateCounter() {
+    document.getElementById('current-slide').textContent = currentSlide;
+  }
+
+  function goToSlide(n) {
+    currentSlide = Math.max(1, Math.min(n, totalSlides));
+    document.getElementById('slide-' + currentSlide).scrollIntoView({ behavior: 'smooth' });
+    updateCounter();
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  const wrapper = document.getElementById('slidesWrapper');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        currentSlide = parseInt(id.split('-')[1]);
+        updateCounter();
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(slide => observer.observe(slide));
+</script>
+</body>
+</html>

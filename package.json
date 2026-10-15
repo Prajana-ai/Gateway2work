@@ -1,0 +1,36 @@
+{
+  "name": "impactforge",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "clean": "rm -rf apps/web/.next apps/api/dist packages/shared/dist .turbo && echo 'Caches cleared. Run npm run build next.'",
+    "db:migrate": "cd apps/api && npm run db:migrate",
+    "db:seed": "cd apps/api && npm run db:seed",
+    "db:mock": "cd apps/api && npm run db:mock --",
+    "sync": "npm install && npx dotenv -e .env -- npm run db:migrate && npx dotenv -e .env -- npm run db:seed",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0",
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@10.9.0",
+  "overrides": {
+    "rxjs": "7.8.2"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.13.1",
+    "@azure/keyvault-secrets": "^4.11.2"
+  }
+}

@@ -1,0 +1,40 @@
+# Dependency directories
+node_modules/
+**/node_modules/
+venv/
+.venv/
+env/
+vendor/
+
+# Build and distribution
+dist/
+build/
+.next/
+.nuxt/
+.turbo/
+.cache/
+out/
+*.log
+
+# System files and IDEs
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large files and lockfiles
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Local secrets
+.env
+.env.local
+.env.*.local
